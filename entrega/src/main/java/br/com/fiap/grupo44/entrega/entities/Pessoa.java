@@ -1,20 +1,15 @@
 package br.com.fiap.grupo44.entrega.entities;
 
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
 public class Pessoa {
+
+    private Long id;
     private String nome;
+    private LocalDate dataNascimento;
+    private Character sexo;
 
-    public Pessoa() {
-    }
-
-    public Pessoa(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 }
