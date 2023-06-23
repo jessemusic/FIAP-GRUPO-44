@@ -1,7 +1,9 @@
 package br.com.fiap.grupo44.entrega.exception;
 
-import java.time.Instant;
+import lombok.Data;
 
+import java.time.Instant;
+@Data
 public class DefaultError {
 
     private Instant timeStamp;
@@ -13,54 +15,4 @@ public class DefaultError {
 
     private String path;
 
-    public DefaultError() {
-    }
-
-    public DefaultError(Instant timeStamp, Integer status, String error, String message, String path) {
-        this.timeStamp = timeStamp;
-        this.status = status;
-        this.error = error;
-        this.message = message;
-        this.path = path;
-    }
-
-    public Instant getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Instant timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 }
