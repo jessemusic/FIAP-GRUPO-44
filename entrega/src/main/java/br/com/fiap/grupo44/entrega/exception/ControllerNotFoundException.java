@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.execption;
+package br.com.fiap.grupo44.entrega.exception;
 
 public class ControllerNotFoundException extends RuntimeException{
 
