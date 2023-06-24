@@ -11,15 +11,16 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(exclude = "id")
 public class Eletrodomestico {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
     private String modelo;
+    private String marca;
     private String voltagem;
-    private String potencia;
-    private Double consumo;
+    private double potencia;
+    private double consumo;
 
 }
