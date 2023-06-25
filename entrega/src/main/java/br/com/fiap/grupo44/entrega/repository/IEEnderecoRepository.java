@@ -1,8 +1,8 @@
 package br.com.fiap.grupo44.entrega.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface IEEnderecoRepository<Endereco,UUID> {
+import br.com.fiap.grupo44.entrega.entities.Endereco;
 
+public interface IEEnderecoRepository extends JpaRepository<Endereco,Long> {
 }

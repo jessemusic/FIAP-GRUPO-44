@@ -1,7 +1,5 @@
 package br.com.fiap.grupo44.entrega.dto;
 
-import java.util.UUID;
-
 import br.com.fiap.grupo44.entrega.entities.Endereco;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnderecoDTO {
-	private UUID id;
+	private Long id;
 	private String rua;
 	private Integer numero; 
 	private String bairro;
