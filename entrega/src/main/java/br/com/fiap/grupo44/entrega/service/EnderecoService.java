@@ -1,11 +1,8 @@
 package br.com.fiap.grupo44.entrega.service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.grupo44.entrega.dto.EnderecoDTO;
@@ -20,7 +17,6 @@ public class EnderecoService {
 	private IEEnderecoRepository enderecoRepository;
 
 	public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
-		System.err.println("ENTREI NO SERVIÇO.");
 		Endereco endereco = this.enderecoRepository.save(enderecoDTO.getEndereco(enderecoDTO));
 		return new EnderecoDTO(endereco);
 	}

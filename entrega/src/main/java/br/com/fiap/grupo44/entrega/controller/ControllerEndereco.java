@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.grupo44.entrega.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.service.EnderecoService;
+import jakarta.validation.Valid;
 
 @RestController
 public class ControllerEndereco {
@@ -19,7 +20,7 @@ public class ControllerEndereco {
 	private EnderecoService enderecoService;
 	
 	@PostMapping("/salvar")
-	public EnderecoDTO salvar(@RequestBody EnderecoDTO enderecoDTO) {
+	public EnderecoDTO salvar(@Valid @RequestBody EnderecoDTO enderecoDTO) {
 		enderecoDTO = this.enderecoService.salvar(enderecoDTO);
 		return enderecoDTO;
 	}
