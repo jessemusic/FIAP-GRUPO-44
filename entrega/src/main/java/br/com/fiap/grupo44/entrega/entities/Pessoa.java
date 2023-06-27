@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_pessoa")
 public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
     private String nome;
     private LocalDate dataNascimento;
