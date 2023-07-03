@@ -25,7 +25,7 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping("/lista")
+    @GetMapping
     public ResponseEntity<Page<PessoaDTO>> findAll(
             @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
             @RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho
