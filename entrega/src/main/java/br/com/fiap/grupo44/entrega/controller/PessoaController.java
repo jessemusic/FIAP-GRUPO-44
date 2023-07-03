@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,14 +34,18 @@ public class PessoaController {
         var pessoas = pessoaService.findAll(pageRequest);
         return ResponseEntity.ok(pessoas);
     }
+    @GetMapping("/{id}")
+    public PessoaDTO getProductById(@PathVariable Long id) {
+        return pessoaService.findById(id);
+    }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody PessoaDTO pessoa){
+    public ResponseEntity<PessoaDTO> insert(@RequestBody PessoaDTO pessoa){
 
         pessoa = pessoaService.insert(pessoa);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(pessoa.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(pessoa);
     }
 
     @PutMapping("/{id}")
@@ -48,14 +53,15 @@ public class PessoaController {
         return ResponseEntity.ok(pessoaService.update(id,pessoaDTO));
     }
 
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<PessoaDTO> updateUnicoCampo(@Valid @RequestBody PessoaDTO pessoaDTO, @PathVariable(value = "id")  Long id){
-//        return ResponseEntity.ok(pessoaService.updateCampo(id,pessoaDTO));
-//    }
-
     @PatchMapping("/{id}")
     public PessoaPatchDTO updatePessoaFiedls(@PathVariable Long id, @RequestBody  Map<String, Object> fields){
         return pessoaService.updatePessoaByFields(id,fields);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Long deleteProduct(@PathVariable Long id) {
+        return pessoaService.deletePessoa(id);
     }
 
 }

@@ -67,5 +67,15 @@ public class PessoaService {
             var pessoaAtualizada = repo.save(existingPessoa);
             return new PessoaPatchDTO(pessoaAtualizada);
     }
+
+    public Long deletePessoa(Long id) {
+        Optional<Pessoa> existingPessoa = repo.findById(id);
+        if (existingPessoa.isPresent()) {
+            repo.deleteById(id);
+        }else {
+            throw  new ControllerNotFoundException("Pessoa não encontrada, impossível deletar se não existe pessoa no id: " + id);
+        }
+        return  repo.count();
+    }
 }
 
