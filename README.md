@@ -12,7 +12,7 @@ Controlador de gastos de eletrodomésticos
  https://github.com/jessemusic/FIAP-GRUPO-44 
 </p>
 
-API para gerenciar lugares (CRUD) que faz parte do primeiro Módulo (https://github.com/jessemusic/FIAP-GRUPO-44 ).
+API para gerenciar pessoas (CRUD) que faz parte do primeiro Módulo (https://github.com/jessemusic/FIAP-GRUPO-44 ).
 
 O projeto foi elaborado PÓS TECH CHALLEGE).
 
