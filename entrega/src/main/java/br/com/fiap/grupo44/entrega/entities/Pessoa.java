@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_pessoa")
 public class Pessoa {
@@ -17,6 +18,7 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String sobrenome;
     private LocalDate dataNascimento;
     private Character sexo;
 

@@ -2,8 +2,10 @@ package br.com.fiap.grupo44.entrega.controller;
 
 
 import br.com.fiap.grupo44.entrega.dto.PessoaDTO;
+import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.sevices.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Map;
 
 
 @RestController
@@ -38,6 +41,21 @@ public class PessoaController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(pessoa.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PessoaDTO> update(@RequestBody PessoaDTO pessoaDTO,@PathVariable Long id){
+        return ResponseEntity.ok(pessoaService.update(id,pessoaDTO));
+    }
+
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<PessoaDTO> updateUnicoCampo(@Valid @RequestBody PessoaDTO pessoaDTO, @PathVariable(value = "id")  Long id){
+//        return ResponseEntity.ok(pessoaService.updateCampo(id,pessoaDTO));
+//    }
+
+    @PatchMapping("/{id}")
+    public PessoaPatchDTO updatePessoaFiedls(@PathVariable Long id, @RequestBody  Map<String, Object> fields){
+        return pessoaService.updatePessoaByFields(id,fields);
     }
 
 }
