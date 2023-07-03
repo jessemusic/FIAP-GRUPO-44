@@ -14,7 +14,7 @@ Controlador de gastos de eletrodomésticos
 
 API para gerenciar pessoas (CRUD) que faz parte do primeiro Módulo (https://github.com/jessemusic/FIAP-GRUPO-44 ).
 
-O projeto foi elaborado PÓS TECH CHALLEGE).
+O projeto foi elaborado PÓS TECH e Apresentação do Tech Challenge ).
 
 ## Tecnologias
 
