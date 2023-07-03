@@ -2,7 +2,7 @@
 Controlador de gastos de eletrodomésticos
 
 
-
+![img_2.png](img_2.png)
 
 <h1 align="center">
   Cadastro de Pessoas
