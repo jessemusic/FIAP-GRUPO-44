@@ -39,12 +39,11 @@ O projeto foi elaborado PÓS TECH e Apresentação do Tech Challenge ).
 - Executar:
 
 
-A API poderá ser acessada em [localhost:8080](http://localhost:8080).
+A API poderá ser acessada em [localhost:8080](http://localhost:8080)
+
 O Swagger poderá ser visualizado em [localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 
-A API poderá ser acessada em [localhost:8080](http://localhost:8080).
-O Swagger poderá ser visualizado em [localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ## API Endpoints
 
@@ -201,4 +200,14 @@ Content-Type: application/json
     "dataNascimento": "1971-01-21",
     "sexo": "F"
 }
+```
+
+Deletando uma pessoa:
+- DELETE /pessoas/{id}
+```
+DELETE http://localhost:8080/pessoas/1
+HTTP/1.1 204 No Content
+Content-Length: 142
+Content-Type: application/json
+
 ```
