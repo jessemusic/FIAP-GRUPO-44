@@ -38,12 +38,12 @@ public class EletrodomesticoDTO {
     @JsonProperty
     @NotNull(message = "É necessario inserir a voltagem de seu eletrodomestico")
     @NotBlank(message = "Voltagem do  eletrodomestico não pode ser vazio")
-    private String voltagem;
+    private String tensao;
 
     @JsonProperty
     @NotNull(message = "É necessario inserir a tensão de seu eletrodomestico")
     @Min(value = 1, message = "A tensão precisa ser de no minimo 1W")
-    private Double tensao;
+    private Double potencia;
 
     @JsonProperty
     @Null(message = "O valor inicial do consumo deve ser nulo")
@@ -54,8 +54,8 @@ public class EletrodomesticoDTO {
         this.nome = entidade.getNome();
         this.modelo = entidade.getModelo();
         this.marca  = entidade.getMarca();
-        this.voltagem = entidade.getVoltagem();
         this.tensao = entidade.getTensao();
+        this.potencia = entidade.getPotencia();
         this.consumo = entidade.getConsumo();
     }
 }

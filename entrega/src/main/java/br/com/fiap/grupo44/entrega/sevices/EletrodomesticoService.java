@@ -42,8 +42,8 @@ public class EletrodomesticoService {
         entity.setNome(eletroDomesticoDTO.getNome());
         entity.setModelo(eletroDomesticoDTO.getModelo());
         entity.setMarca(eletroDomesticoDTO.getMarca());
-        entity.setVoltagem(eletroDomesticoDTO.getVoltagem());
         entity.setTensao(eletroDomesticoDTO.getTensao());
+        entity.setPotencia(eletroDomesticoDTO.getPotencia());
         entity.setConsumo(eletroDomesticoDTO.getConsumo());
 
         var eletroSaved = repository.save(entity);
@@ -56,8 +56,8 @@ public class EletrodomesticoService {
             buscaEletrodomestico.setNome(eletroDomesticoDTO.getNome());
             buscaEletrodomestico.setModelo(eletroDomesticoDTO.getModelo());
             buscaEletrodomestico.setMarca(eletroDomesticoDTO.getMarca());
-            buscaEletrodomestico.setVoltagem(eletroDomesticoDTO.getVoltagem());
             buscaEletrodomestico.setTensao(eletroDomesticoDTO.getTensao());
+            buscaEletrodomestico.setPotencia(eletroDomesticoDTO.getPotencia());
             buscaEletrodomestico.setConsumo(eletroDomesticoDTO.getConsumo());
             buscaEletrodomestico = repository.save(buscaEletrodomestico);
 
@@ -84,7 +84,7 @@ public class EletrodomesticoService {
         return violacoesToList;
     }
     public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO eletrodomesticoDTO) {
-        Double consumo = (eletrodomesticoDTO.getTensao() * 24) / 1000;
+        Double consumo = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
         eletrodomesticoDTO.setConsumo(consumo);
         return eletrodomesticoDTO;
     }

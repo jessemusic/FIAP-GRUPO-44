@@ -19,8 +19,8 @@ public class Eletrodomestico {
     private String nome;
     private String modelo;
     private String marca;
-    private String voltagem;
-    private double tensao;
+    private String tensao;
+    private double potencia;
     private double consumo;
 
 }
