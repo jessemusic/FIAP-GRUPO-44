@@ -240,8 +240,8 @@ http GET http://localhost:8080/eletrodomesticos
             "nome": "Notebook",
             "modelo": "inspiron 14",
             "marca": "Dell",
-            "voltagem": "Bivolt",
-            "tensao": 500.0,
+            "tensao": "Bivolt",
+            "potencia": 500.0,
             "consumo": 12.0
         },
         {
@@ -249,8 +249,8 @@ http GET http://localhost:8080/eletrodomesticos
             "nome": "Notebook",
             "modelo": "inspiron 14",
             "marca": "Dell",
-            "voltagem": "Bivolt",
-            "tensao": 500.0,
+            "tensao": "Bivolt",
+            "potencia": 500.0,
             "consumo": 12.0
         },
         {
@@ -258,8 +258,8 @@ http GET http://localhost:8080/eletrodomesticos
             "nome": "Notebook",
             "modelo": "inspiron 14",
             "marca": "Dell",
-            "voltagem": "Bivolt",
-            "tensao": 500.0,
+            "tensao": "Bivolt",
+            "potencia": 500.0,
             "consumo": 12.0
         },
         {
@@ -267,8 +267,8 @@ http GET http://localhost:8080/eletrodomesticos
             "nome": "Notebook",
             "modelo": "inspiron 14",
             "marca": "Dell",
-            "voltagem": "Bivolt",
-            "tensao": 500.0,
+            "tensao": "Bivolt",
+            "potencia": 500.0,
             "consumo": 12.0
         },
         {
@@ -276,8 +276,8 @@ http GET http://localhost:8080/eletrodomesticos
             "nome": "Notebook",
             "modelo": "inspiron 14",
             "marca": "Dell",
-            "voltagem": "Bivolt",
-            "tensao": 500.0,
+            "tensao": "Bivolt",
+            "potencia": 500.0,
             "consumo": 12.0
         }
     ],
@@ -320,8 +320,8 @@ Content-Type: application/json
     "nome": "Notebook",
     "modelo": "inspiron 14",
     "marca":"Dell",
-    "voltagem": "Bivolt",
-    "tensao": 500
+    "tensao": "Bivolt",
+    "potencia": 500.0
 }
 ```
 
@@ -332,8 +332,8 @@ http://localhost:8080/eletrodomesticos/2{
     "nome": "Notebook",
     "modelo": "inspiron 14",
     "marca": "Dell",
-    "voltagem": "Bivolt",
-    "tensao": 500.0,
+    "tensao": "Bivolt",
+    "potencia": 500.0,
     "consumo": 12.0
 }
 ```
@@ -348,8 +348,8 @@ Content-Type: application/json
     "nome": "Notebook",
     "modelo": "inspiron 14",
     "marca": "Dell",
-    "voltagem": "Bivolt",
-    "tensao": 800.0
+    "tensao": "Bivolt",
+    "potencia": 800.0
 }
 ```
 
@@ -423,6 +423,8 @@ RESPONSE
 ```
 LISTAR POR ID
 
+
+```
 GET http://localhost:8080/buscar-getID?id=2
 
 RESPONSE:
@@ -434,8 +436,9 @@ RESPONSE:
     "cidade": "São Paulo",
     "estado": "SP"
 }
-```
 
+
+```
 #CADASTRAR ENDEREÇOS
 
 ```
@@ -466,8 +469,8 @@ RESPONSE
     "estado": "SP"
 }
 
-```
 
+```
 #ATUALIZAR ENDEREÇO
 
 ```
@@ -492,10 +495,10 @@ RESPOSE
     "cidade": "Luanda",
     "estado": "LD"
 }
+
 ```
-
-
 DELETANDO ENDEREÇO
+```
 
 http://localhost:8080/apagar/10
 
