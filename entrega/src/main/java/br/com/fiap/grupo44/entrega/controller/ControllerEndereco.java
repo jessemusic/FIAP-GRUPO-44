@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.grupo44.entrega.dto.EnderecoDTO;
-import br.com.fiap.grupo44.entrega.service.EnderecoService;
+import br.com.fiap.grupo44.entrega.sevices.EnderecoService;
 import jakarta.validation.Valid;
 
 @RestController

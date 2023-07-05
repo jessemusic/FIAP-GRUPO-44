@@ -1,9 +1,9 @@
-package br.com.fiap.grupo44.entrega.service;
+package br.com.fiap.grupo44.entrega.sevices;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
-import br.com.fiap.grupo44.entrega.repository.IEletrodomesticoRepository;
+import br.com.fiap.grupo44.entrega.repositories.IEletrodomesticoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service

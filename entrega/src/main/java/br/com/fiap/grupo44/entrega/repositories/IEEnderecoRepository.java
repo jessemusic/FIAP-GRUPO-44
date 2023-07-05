@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.repository;
+package br.com.fiap.grupo44.entrega.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

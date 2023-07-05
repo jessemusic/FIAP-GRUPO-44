@@ -1,9 +1,7 @@
 package br.com.fiap.grupo44.entrega.controller;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
-import br.com.fiap.grupo44.entrega.service.EletrodomesticoService;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
+import br.com.fiap.grupo44.entrega.sevices.EletrodomesticoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,9 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/eletrodomesticos")
