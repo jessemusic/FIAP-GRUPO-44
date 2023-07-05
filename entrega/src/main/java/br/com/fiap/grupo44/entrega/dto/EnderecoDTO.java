@@ -12,14 +12,15 @@ import lombok.Setter;
 public class EnderecoDTO {
 	
 	private Long id;
-	@NotBlank(message = "Ocampo rua é obrigatório seu preenchimento.")
+	@NotBlank(message = "Ocampo Rua é obrigatório seu preenchimento.")
 	private String rua;
-	@Range(min = 1,message = "O número da rua deve ser um número maior que 0")
+	@Range(min = 1,message = "O Número da rua deve ser um número maior que 0")
 	private Integer numero; 
-	@NotBlank(message = "Ocampo bairro é obrigatório seu preenchimento.")
+	@NotBlank(message = "Ocampo Bairro é obrigatório seu preenchimento.")
 	private String bairro;
-	@NotBlank(message = "Ocampo cidade é obrigatório seu preenchimento.")
+	@NotBlank(message = "Ocampo Cidade é obrigatório seu preenchimento.")
 	private String cidade;
+	@NotBlank(message = "Ocampo Estado é obrigatório seu preenchimento.")
 	private String estado;
 	
 	public EnderecoDTO() {
