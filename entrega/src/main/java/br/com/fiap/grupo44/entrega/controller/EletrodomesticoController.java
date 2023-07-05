@@ -36,7 +36,7 @@ public class EletrodomesticoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EletrodomesticoDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<EletrodomesticoDTO> findById(@PathVariable Long id) {
         var eletrodomestico = eletrodomesticoService.findById(id);
         return ResponseEntity.ok(eletrodomestico);
     }
@@ -54,7 +54,7 @@ public class EletrodomesticoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody EletrodomesticoDTO eletroDomesticoDTO, @PathVariable UUID id) {
+    public ResponseEntity update(@RequestBody EletrodomesticoDTO eletroDomesticoDTO, @PathVariable Long id) {
         List<String> violacoesToList = eletrodomesticoService.validate(eletroDomesticoDTO);
         if (!violacoesToList.isEmpty()) {
             return ResponseEntity.badRequest().body(violacoesToList);
@@ -65,7 +65,7 @@ public class EletrodomesticoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable UUID id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         eletrodomesticoService.delete(id);
         return ResponseEntity.noContent().build();
     }

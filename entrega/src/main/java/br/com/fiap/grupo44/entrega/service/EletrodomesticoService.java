@@ -2,6 +2,7 @@ package br.com.fiap.grupo44.entrega.service;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.repository.IEletrodomesticoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
@@ -27,10 +28,15 @@ public class EletrodomesticoService {
         return eletrodomesticos.map(eletrodomestico -> new EletrodomesticoDTO(eletrodomestico));
     }
 
-    public EletrodomesticoDTO findById(UUID id) {
-        var eletrodomestico = repository.findById(id).orElse(null);
+    public EletrodomesticoDTO findById(Long id) {
+        var eletrodomestico = repository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
         return new EletrodomesticoDTO(eletrodomestico);
     }
+
+//    public EletrodomesticoDTO findById(Long id){
+//        var pessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
+//        return new PessoaDTO(pessoa);
+//    }
 
     public EletrodomesticoDTO save(EletrodomesticoDTO eletroDomesticoDTO) {
         Eletrodomestico entity = new Eletrodomestico();
@@ -38,31 +44,31 @@ public class EletrodomesticoService {
         entity.setModelo(eletroDomesticoDTO.getModelo());
         entity.setMarca(eletroDomesticoDTO.getMarca());
         entity.setVoltagem(eletroDomesticoDTO.getVoltagem());
-        entity.setPotencia(eletroDomesticoDTO.getPotencia());
+        entity.setTensao(eletroDomesticoDTO.getTensao());
         entity.setConsumo(eletroDomesticoDTO.getConsumo());
 
         var eletroSaved = repository.save(entity);
         return new EletrodomesticoDTO(eletroSaved);
     }
 
-    public EletrodomesticoDTO update(UUID id, EletrodomesticoDTO eletroDomesticoDTO) {
+    public EletrodomesticoDTO update(Long id, EletrodomesticoDTO eletroDomesticoDTO) {
         try {
             Eletrodomestico buscaEletrodomestico = repository.getOne(id);
             buscaEletrodomestico.setNome(eletroDomesticoDTO.getNome());
             buscaEletrodomestico.setModelo(eletroDomesticoDTO.getModelo());
             buscaEletrodomestico.setMarca(eletroDomesticoDTO.getMarca());
             buscaEletrodomestico.setVoltagem(eletroDomesticoDTO.getVoltagem());
-            buscaEletrodomestico.setPotencia(eletroDomesticoDTO.getPotencia());
+            buscaEletrodomestico.setTensao(eletroDomesticoDTO.getTensao());
             buscaEletrodomestico.setConsumo(eletroDomesticoDTO.getConsumo());
             buscaEletrodomestico = repository.save(buscaEletrodomestico);
 
             return new EletrodomesticoDTO(buscaEletrodomestico);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Produto não encontrado, id:" + id);
+            throw new EntityNotFoundException("Tensão não encontrado, id:" + id);
         }
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         try {
             repository.deleteById(id);
         } catch (Exception ex) {
@@ -79,7 +85,7 @@ public class EletrodomesticoService {
         return violacoesToList;
     }
     public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO eletrodomesticoDTO) {
-        Double consumo = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
+        Double consumo = (eletrodomesticoDTO.getTensao() * 24) / 1000;
         eletrodomesticoDTO.setConsumo(consumo);
         return eletrodomesticoDTO;
     }

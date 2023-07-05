@@ -14,13 +14,13 @@ import java.util.UUID;
 @EqualsAndHashCode(exclude = "id")
 public class Eletrodomestico {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private String modelo;
     private String marca;
     private String voltagem;
-    private double potencia;
+    private double tensao;
     private double consumo;
 
 }

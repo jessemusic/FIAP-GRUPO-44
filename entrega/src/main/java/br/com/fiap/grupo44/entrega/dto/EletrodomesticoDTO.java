@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class EletrodomesticoDTO {
     @JsonProperty
-    private UUID id;
+    private Long id;
 
     @JsonProperty
     @NotNull(message = "Nome não deve ser nulo")
@@ -41,9 +41,9 @@ public class EletrodomesticoDTO {
     private String voltagem;
 
     @JsonProperty
-    @NotNull(message = "É necessario inserir a Potencia de seu eletrodomestico")
-    @Min(value = 1, message = "A potencia precisa ser de no minimo 1W")
-    private Double potencia;
+    @NotNull(message = "É necessario inserir a tensão de seu eletrodomestico")
+    @Min(value = 1, message = "A tensão precisa ser de no minimo 1W")
+    private Double tensao;
 
     @JsonProperty
     @Null(message = "O valor inicial do consumo deve ser nulo")
@@ -55,7 +55,7 @@ public class EletrodomesticoDTO {
         this.modelo = entidade.getModelo();
         this.marca  = entidade.getMarca();
         this.voltagem = entidade.getVoltagem();
-        this.potencia = entidade.getPotencia();
+        this.tensao = entidade.getTensao();
         this.consumo = entidade.getConsumo();
     }
 }
