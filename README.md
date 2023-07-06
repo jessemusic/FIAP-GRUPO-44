@@ -381,7 +381,7 @@ Content-Type: application/json
 API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos.
 
 <h1 align="center">
-  API Eletrodomésticos
+  API de Endereços
 </h1>
 
 ## API Endpoints
