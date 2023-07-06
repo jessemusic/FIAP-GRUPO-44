@@ -1,26 +1,27 @@
 # FIAP-GRUPO-44
 Controlador de gastos de eletrodomésticos
+## Introdução:
+
+O presente projeto tem como principio atender as diretrizes solicitadas pela pós graduação da FIAP no desenvolvimento do Tech Chellenge. Em suma o projeto visa desenvolver uma solução que provisione o monitoramento de eletrodoméstico identificando aparelhos com maior consumo, gerenciamento do consumo de energia em tempo real gerando economia para usuario final.
+Para atender a demanda em sua complitude o desenvolvimento do projeto se dará por etapas
 
 
 ![img_2.png](img_2.png)
 
+## Descrição da primeira etapa:
+
+Na primeira etapa foi proposto o desenvolvimento de tres APIs que promovam a manipulação de registros cadastrados para Pessoas, eletrodomésticos e Endereços. As APIs proporcionam a listagem, visualização, criação, atualização e deleção dos registros. Cada operação tem sua tratativa de erros correspondente
 <h1 align="center">
-  Cadastro de Pessoas
+  Desenvolvimento das APIs
 </h1>
-
-<p align="center">
- https://github.com/jessemusic/FIAP-GRUPO-44 
-</p>
-
-API para gerenciar pessoas (CRUD) que faz parte do primeiro Módulo (https://github.com/jessemusic/FIAP-GRUPO-44 ).
-
-O projeto foi elaborado PÓS TECH e Apresentação do Tech Challenge ).
 
 ## Tecnologias
 
-- [Spring Boot](https://spring.io/projects/spring-boot)
-
-
+- [Spring Boot](https://spring.io/projects/spring-boot):Modulo derivado do Spring Framework que facilita desenvolvimento de aplicações java implementando injeção e inversão de dependencias
+- [H2](https://github.com/h2database/h2database/releases/download/version-2.2.220/h2.pdf): Gerenciador de banco de dados relacional
+- [Postman](https://learning.postman.com/docs/developer/postman-api/intro-api/): Ferramenta destinada a desenvolvedores que possibilita testar chamadas API e gerar documentação de forma iterativa.Foi usado neste projeto para gerar collections e realizar teste de chamadas aos endpoints;
+- [Tortoise](https://tortoisegit.org/docs/tortoisegit/): Ferramenta gerencial que facilita manipulação de projetos em GIT. Foi usado neste projeto para resolução de conflitos.
+- [Sourcetree](https://confluence.atlassian.com/get-started-with-sourcetree): Assim como o Tortoise é uma ferramenta gerencial para facilitar o desenvolvimento de projetos em Git, no entanto possui uma interface mais receptivel e navegabilidade facilitada.Foi usado neste projeto paa navegação e criação de ramos.
 ## Práticas adotadas
 
 
@@ -43,6 +44,18 @@ A API poderá ser acessada em [localhost:8080](http://localhost:8080)
 
 O Swagger poderá ser visualizado em [localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
+
+<h1 align="center">
+  API Pessoas
+</h1>
+
+<p align="center">
+ https://github.com/jessemusic/FIAP-GRUPO-44 
+</p>
+
+API para gerenciar pessoas (CRUD) que faz parte do primeiro Módulo (https://github.com/jessemusic/FIAP-GRUPO-44 ).
+
+O projeto foi elaborado PÓS TECH e Apresentação do Tech Challenge ).
 
 
 ## API Endpoints
@@ -213,21 +226,21 @@ Content-Type: application/json
 ```
 
 <h1 align="center">
-  Cadastro de Eletrodomesticos
+  API Eletrodomésticos
 </h1>
 
 <p align="center">
  https://github.com/jessemusic/FIAP-GRUPO-44 
 </p>
 
-API para gerenciamento de eletrodomesticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomesticos. 
+API para gerenciamento de eletrodomésticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomésticos.
 
 
 
 ## API Endpoints
 
 
-Lista de eletrodomesticos
+Lista de eletrodomésticos
 
 - GET /eletrodomesticos
 ```
@@ -365,11 +378,13 @@ Content-Type: application/json
 ```
 
 
-API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos. 
+API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos.
 
+<h1 align="center">
+  API Eletrodomésticos
+</h1>
 
 ## API Endpoints
-
 
 #LISTA DE ENDEREÇOS
 
