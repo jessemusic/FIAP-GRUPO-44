@@ -233,7 +233,7 @@ Content-Type: application/json
  https://github.com/jessemusic/FIAP-GRUPO-44 
 </p>
 
-API para gerenciamento de eletrodomésticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomésticos. 
+API para gerenciamento de eletrodomésticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomésticos.
 
 
 
@@ -378,7 +378,7 @@ Content-Type: application/json
 ```
 
 
-API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos. 
+API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos.
 
 <h1 align="center">
   API Eletrodomésticos
