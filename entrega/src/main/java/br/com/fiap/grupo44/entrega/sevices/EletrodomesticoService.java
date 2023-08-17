@@ -32,20 +32,9 @@ public class EletrodomesticoService {
         return new EletrodomesticoDTO(eletrodomestico);
     }
 
-//    public EletrodomesticoDTO findById(Long id){
-//        var pessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
-//        return new PessoaDTO(pessoa);
-//    }
-
     public EletrodomesticoDTO save(EletrodomesticoDTO eletroDomesticoDTO) {
         Eletrodomestico entity = new Eletrodomestico();
-        entity.setNome(eletroDomesticoDTO.getNome());
-        entity.setModelo(eletroDomesticoDTO.getModelo());
-        entity.setMarca(eletroDomesticoDTO.getMarca());
-        entity.setTensao(eletroDomesticoDTO.getTensao());
-        entity.setPotencia(eletroDomesticoDTO.getPotencia());
-        entity.setConsumo(eletroDomesticoDTO.getConsumo());
-
+        mapperDtoToEntity(eletroDomesticoDTO,entity);
         var eletroSaved = repository.save(entity);
         return new EletrodomesticoDTO(eletroSaved);
     }
@@ -53,12 +42,7 @@ public class EletrodomesticoService {
     public EletrodomesticoDTO update(Long id, EletrodomesticoDTO eletroDomesticoDTO) {
         try {
             Eletrodomestico buscaEletrodomestico = repository.getOne(id);
-            buscaEletrodomestico.setNome(eletroDomesticoDTO.getNome());
-            buscaEletrodomestico.setModelo(eletroDomesticoDTO.getModelo());
-            buscaEletrodomestico.setMarca(eletroDomesticoDTO.getMarca());
-            buscaEletrodomestico.setTensao(eletroDomesticoDTO.getTensao());
-            buscaEletrodomestico.setPotencia(eletroDomesticoDTO.getPotencia());
-            buscaEletrodomestico.setConsumo(eletroDomesticoDTO.getConsumo());
+            mapperDtoToEntity(eletroDomesticoDTO,buscaEletrodomestico);
             buscaEletrodomestico = repository.save(buscaEletrodomestico);
 
             return new EletrodomesticoDTO(buscaEletrodomestico);
@@ -87,5 +71,14 @@ public class EletrodomesticoService {
         Double consumo = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
         eletrodomesticoDTO.setConsumo(consumo);
         return eletrodomesticoDTO;
+    }
+
+    private void  mapperDtoToEntity(EletrodomesticoDTO dto, Eletrodomestico entity) {
+        entity.setNome(dto.getNome());
+        entity.setModelo(dto.getModelo());
+        entity.setMarca(dto.getMarca());
+        entity.setTensao(dto.getTensao());
+        entity.setPotencia(dto.getPotencia());
+        entity.setConsumo(dto.getConsumo());
     }
 }

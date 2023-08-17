@@ -1,8 +1,7 @@
 package br.com.fiap.grupo44.entrega.dto;
 
+import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.entities.Pessoa;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -32,11 +32,18 @@ public class PessoaDTO {
     @Max(value = 1,message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
     private Character sexo;
 
+    private Set<EletrodomesticoDTO> eletrodomesticos;
+
     public PessoaDTO(Pessoa entidade){
         this.id = entidade.getId();
         this.nome = entidade.getNome();
         this.sobrenome = entidade.getSobrenome();
         this.dataNascimento = entidade.getDataNascimento();
         this.sexo = entidade.getSexo();
+    }
+
+    public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos) {
+        this(pessoa);
+        eletrodomesticos.forEach(eletro -> this.eletrodomesticos.add(new EletrodomesticoDTO(eletro)));
     }
 }

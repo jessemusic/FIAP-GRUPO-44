@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +23,9 @@ public class Pessoa {
     private String sobrenome;
     private LocalDate dataNascimento;
     private Character sexo;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant dataDeCriacao;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Set<Eletrodomestico> eletrodomesticoSet;
 
 }
