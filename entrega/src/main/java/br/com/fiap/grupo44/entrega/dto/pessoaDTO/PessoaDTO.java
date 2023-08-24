@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.dto;
+package br.com.fiap.grupo44.entrega.dto.pessoaDTO;
 
 import br.com.fiap.grupo44.entrega.entities.Pessoa;
 import com.fasterxml.jackson.annotation.JsonInclude;

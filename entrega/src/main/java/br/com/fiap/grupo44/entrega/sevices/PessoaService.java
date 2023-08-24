@@ -1,7 +1,7 @@
 package br.com.fiap.grupo44.entrega.sevices;
 
-import br.com.fiap.grupo44.entrega.dto.PessoaDTO;
-import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
+import br.com.fiap.grupo44.entrega.dto.pessoaDTO.PessoaDTO;
+import br.com.fiap.grupo44.entrega.dto.pessoaDTO.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.repositories.IPessoaRepository;
