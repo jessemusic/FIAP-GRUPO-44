@@ -67,7 +67,6 @@ public class PessoaController {
             @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @PostMapping
     public ResponseEntity<PessoaDTO> insert(@RequestBody PessoaDTO pessoa){
-
         pessoa = pessoaService.insert(pessoa);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(pessoa.getId()).toUri();

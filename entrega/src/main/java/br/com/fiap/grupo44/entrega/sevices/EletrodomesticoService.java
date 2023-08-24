@@ -1,9 +1,12 @@
 package br.com.fiap.grupo44.entrega.sevices;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.repositories.IEletrodomesticoRepository;
+import br.com.fiap.grupo44.entrega.repositories.IPessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -11,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,6 +57,17 @@ public class EletrodomesticoService {
         }
     }
 
+    public EletrodomesticoDTO updateEletrodomesticoByFields(Long id, Map<String, Object> fields) {
+        Eletrodomestico existingEletro = repository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Eletrodomestico não encontrada"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Eletrodomestico.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, existingEletro, value);
+        });
+        var eletroAtualizado = repository.save(existingEletro);
+        return new EletrodomesticoDTO(eletroAtualizado);
+    }
+
     public void delete(Long id) {
         try {
             repository.deleteById(id);
@@ -68,8 +85,13 @@ public class EletrodomesticoService {
         return violacoesToList;
     }
     public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO eletrodomesticoDTO) {
-        Double consumo = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
-        eletrodomesticoDTO.setConsumo(consumo);
+
+        Double consumoDiario = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
+        if (consumoDiario > 0){
+            eletrodomesticoDTO.setConsumoDiario(consumoDiario);
+            eletrodomesticoDTO.setConsumoMensal(consumoDiario * eletrodomesticoDTO.getUsoDiasEstimados());
+
+        }
         return eletrodomesticoDTO;
     }
 
@@ -79,6 +101,9 @@ public class EletrodomesticoService {
         entity.setMarca(dto.getMarca());
         entity.setTensao(dto.getTensao());
         entity.setPotencia(dto.getPotencia());
-        entity.setConsumo(dto.getConsumo());
+        entity.setUsoDiasEstimados(dto.getUsoDiasEstimados());
+        entity.setConsumoDiario(dto.getConsumoDiario());
+        entity.setConsumoMensal(dto.getConsumoMensal());
+        entity.setPessoa(new PessoaService().retornaEntidadeCadastroEletrodomestico(dto.getPessoaId()));
     }
 }

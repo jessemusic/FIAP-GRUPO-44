@@ -79,6 +79,13 @@ public class PessoaService {
         return  repo.count();
     }
 
+    public Pessoa retornaEntidadeCadastroEletrodomestico(Long idPessoa){
+        PessoaDTO dto = findById(idPessoa);
+        Pessoa entity = new Pessoa();
+        mapperDtoToEntity(dto,entity);
+        return entity;
+    }
+
     private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity){
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
@@ -86,9 +93,11 @@ public class PessoaService {
         entity.setSexo(dto.getSexo());
         entity = repo.save(entity);
 
-        for (EletrodomesticoDTO eletroDTO: dto.getEletrodomesticos()) {
-            Eletrodomestico eletrodomestico = eletroRepository.getOne(eletroDTO.getId());
-            entity.getEletrodomesticoSet().add(eletrodomestico);
+        if (dto.getEletrodomesticos() != null && !dto.getEletrodomesticos().isEmpty()){
+            for (EletrodomesticoDTO eletroDTO: dto.getEletrodomesticos()) {
+                Eletrodomestico eletrodomestico = eletroRepository.getOne(eletroDTO.getId());
+                entity.getEletrodomesticoSet().add(eletrodomestico);
+            }
         }
     }
 }

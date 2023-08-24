@@ -22,7 +22,9 @@ public class Eletrodomestico {
     private String marca;
     private String tensao;
     private double potencia;
-    private double consumo;
+    private double consumoDiario;
+    private double consumoMensal;
+    private Long usoDiasEstimados;
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;

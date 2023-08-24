@@ -1,7 +1,11 @@
 package br.com.fiap.grupo44.entrega.controller;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.sevices.EletrodomesticoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/eletrodomesticos")
@@ -19,7 +24,12 @@ public class EletrodomesticoController {
 
     @Autowired
     private EletrodomesticoService eletrodomesticoService;
-
+    @Operation(summary = "Consulta pessoa passando o id",method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @GetMapping
     public ResponseEntity<Page<EletrodomesticoDTO>> findAll(
             @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
@@ -29,13 +39,23 @@ public class EletrodomesticoController {
         var eletrodomesticos = eletrodomesticoService.findAll(pageRequest);
         return ResponseEntity.ok(eletrodomesticos);
     }
-
+    @Operation(summary = "Consulta eletrodomestico por id",method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @GetMapping("/{id}")
     public ResponseEntity<EletrodomesticoDTO> findById(@PathVariable Long id) {
         var eletrodomestico = eletrodomesticoService.findById(id);
         return ResponseEntity.ok(eletrodomestico);
     }
-
+    @Operation(summary = "Insere eletrodomestico",method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @PostMapping
     public ResponseEntity save(@RequestBody EletrodomesticoDTO eletroDomesticoDTO) {
         List<String> violacoesToList = eletrodomesticoService.validate(eletroDomesticoDTO);
@@ -48,6 +68,12 @@ public class EletrodomesticoController {
         return ResponseEntity.created(uri).body(eletrodomesticoSaved);
     }
 
+    @Operation(summary = "Atualiza eletrodomestico",method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody EletrodomesticoDTO eletroDomesticoDTO, @PathVariable Long id) {
         List<String> violacoesToList = eletrodomesticoService.validate(eletroDomesticoDTO);
@@ -58,7 +84,22 @@ public class EletrodomesticoController {
         var eletrodomesticoUpdated = eletrodomesticoService.update(id, eletroDomesticoDTO);
         return  ResponseEntity.ok(eletrodomesticoUpdated);
     }
-
+    @Operation(summary = "Atualização de eletrodomestico por campo",method = "PATCH")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
+    @PatchMapping("/{id}")
+    public EletrodomesticoDTO updateEletrodomesticoFiedls(@PathVariable Long id, @RequestBody Map<String, Object> fields){
+        return eletrodomesticoService.updateEletrodomesticoByFields(id,fields);
+    }
+    @Operation(summary = "Deleta eletrodomestico",method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         eletrodomesticoService.delete(id);

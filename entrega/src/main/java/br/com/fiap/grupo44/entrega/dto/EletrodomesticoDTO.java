@@ -46,8 +46,25 @@ public class EletrodomesticoDTO {
     private Double potencia;
 
     @JsonProperty
-    @Null(message = "O valor inicial do consumo deve ser nulo")
-    private Double consumo;
+    @NotNull(message = "É necessario inserir o numero de dias de uso estimados")
+    @Min(value = 1, message = "É necessario usar ao menos 1 dia no mes")
+    private Long  usoDiasEstimados;
+
+    @JsonProperty
+    @NotNull(message = "É necessario inserir a estimativa de uso diario")
+    private Long  usoDiarioEstimado;
+
+    @JsonProperty
+    @Null(message = "O valor inicial do consumo diario deve ser nulo")
+    private Double consumoDiario;
+
+    @JsonProperty
+    @Null(message = "O valor inicial do consumo mensal deve ser nulo")
+    private Double consumoMensal;
+
+    @JsonProperty
+    @NotNull(message = "É necessario referenciar o id da pessoa que possui o eletrodomestico")
+    private Long pessoaId;
 
     public EletrodomesticoDTO(Eletrodomestico entidade) {
         this.id = entidade.getId();
@@ -56,6 +73,9 @@ public class EletrodomesticoDTO {
         this.marca  = entidade.getMarca();
         this.tensao = entidade.getTensao();
         this.potencia = entidade.getPotencia();
-        this.consumo = entidade.getConsumo();
+        this.usoDiasEstimados = entidade.getUsoDiasEstimados();
+        this.consumoDiario = entidade.getConsumoDiario();
+        this.consumoMensal = entidade.getConsumoMensal();
+        this.pessoaId = entidade.getPessoa().getId();
     }
 }
