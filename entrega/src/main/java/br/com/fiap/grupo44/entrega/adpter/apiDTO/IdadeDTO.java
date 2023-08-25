@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.dto.apiDTO;
+package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class NameDTO {
-    private String title;
-    private String first;
-    private String last;
+public class IdadeDTO {
+
+     private String date;
+     private Integer age;
 }

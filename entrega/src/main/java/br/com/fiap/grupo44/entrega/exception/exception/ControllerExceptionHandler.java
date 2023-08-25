@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.controller.exception;
+package br.com.fiap.grupo44.entrega.exception.exception;
 
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.exception.DefaultError;

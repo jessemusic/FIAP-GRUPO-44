@@ -1,6 +1,6 @@
 package br.com.fiap.grupo44.entrega.adpter.in;
 
-import br.com.fiap.grupo44.entrega.dto.apiDTO.ChamaResultDTO;
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.ChamaResultDTO;
 import br.com.fiap.grupo44.entrega.adpter.out.RandomUseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

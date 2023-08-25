@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.entities;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.entities;
 
 
 import jakarta.persistence.*;

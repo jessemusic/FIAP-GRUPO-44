@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.dto.apiDTO;
+package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

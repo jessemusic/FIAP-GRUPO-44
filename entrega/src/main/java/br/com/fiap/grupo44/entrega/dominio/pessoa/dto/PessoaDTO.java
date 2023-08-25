@@ -1,6 +1,6 @@
-package br.com.fiap.grupo44.entrega.dto.pessoaDTO;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,8 +1,5 @@
-package br.com.fiap.grupo44.entrega.dto.apiDTO;
+package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
-import br.com.fiap.grupo44.entrega.dto.apiDTO.FotoPessoalDTO;
-import br.com.fiap.grupo44.entrega.dto.apiDTO.IdadeDTO;
-import br.com.fiap.grupo44.entrega.dto.apiDTO.NameDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

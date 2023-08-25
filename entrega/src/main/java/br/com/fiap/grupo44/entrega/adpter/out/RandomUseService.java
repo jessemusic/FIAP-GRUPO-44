@@ -1,6 +1,6 @@
 package br.com.fiap.grupo44.entrega.adpter.out;
 
-import br.com.fiap.grupo44.entrega.dto.apiDTO.ChamaResultDTO;
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.ChamaResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
