@@ -1,11 +1,6 @@
-<<<<<<<< HEAD:entrega/src/main/java/br/com/fiap/grupo44/entrega/exception/exception/ControllerExceptionHandler.java
-package br.com.fiap.grupo44.entrega.exception.exception;
-========
 package br.com.fiap.grupo44.entrega.exception;
->>>>>>>> main:entrega/src/main/java/br/com/fiap/grupo44/entrega/exception/ControllerExceptionHandler.java
 
-import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
-import br.com.fiap.grupo44.entrega.exception.DefaultError;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

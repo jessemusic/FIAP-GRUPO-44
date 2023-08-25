@@ -1,13 +1,11 @@
-<<<<<<<< HEAD:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/sevices/PessoaService.java
-package br.com.fiap.grupo44.entrega.dominio.pessoa.sevices;
 
+package br.com.fiap.grupo44.entrega.dominio.pessoa.sevices;
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.ChamaResultDTO;
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.ResultsDto;
 import br.com.fiap.grupo44.entrega.adpter.out.RandomUseService;
-========
-package br.com.fiap.grupo44.entrega.dominio.pessoa.services;
 
->>>>>>>> main:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/services/PessoaService.java
+
+
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;

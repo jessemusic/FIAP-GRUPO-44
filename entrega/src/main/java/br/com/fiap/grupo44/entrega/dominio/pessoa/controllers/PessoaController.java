@@ -1,43 +1,22 @@
-<<<<<<<< HEAD:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/controller/PessoaController.java
-package br.com.fiap.grupo44.entrega.dominio.pessoa.controller;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.controllers;
 
-
-import br.com.fiap.grupo44.entrega.adpter.apiDTO.ChamaResultDTO;
-import br.com.fiap.grupo44.entrega.adpter.apiDTO.ResultsDto;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.sevices.PessoaService;
 
-========
-package br.com.fiap.grupo44.entrega.dominio.pessoa.controllers;
-
-
-import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
-import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
-import br.com.fiap.grupo44.entrega.dominio.pessoa.services.PessoaService;
->>>>>>>> main:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/controllers/PessoaController.java
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-<<<<<<<< HEAD:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/controller/PessoaController.java
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-
-========
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
->>>>>>>> main:entrega/src/main/java/br/com/fiap/grupo44/entrega/dominio/pessoa/controllers/PessoaController.java
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping(value = "/pessoas",produces = {"application/json"})
@@ -108,7 +87,7 @@ public class PessoaController {
             @ApiResponse(responseCode = "404", description = "Person not found"),
             @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @PatchMapping("/{id}")
-    public PessoaPatchDTO updatePessoaFiedls(@PathVariable Long id, @RequestBody  Map<String, Object> fields){
+    public PessoaPatchDTO updatePessoaFiedls(@PathVariable Long id, @RequestBody Map<String, Object> fields){
         return pessoaService.updatePessoaByFields(id,fields);
     }
 
