@@ -31,7 +31,7 @@ public class PessoaService {
 
     public Page<PessoaDTO> findAll(PageRequest pagina){
         var pessoas = repo.findAll(pagina);
-        return pessoas.map(pessoa -> new PessoaDTO(pessoa));
+        return pessoas.map(PessoaDTO::new);
     }
 
     public PessoaDTO findById(Long id){
@@ -45,6 +45,12 @@ public class PessoaService {
         pessoaEntity.setSobrenome(pessoa.getSobrenome());
         pessoaEntity.setDataNascimento(pessoa.getDataNascimento());
         pessoaEntity.setSexo(pessoa.getSexo());
+        pessoaEntity.setIdade(pessoa.getIdade());
+        pessoaEntity.setEmail(pessoa.getEmail());
+        pessoaEntity.setPhone(pessoa.getPhone());
+        pessoaEntity.setCell(pessoa.getCell());
+        pessoaEntity.setFotosUrls(pessoa.getFotosUrls());
+        pessoaEntity.setNat(pessoa.getNat());
         var  pessoaSaved = repo.save(pessoaEntity);
         return new PessoaDTO(pessoaSaved);
     }
@@ -56,6 +62,12 @@ public class PessoaService {
         buscaPessoa.setSobrenome(pessoaDTO.getSobrenome());
         buscaPessoa.setDataNascimento(pessoaDTO.getDataNascimento());
         buscaPessoa.setSexo(pessoaDTO.getSexo());
+        buscaPessoa.setIdade(pessoaDTO.getIdade());
+        buscaPessoa.setEmail(pessoaDTO.getEmail());
+        buscaPessoa.setPhone(pessoaDTO.getPhone());
+        buscaPessoa.setCell(pessoaDTO.getCell());
+        buscaPessoa.setFotosUrls(pessoaDTO.getFotosUrls());
+        buscaPessoa.setNat(pessoaDTO.getNat());
         buscaPessoa = repo.save(buscaPessoa);
         return new PessoaDTO(buscaPessoa);
     }catch (EntityNotFoundException ene){
