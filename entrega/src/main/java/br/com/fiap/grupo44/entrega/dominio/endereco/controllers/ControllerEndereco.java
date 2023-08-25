@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.controller;
+package br.com.fiap.grupo44.entrega.dominio.endereco.controllers;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.grupo44.entrega.dto.EnderecoDTO;
-import br.com.fiap.grupo44.entrega.sevices.EnderecoService;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.services.EnderecoService;
 import jakarta.validation.Valid;
 
 @RestController

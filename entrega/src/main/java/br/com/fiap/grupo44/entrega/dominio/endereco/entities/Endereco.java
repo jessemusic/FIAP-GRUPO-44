@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.entities;
+package br.com.fiap.grupo44.entrega.dominio.endereco.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,8 +1,6 @@
-package br.com.fiap.grupo44.entrega.dto;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

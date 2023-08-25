@@ -1,6 +1,6 @@
-package br.com.fiap.grupo44.entrega.dto;
+package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto;
 
-import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -9,8 +9,6 @@ import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Getter
 @Setter

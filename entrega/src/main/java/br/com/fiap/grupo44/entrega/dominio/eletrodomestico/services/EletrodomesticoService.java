@@ -1,9 +1,9 @@
-package br.com.fiap.grupo44.entrega.sevices;
+package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.services;
 
-import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
-import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
-import br.com.fiap.grupo44.entrega.repositories.IEletrodomesticoRepository;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories.IEletrodomesticoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;

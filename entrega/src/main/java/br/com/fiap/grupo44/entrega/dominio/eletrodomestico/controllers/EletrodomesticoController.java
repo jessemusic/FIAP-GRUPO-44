@@ -1,7 +1,7 @@
-package br.com.fiap.grupo44.entrega.controller;
+package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.controllers;
 
-import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
-import br.com.fiap.grupo44.entrega.sevices.EletrodomesticoService;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.services.EletrodomesticoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

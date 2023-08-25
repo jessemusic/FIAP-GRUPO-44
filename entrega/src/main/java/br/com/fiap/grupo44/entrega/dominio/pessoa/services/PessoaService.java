@@ -1,10 +1,10 @@
-package br.com.fiap.grupo44.entrega.sevices;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.services;
 
-import br.com.fiap.grupo44.entrega.dto.PessoaDTO;
-import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
-import br.com.fiap.grupo44.entrega.repositories.IPessoaRepository;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.repositories.IPessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,8 +1,8 @@
-package br.com.fiap.grupo44.entrega.dto;
+package br.com.fiap.grupo44.entrega.dominio.endereco.dto;
 
 import org.hibernate.validator.constraints.Range;
 
-import br.com.fiap.grupo44.entrega.entities.Endereco;
+import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;

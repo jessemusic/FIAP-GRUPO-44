@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.sevices;
+package br.com.fiap.grupo44.entrega.dominio.endereco.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.grupo44.entrega.dto.EnderecoDTO;
-import br.com.fiap.grupo44.entrega.entities.Endereco;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
-import br.com.fiap.grupo44.entrega.repositories.IEEnderecoRepository;
+import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
 
 @Service
 public class EnderecoService {

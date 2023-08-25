@@ -1,6 +1,6 @@
-package br.com.fiap.grupo44.entrega.dto;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

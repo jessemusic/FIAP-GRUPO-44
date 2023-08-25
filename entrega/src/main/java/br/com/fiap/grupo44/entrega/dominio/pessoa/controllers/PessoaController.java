@@ -1,20 +1,16 @@
-package br.com.fiap.grupo44.entrega.controller;
+package br.com.fiap.grupo44.entrega.dominio.pessoa.controllers;
 
 
-import br.com.fiap.grupo44.entrega.dto.PessoaDTO;
-import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
-import br.com.fiap.grupo44.entrega.sevices.PessoaService;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.services.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

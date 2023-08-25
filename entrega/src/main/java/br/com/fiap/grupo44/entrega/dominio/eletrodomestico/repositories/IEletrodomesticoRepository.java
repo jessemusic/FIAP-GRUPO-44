@@ -1,10 +1,9 @@
-package br.com.fiap.grupo44.entrega.repositories;
+package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories;
 
-import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
 @Repository
 public interface IEletrodomesticoRepository  extends JpaRepository<Eletrodomestico, Long> {
 }
