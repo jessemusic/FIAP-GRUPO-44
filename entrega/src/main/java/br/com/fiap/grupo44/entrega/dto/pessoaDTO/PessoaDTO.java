@@ -1,15 +1,11 @@
 package br.com.fiap.grupo44.entrega.dto.pessoaDTO;
 
 import br.com.fiap.grupo44.entrega.entities.Pessoa;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -26,11 +22,17 @@ public class PessoaDTO {
     @NotNull(message = "Sobrenome não pode deve ser nulo")
     private String sobrenome;
 
-    private LocalDate dataNascimento;
+    private String dataNascimento;
     @NotNull(message = "Sexo não deve ser nulo")
     @NotBlank(message = "Sexo deve ser apenas um caractere")
     @Max(value = 1,message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
     private Character sexo;
+    private Integer age;
+    private String email;
+    private String phone;
+    private String cell;
+    private String fotosUrls;
+    private String nat;
 
     public PessoaDTO(Pessoa entidade){
         this.id = entidade.getId();
@@ -38,5 +40,11 @@ public class PessoaDTO {
         this.sobrenome = entidade.getSobrenome();
         this.dataNascimento = entidade.getDataNascimento();
         this.sexo = entidade.getSexo();
+        this.age = entidade.getAge();
+        this.email = entidade.getEmail();
+        this.phone = entidade.getPhone();
+        this.cell = entidade.getCell();
+        this.fotosUrls = entidade.getFotosUrls();
+        this.nat = entidade.getNat();
     }
 }

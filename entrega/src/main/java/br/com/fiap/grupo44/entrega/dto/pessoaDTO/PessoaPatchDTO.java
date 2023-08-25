@@ -17,7 +17,7 @@ public class PessoaPatchDTO {
 
     private String sobrenome;
 
-    private LocalDate dataNascimento;
+    private String dataNascimento;
     private Character sexo;
 
     public PessoaPatchDTO(Pessoa entidade){
