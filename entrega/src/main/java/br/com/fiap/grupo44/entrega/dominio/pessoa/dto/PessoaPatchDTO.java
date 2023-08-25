@@ -16,7 +16,7 @@ public class PessoaPatchDTO {
     private String sobrenome;
 
     private String dataNascimento;
-    private Character sexo;
+    private String sexo;
 
     public PessoaPatchDTO(Pessoa entidade){
         this.id = entidade.getId();

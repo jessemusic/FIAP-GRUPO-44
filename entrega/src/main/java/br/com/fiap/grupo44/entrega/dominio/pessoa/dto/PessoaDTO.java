@@ -26,8 +26,8 @@ public class PessoaDTO {
     @NotNull(message = "Sexo não deve ser nulo")
     @NotBlank(message = "Sexo deve ser apenas um caractere")
     @Max(value = 1,message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
-    private Character sexo;
-    private Integer age;
+    private String sexo;
+    private Integer idade;
     private String email;
     private String phone;
     private String cell;
@@ -40,7 +40,7 @@ public class PessoaDTO {
         this.sobrenome = entidade.getSobrenome();
         this.dataNascimento = entidade.getDataNascimento();
         this.sexo = entidade.getSexo();
-        this.age = entidade.getAge();
+        this.idade = entidade.getIdade();
         this.email = entidade.getEmail();
         this.phone = entidade.getPhone();
         this.cell = entidade.getCell();

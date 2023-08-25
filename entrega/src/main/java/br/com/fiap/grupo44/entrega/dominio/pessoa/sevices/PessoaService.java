@@ -1,5 +1,8 @@
 package br.com.fiap.grupo44.entrega.dominio.pessoa.sevices;
 
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.ChamaResultDTO;
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.ResultsDto;
+import br.com.fiap.grupo44.entrega.adpter.out.RandomUseService;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ public class PessoaService {
 
     @Autowired
     private IPessoaRepository repo;
+
+    @Autowired
+    private RandomUseService criarRandomUseService;
 
     public Page<PessoaDTO> findAll(PageRequest pagina){
         var pessoas = repo.findAll(pagina);
@@ -77,5 +84,22 @@ public class PessoaService {
         }
         return  repo.count();
     }
-}
 
+    public PessoaDTO insertAndCria() {
+        ChamaResultDTO pessoaCriada = criarRandomUseService.getRandomUser();
+        ResultsDto resultsDto = pessoaCriada.getResults().get(0);
+        Pessoa pessoaEntity = new Pessoa();
+        pessoaEntity.setNome(resultsDto.getName().getTitle() +" "+resultsDto.getName().getFirst() );
+        pessoaEntity.setSobrenome(resultsDto.getName().getLast());
+        pessoaEntity.setDataNascimento(resultsDto.getDob().getDate());
+        pessoaEntity.setIdade(resultsDto.getDob().getAge());
+        pessoaEntity.setSexo(resultsDto.getGender());
+        pessoaEntity.setEmail(resultsDto.getEmail());
+        pessoaEntity.setPhone(resultsDto.getPhone());
+        pessoaEntity.setCell(resultsDto.getCell());
+        pessoaEntity.setFotosUrls(resultsDto.getPicture().getLarge());
+        pessoaEntity.setNat(resultsDto.getNat());
+        var  pessoaSaved = repo.save(pessoaEntity);
+        return new PessoaDTO(pessoaSaved);
+    }
+}

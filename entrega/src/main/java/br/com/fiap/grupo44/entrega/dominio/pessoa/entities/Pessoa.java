@@ -18,9 +18,9 @@ public class Pessoa {
     private Long id;
     private String nome;
     private String sobrenome;
-    private Character sexo;
+    private String sexo;
     private String dataNascimento;
-    private Integer age;
+    private Integer idade;
     private String email;
     private String phone;
     private String cell;
