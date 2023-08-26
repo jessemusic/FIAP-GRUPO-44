@@ -1,10 +1,14 @@
 package br.com.fiap.grupo44.entrega.dominio.pessoa.entities;
 
 
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.Instant;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor

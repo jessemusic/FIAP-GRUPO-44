@@ -1,4 +1,5 @@
 package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.persistence.*;
 import lombok.*;
 
