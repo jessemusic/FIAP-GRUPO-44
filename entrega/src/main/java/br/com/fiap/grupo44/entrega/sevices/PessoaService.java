@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,73 +31,74 @@ public class PessoaService {
     private IEletrodomesticoRepository eletroRepository;
 
     @Transactional(readOnly = true)
-    public Page<PessoaDTO> findAll(PageRequest pagina){
+    public Page<PessoaDTO> findAll(PageRequest pagina) {
         var pessoas = repo.findAll(pagina);
-        return pessoas.map(pessoa -> new PessoaDTO(pessoa,pessoa.getEletrodomesticoSet()));
-    }
-    @Transactional(readOnly = true)
-    public PessoaDTO findById(Long id){
-        var pessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
-        return new PessoaDTO(pessoa,pessoa.getEletrodomesticoSet());
-    }
-    @Transactional
-    public PessoaDTO insert(PessoaDTO pessoa){
-        Pessoa pessoaEntity = new Pessoa();
-        mapperDtoToEntity(pessoa,pessoaEntity);
-        var  pessoaSaved = repo.save(pessoaEntity);
-        return new PessoaDTO(pessoaSaved);
+        return pessoas.map(pessoa -> new PessoaDTO(pessoa, pessoa.getEletrodomesticos()));
     }
 
-    public PessoaDTO update(Long id,PessoaDTO pessoaDTO){
-    try {
-        Pessoa buscaPessoa = repo.getOne(id);
-        mapperDtoToEntity(pessoaDTO,buscaPessoa);
-        return new PessoaDTO(buscaPessoa);
-    }catch (EntityNotFoundException ene){
-        throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
+    @Transactional(readOnly = true)
+    public PessoaDTO findById(Long id) {
+        var pessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
+        return new PessoaDTO(pessoa, pessoa.getEletrodomesticos());
     }
+
+    @Transactional
+    public PessoaDTO insert(PessoaDTO pessoa) {
+        Pessoa pessoaEntity = new Pessoa();
+        mapperDtoToEntity(pessoa, pessoaEntity);
+        var pessoaSaved = repo.save(pessoaEntity);
+        return new PessoaDTO(pessoaSaved, pessoaSaved.getEletrodomesticos());
+    }
+
+    public PessoaDTO update(Long id, PessoaDTO pessoaDTO) {
+        try {
+            Pessoa buscaPessoa = repo.getOne(id);
+            mapperDtoToEntity(pessoaDTO, buscaPessoa);
+            return new PessoaDTO(buscaPessoa, buscaPessoa.getEletrodomesticos());
+        } catch (EntityNotFoundException ene) {
+            throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
+        }
 
     }
 
     public PessoaPatchDTO updatePessoaByFields(Long id, Map<String, Object> fields) {
         Pessoa existingPessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
-            fields.forEach((key, value) -> {
-                Field field = ReflectionUtils.findField(Pessoa.class, key);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, existingPessoa, value);
-            });
-            var pessoaAtualizada = repo.save(existingPessoa);
-            return new PessoaPatchDTO(pessoaAtualizada);
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Pessoa.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, existingPessoa, value);
+        });
+        var pessoaAtualizada = repo.save(existingPessoa);
+        return new PessoaPatchDTO(pessoaAtualizada);
     }
 
     public Long deletePessoa(Long id) {
         Optional<Pessoa> existingPessoa = repo.findById(id);
         if (existingPessoa.isPresent()) {
             repo.deleteById(id);
-        }else {
-            throw  new ControllerNotFoundException("Pessoa não encontrada, impossível deletar se não existe pessoa no id: " + id);
+        } else {
+            throw new ControllerNotFoundException("Pessoa não encontrada, impossível deletar se não existe pessoa no id: " + id);
         }
-        return  repo.count();
+        return repo.count();
     }
 
-    public Pessoa retornaEntidadeCadastroEletrodomestico(Long idPessoa){
+    public Pessoa retornaEntidadeParaCadastroEletrodomestico(Long idPessoa) {
         PessoaDTO dto = findById(idPessoa);
         Pessoa entity = new Pessoa();
-        mapperDtoToEntity(dto,entity);
+        mapperDtoToEntity(dto, entity);
         return entity;
     }
 
-    private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity){
+    private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setSexo(dto.getSexo());
-        entity = repo.save(entity);
 
         if (dto.getEletrodomesticos() != null && !dto.getEletrodomesticos().isEmpty()){
             for (EletrodomesticoDTO eletroDTO: dto.getEletrodomesticos()) {
                 Eletrodomestico eletrodomestico = eletroRepository.getOne(eletroDTO.getId());
-                entity.getEletrodomesticoSet().add(eletrodomestico);
+                entity.getEletrodomesticos().add(eletrodomestico);
             }
         }
     }

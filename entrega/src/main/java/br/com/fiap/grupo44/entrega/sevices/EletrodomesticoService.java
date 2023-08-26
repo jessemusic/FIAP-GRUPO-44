@@ -1,12 +1,9 @@
 package br.com.fiap.grupo44.entrega.sevices;
 
 import br.com.fiap.grupo44.entrega.dto.EletrodomesticoDTO;
-import br.com.fiap.grupo44.entrega.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.entities.Eletrodomestico;
-import br.com.fiap.grupo44.entrega.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.repositories.IEletrodomesticoRepository;
-import br.com.fiap.grupo44.entrega.repositories.IPessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -86,7 +83,7 @@ public class EletrodomesticoService {
     }
     public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO eletrodomesticoDTO) {
 
-        Double consumoDiario = (eletrodomesticoDTO.getPotencia() * 24) / 1000;
+        Double consumoDiario = (eletrodomesticoDTO.getPotencia() * eletrodomesticoDTO.getUsoDiarioEstimado()) / 1000;
         if (consumoDiario > 0){
             eletrodomesticoDTO.setConsumoDiario(consumoDiario);
             eletrodomesticoDTO.setConsumoMensal(consumoDiario * eletrodomesticoDTO.getUsoDiasEstimados());
@@ -101,9 +98,9 @@ public class EletrodomesticoService {
         entity.setMarca(dto.getMarca());
         entity.setTensao(dto.getTensao());
         entity.setPotencia(dto.getPotencia());
+        entity.setUsoDiarioEstimado(dto.getUsoDiarioEstimado());
         entity.setUsoDiasEstimados(dto.getUsoDiasEstimados());
         entity.setConsumoDiario(dto.getConsumoDiario());
         entity.setConsumoMensal(dto.getConsumoMensal());
-        entity.setPessoa(new PessoaService().retornaEntidadeCadastroEletrodomestico(dto.getPessoaId()));
     }
 }

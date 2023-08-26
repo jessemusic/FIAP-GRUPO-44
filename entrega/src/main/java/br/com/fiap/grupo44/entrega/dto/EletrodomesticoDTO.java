@@ -62,9 +62,6 @@ public class EletrodomesticoDTO {
     @Null(message = "O valor inicial do consumo mensal deve ser nulo")
     private Double consumoMensal;
 
-    @JsonProperty
-    @NotNull(message = "É necessario referenciar o id da pessoa que possui o eletrodomestico")
-    private Long pessoaId;
 
     public EletrodomesticoDTO(Eletrodomestico entidade) {
         this.id = entidade.getId();
@@ -74,8 +71,8 @@ public class EletrodomesticoDTO {
         this.tensao = entidade.getTensao();
         this.potencia = entidade.getPotencia();
         this.usoDiasEstimados = entidade.getUsoDiasEstimados();
+        this.usoDiarioEstimado = entidade.getUsoDiarioEstimado();
         this.consumoDiario = entidade.getConsumoDiario();
         this.consumoMensal = entidade.getConsumoMensal();
-        this.pessoaId = entidade.getPessoa().getId();
     }
 }

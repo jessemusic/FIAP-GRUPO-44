@@ -25,7 +25,12 @@ public class Pessoa {
     private Character sexo;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant dataDeCriacao;
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private Set<Eletrodomestico> eletrodomesticoSet;
+    @ManyToMany
+    @JoinTable(
+            name = "tb_pessoa_eletrodomestico",
+            joinColumns = @JoinColumn(name = "pessoa_id"),
+            inverseJoinColumns = @JoinColumn(name = "eletrodomestico_id")
+    )
+    private Set<Eletrodomestico> eletrodomesticos;
 
 }

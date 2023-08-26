@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -25,9 +26,9 @@ public class Eletrodomestico {
     private double consumoDiario;
     private double consumoMensal;
     private Long usoDiasEstimados;
-    @ManyToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
+    private Long usoDiarioEstimado;
+    @ManyToMany(mappedBy = "eletrodomesticos")
+    private Set<Pessoa> pessoas;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant dataDeCriacao;
 

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -32,7 +33,7 @@ public class PessoaDTO {
     @Max(value = 1,message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
     private Character sexo;
 
-    private Set<EletrodomesticoDTO> eletrodomesticos;
+    private Set<EletrodomesticoDTO> eletrodomesticos = new HashSet<>();
 
     public PessoaDTO(Pessoa entidade){
         this.id = entidade.getId();
@@ -44,6 +45,9 @@ public class PessoaDTO {
 
     public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos) {
         this(pessoa);
-        eletrodomesticos.forEach(eletro -> this.eletrodomesticos.add(new EletrodomesticoDTO(eletro)));
+        if (eletrodomesticos != null && eletrodomesticos.size() > 0){
+            eletrodomesticos.forEach(eletro -> this.eletrodomesticos.add(new EletrodomesticoDTO(eletro)));
+        }
+
     }
 }
