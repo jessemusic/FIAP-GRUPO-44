@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -30,14 +32,14 @@ public class Pessoa {
     private String cell;
     private String fotosUrls;
     private String nat;
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @CreationTimestamp
     private Instant dataDeCriacao;
     @ManyToMany
-    @JoinTable(
-            name = "tb_pessoa_eletrodomestico",
-            joinColumns = @JoinColumn(name = "pessoa_id"),
-            inverseJoinColumns = @JoinColumn(name = "eletrodomestico_id")
-    )
-    private Set<Eletrodomestico> eletrodomesticos;
+        @JoinTable(
+                name = "tb_pessoa_eletrodomestico",
+                joinColumns = @JoinColumn(name = "pessoa_id"),
+                inverseJoinColumns = @JoinColumn(name = "eletrodomestico_id")
+        )
+    private Set<Eletrodomestico> eletrodomesticos = new HashSet<>();
 
 }

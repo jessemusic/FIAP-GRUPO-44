@@ -32,10 +32,21 @@ public class EletrodomesticoController {
     @GetMapping
     public ResponseEntity<Page<EletrodomesticoDTO>> findAll(
             @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
-            @RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho
+            @RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String marca,
+            @RequestParam(required = false) Double potencia,
+            @RequestParam(required = false) String tensao,
+            @RequestParam(required = false) Long categoria
     ) {
         PageRequest pageRequest = PageRequest.of(pagina, tamanho);
-        var eletrodomesticos = eletrodomesticoService.findAll(pageRequest);
+        EletrodomesticoDTO filtro = new EletrodomesticoDTO();
+        filtro.setNome(nome);
+        filtro.setMarca(marca);
+        filtro.setPotencia(potencia);
+        filtro.setTensao(tensao);
+        filtro.setIdPatchCategoria(categoria);
+        var eletrodomesticos = eletrodomesticoService.findAll(filtro,pageRequest);
         return ResponseEntity.ok(eletrodomesticos);
     }
     @Operation(summary = "Consulta eletrodomestico por id",method = "GET")
@@ -83,7 +94,7 @@ public class EletrodomesticoController {
         var eletrodomesticoUpdated = eletrodomesticoService.update(id, eletroDomesticoDTO);
         return  ResponseEntity.ok(eletrodomesticoUpdated);
     }
-    @Operation(summary = "Atualização de eletrodomestico por campo",method = "PATCH")
+    @Operation(summary = "Atualizaï¿½ï¿½o de eletrodomestico por campo",method = "PATCH")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the book"),
             @ApiResponse(responseCode = "400", description = "Bad request"),

@@ -5,7 +5,9 @@ import br.com.fiap.grupo44.entrega.adpter.apiDTO.ResultsDto;
 import br.com.fiap.grupo44.entrega.adpter.out.RandomUseService;
 
 
-
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories.IEletrodomesticoRepository;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
@@ -31,6 +33,9 @@ public class PessoaService {
     private IPessoaRepository repo;
 
     @Autowired
+    private IEletrodomesticoRepository repoEletro;
+
+    @Autowired
     private RandomUseService criarRandomUseService;
 
     public Page<PessoaDTO> findAll(PageRequest pagina){
@@ -45,40 +50,22 @@ public class PessoaService {
     }
 
     @Transactional
-    public PessoaDTO insert(PessoaDTO pessoa) {
-        Pessoa pessoaEntity = new Pessoa();
-        pessoaEntity.setNome(pessoa.getNome());
-        pessoaEntity.setSobrenome(pessoa.getSobrenome());
-        pessoaEntity.setDataNascimento(pessoa.getDataNascimento());
-        pessoaEntity.setSexo(pessoa.getSexo());
-        pessoaEntity.setIdade(pessoa.getIdade());
-        pessoaEntity.setEmail(pessoa.getEmail());
-        pessoaEntity.setPhone(pessoa.getPhone());
-        pessoaEntity.setCell(pessoa.getCell());
-        pessoaEntity.setFotosUrls(pessoa.getFotosUrls());
-        pessoaEntity.setNat(pessoa.getNat());
-        var  pessoaSaved = repo.save(pessoaEntity);
-        return new PessoaDTO(pessoaSaved);
+    public PessoaDTO insert(PessoaDTO dto) {
+        Pessoa entity = new Pessoa();
+        mapperDtoToEntity(dto,entity);
+        var  pessoaSaved = repo.save(entity);
+        return new PessoaDTO(pessoaSaved,pessoaSaved.getEletrodomesticos());
     }
 
-    public PessoaDTO update(Long id,PessoaDTO pessoaDTO){
-    try {
-        Pessoa buscaPessoa = repo.getOne(id);
-        buscaPessoa.setNome(pessoaDTO.getNome());
-        buscaPessoa.setSobrenome(pessoaDTO.getSobrenome());
-        buscaPessoa.setDataNascimento(pessoaDTO.getDataNascimento());
-        buscaPessoa.setSexo(pessoaDTO.getSexo());
-        buscaPessoa.setIdade(pessoaDTO.getIdade());
-        buscaPessoa.setEmail(pessoaDTO.getEmail());
-        buscaPessoa.setPhone(pessoaDTO.getPhone());
-        buscaPessoa.setCell(pessoaDTO.getCell());
-        buscaPessoa.setFotosUrls(pessoaDTO.getFotosUrls());
-        buscaPessoa.setNat(pessoaDTO.getNat());
-        buscaPessoa = repo.save(buscaPessoa);
-        return new PessoaDTO(buscaPessoa);
-    }catch (EntityNotFoundException ene){
-        throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
-    }
+    public PessoaDTO update(Long id,PessoaDTO dto){
+        try {
+            Pessoa entity = repo.getOne(id);
+            mapperDtoToEntity(dto,entity);
+            entity = repo.save(entity);
+            return new PessoaDTO(entity);
+        }catch (EntityNotFoundException ene){
+            throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
+        }
 
     }
 
@@ -106,18 +93,36 @@ public class PessoaService {
     public PessoaDTO insertAndCria() {
         ChamaResultDTO pessoaCriada = criarRandomUseService.getRandomUser();
         ResultsDto resultsDto = pessoaCriada.getResults().get(0);
-        Pessoa pessoaEntity = new Pessoa();
-        pessoaEntity.setNome(resultsDto.getName().getTitle() +" "+resultsDto.getName().getFirst() );
-        pessoaEntity.setSobrenome(resultsDto.getName().getLast());
-        pessoaEntity.setDataNascimento(resultsDto.getDob().getDate());
-        pessoaEntity.setIdade(resultsDto.getDob().getAge());
-        pessoaEntity.setSexo(resultsDto.getGender());
-        pessoaEntity.setEmail(resultsDto.getEmail());
-        pessoaEntity.setPhone(resultsDto.getPhone());
-        pessoaEntity.setCell(resultsDto.getCell());
-        pessoaEntity.setFotosUrls(resultsDto.getPicture().getLarge());
-        pessoaEntity.setNat(resultsDto.getNat());
-        var  pessoaSaved = repo.save(pessoaEntity);
+        Pessoa entity = new Pessoa();
+        entity.setNome(resultsDto.getName().getTitle() +" "+resultsDto.getName().getFirst() );
+        entity.setSobrenome(resultsDto.getName().getLast());
+        entity.setDataNascimento(resultsDto.getDob().getDate());
+        entity.setIdade(resultsDto.getDob().getAge());
+        entity.setSexo(resultsDto.getGender());
+        entity.setEmail(resultsDto.getEmail());
+        entity.setPhone(resultsDto.getPhone());
+        entity.setCell(resultsDto.getCell());
+        entity.setFotosUrls(resultsDto.getPicture().getLarge());
+        entity.setNat(resultsDto.getNat());
+        var  pessoaSaved = repo.save(entity);
         return new PessoaDTO(pessoaSaved);
+    }
+
+    private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
+        entity.setNome(dto.getNome());
+        entity.setSobrenome(dto.getSobrenome());
+        entity.setDataNascimento(dto.getDataNascimento());
+        entity.setSexo(dto.getSexo());
+        entity.setIdade(dto.getIdade());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
+        entity.setCell(dto.getCell());
+        entity.setFotosUrls(dto.getFotosUrls());
+        entity.setNat(dto.getNat());
+
+        for (EletrodomesticoDTO eletrodomesticoDTO: dto.getEletrodomesticos()) {
+            Eletrodomestico eletrodomestico = repoEletro.getOne(eletrodomesticoDTO.getId());
+            entity.getEletrodomesticos().add(eletrodomestico);
+        }
     }
 }

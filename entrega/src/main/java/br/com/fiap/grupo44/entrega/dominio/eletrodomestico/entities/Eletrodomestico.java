@@ -2,6 +2,7 @@ package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.Set;
@@ -28,9 +29,10 @@ public class Eletrodomestico {
     private double consumoMensal;
     private Long usoDiasEstimados;
     private Long usoDiarioEstimado;
+    private Long idPatchCategoria;
     @ManyToMany(mappedBy = "eletrodomesticos")
     private Set<Pessoa> pessoas;
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @CreationTimestamp
     private Instant dataDeCriacao;
 
 }

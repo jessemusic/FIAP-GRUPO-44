@@ -10,13 +10,13 @@ import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,8 +25,35 @@ public class EletrodomesticoService {
     @Autowired
     private IEletrodomesticoRepository repository;
 
-    public Page<EletrodomesticoDTO> findAll(PageRequest pagina) {
-        var eletrodomesticos = repository.findAll(pagina);
+    public Page<EletrodomesticoDTO> findAll(EletrodomesticoDTO filtro, PageRequest pagina) {
+
+        Specification<Eletrodomestico> specification = Specification.where(null);
+        if (!StringUtils.isEmpty(filtro.getNome())) {
+            specification = specification.and((root, query, builder) ->
+                    builder.like(builder.lower(root.get("nome")), "%" + filtro.getNome().toLowerCase() + "%"));
+        }
+
+        if (!StringUtils.isEmpty(filtro.getMarca())) {
+            specification = specification.and((root, query, builder) ->
+                    builder.like(builder.lower(root.get("marca")), "%" + filtro.getMarca().toLowerCase() + "%"));
+        }
+
+        if (filtro.getPotencia() != null) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("potencia"), filtro.getPotencia()));
+        }
+
+        if (!StringUtils.isEmpty(filtro.getTensao())) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("tensao"), filtro.getTensao()));
+        }
+
+        if (filtro.getIdPatchCategoria() != null) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("idPatchCategoria"), filtro.getIdPatchCategoria()));
+        }
+
+        var eletrodomesticos = repository.findAll(specification,pagina);
         return eletrodomesticos.map(eletrodomestico -> new EletrodomesticoDTO(eletrodomestico));
     }
 
@@ -35,17 +62,17 @@ public class EletrodomesticoService {
         return new EletrodomesticoDTO(eletrodomestico);
     }
 
-    public EletrodomesticoDTO save(EletrodomesticoDTO eletroDomesticoDTO) {
+    public EletrodomesticoDTO save(EletrodomesticoDTO dto) {
         Eletrodomestico entity = new Eletrodomestico();
-        mapperDtoToEntity(eletroDomesticoDTO,entity);
+        mapperDtoToEntity(dto,entity);
         var eletroSaved = repository.save(entity);
         return new EletrodomesticoDTO(eletroSaved);
     }
 
-    public EletrodomesticoDTO update(Long id, EletrodomesticoDTO eletroDomesticoDTO) {
+    public EletrodomesticoDTO update(Long id, EletrodomesticoDTO dto) {
         try {
             Eletrodomestico buscaEletrodomestico = repository.getOne(id);
-            mapperDtoToEntity(eletroDomesticoDTO,buscaEletrodomestico);
+            mapperDtoToEntity(dto,buscaEletrodomestico);
             buscaEletrodomestico = repository.save(buscaEletrodomestico);
 
             return new EletrodomesticoDTO(buscaEletrodomestico);
@@ -74,22 +101,22 @@ public class EletrodomesticoService {
 
     }
 
-    public List<String> validate(EletrodomesticoDTO eletrodomesticoDTO){
-        Set<ConstraintViolation<EletrodomesticoDTO>> violacoes = Validation.buildDefaultValidatorFactory().getValidator().validate(eletrodomesticoDTO);
+    public List<String> validate(EletrodomesticoDTO dto){
+        Set<ConstraintViolation<EletrodomesticoDTO>> violacoes = Validation.buildDefaultValidatorFactory().getValidator().validate(dto);
         List<String> violacoesToList = violacoes.stream()
                 .map((violacao) -> violacao.getPropertyPath() + ":" + violacao.getMessage())
                 .collect(Collectors.toList());
         return violacoesToList;
     }
-    public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO eletrodomesticoDTO) {
+    public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO dto) {
 
-        Double consumoDiario = (eletrodomesticoDTO.getPotencia() * eletrodomesticoDTO.getUsoDiarioEstimado()) / 1000;
+        Double consumoDiario = (dto.getPotencia() * dto.getUsoDiarioEstimado()) / 1000;
         if (consumoDiario > 0){
-            eletrodomesticoDTO.setConsumoDiario(consumoDiario);
-            eletrodomesticoDTO.setConsumoMensal(consumoDiario * eletrodomesticoDTO.getUsoDiasEstimados());
+            dto.setConsumoDiario(consumoDiario);
+            dto.setConsumoMensal(consumoDiario * dto.getUsoDiasEstimados());
 
         }
-        return eletrodomesticoDTO;
+        return dto;
     }
 
     private void  mapperDtoToEntity(EletrodomesticoDTO dto, Eletrodomestico entity) {
@@ -102,5 +129,25 @@ public class EletrodomesticoService {
         entity.setUsoDiasEstimados(dto.getUsoDiasEstimados());
         entity.setConsumoDiario(dto.getConsumoDiario());
         entity.setConsumoMensal(dto.getConsumoMensal());
+        entity.setIdPatchCategoria(dto.getIdPatchCategoria());
+    }
+
+    public Map<Long, EletrodomesticoDTO> selecionarUmDeCadaCategoriaAleatoriamente() {
+        Set<Eletrodomestico> eletrodomesticos = new HashSet<>(repository.findAll());
+        Map<Long, Set<Eletrodomestico>> eletrodomesticosPorCategoria = eletrodomesticos.stream()
+                .collect(Collectors.groupingBy(Eletrodomestico::getIdPatchCategoria, Collectors.toSet()));
+
+        Random random = new Random();
+        return eletrodomesticosPorCategoria.entrySet().stream()
+                .filter(entry -> !entry.getValue().isEmpty())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> {
+                            Set<Eletrodomestico> eletrodomesticosCategoria = entry.getValue();
+                            Eletrodomestico[] arrayEletrodomesticos = eletrodomesticosCategoria.toArray(new Eletrodomestico[0]);
+                            int indexAleatorio = random.nextInt(arrayEletrodomesticos.length);
+                            return new EletrodomesticoDTO(arrayEletrodomesticos[indexAleatorio]);
+                        }
+                ));
     }
 }

@@ -58,7 +58,7 @@ public class PessoaDTO {
     public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos) {
         this(pessoa);
         if (eletrodomesticos != null && eletrodomesticos.size() > 0){
-            eletrodomesticos.forEach(eletro -> this.eletrodomesticos.add(new EletrodomesticoDTO(eletro)));
+            eletrodomesticos.forEach(eletrodomestico -> this.eletrodomesticos.add(new EletrodomesticoDTO(eletrodomestico)));
         }
 
     }

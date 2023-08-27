@@ -8,11 +8,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EletrodomesticoDTO {
     @JsonProperty
     private Long id;
@@ -60,6 +62,8 @@ public class EletrodomesticoDTO {
     @Null(message = "O valor inicial do consumo mensal deve ser nulo")
     private Double consumoMensal;
 
+    @JsonProperty
+    private Long idPatchCategoria;
 
     public EletrodomesticoDTO(Eletrodomestico entidade) {
         this.id = entidade.getId();
@@ -72,5 +76,6 @@ public class EletrodomesticoDTO {
         this.usoDiarioEstimado = entidade.getUsoDiarioEstimado();
         this.consumoDiario = entidade.getConsumoDiario();
         this.consumoMensal = entidade.getConsumoMensal();
+        this.idPatchCategoria = entidade.getIdPatchCategoria();
     }
 }
