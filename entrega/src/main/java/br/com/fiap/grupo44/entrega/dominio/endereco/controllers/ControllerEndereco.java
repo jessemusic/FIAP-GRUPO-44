@@ -26,8 +26,9 @@ public class ControllerEndereco {
 	private EnderecoService enderecoService;
 	 
 	@PostMapping("/salvar")
-	public ResponseEntity<EnderecoDTO> salvar(@Valid @RequestBody EnderecoDTO enderecoDTO) {
-		enderecoDTO = this.enderecoService.salvar(enderecoDTO);
+	public ResponseEntity<EnderecoDTO> salvar(@Valid @RequestBody EnderecoDTO enderecoDTO,@RequestParam(required = false) String cep) {
+		
+		enderecoDTO = this.enderecoService.salvar(enderecoDTO,cep);
 		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoDTO); 
 	}
 	

@@ -6,20 +6,39 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoViaCepDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
 
 @Service
 public class EnderecoService {
-
+ 
 	@Autowired
 	private IEEnderecoRepository enderecoRepository;
+	private RestTemplate restTemplate=new RestTemplate();
 
-	public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
+
+	public EnderecoDTO salvar(EnderecoDTO enderecoDTO,String cep) {
+		
+		if(cep!=null) {
+			EnderecoViaCepDTO enderecoViaCepDTO = this.restTemplate.getForEntity("https://viacep.com.br/ws/"+cep+"/json/", EnderecoViaCepDTO.class).getBody();
+			
+			if(!enderecoDTO.getEstado().equals(enderecoViaCepDTO.getUf())) 
+				throw new ControllerNotFoundException("O estado informado não é válido.");	
+			if(!enderecoDTO.getCidade().equals(enderecoViaCepDTO.getLocalidade())) 
+				throw new ControllerNotFoundException("A cidade informada não é válida.");				
+			if(!enderecoDTO.getBairro().equals(enderecoViaCepDTO.getBairro())) 
+				throw new ControllerNotFoundException("O Bairro informado não é válido.");
+			
+			System.err.println(enderecoViaCepDTO);			
+		}
+		
 		Endereco endereco = this.enderecoRepository.save(enderecoDTO.getEndereco(enderecoDTO));
+		
 		return new EnderecoDTO(endereco);
 	}
 	
