@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.EnderecoResultViaCepDTO;
-import br.com.fiap.grupo44.entrega.adpter.in.ServicoViaSepValidator;
+import br.com.fiap.grupo44.entrega.adpter.out.ServicoViaSepValidator;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;

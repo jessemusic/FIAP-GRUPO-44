@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.adpter.in;
+package br.com.fiap.grupo44.entrega.adpter.out;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
