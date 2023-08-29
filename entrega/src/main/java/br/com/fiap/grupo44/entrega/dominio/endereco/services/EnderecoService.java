@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.EnderecoResultViaCepDTO;
 import br.com.fiap.grupo44.entrega.adpter.in.ServicoViaSepValidator;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
@@ -22,9 +24,10 @@ public class EnderecoService {
 	private ServicoViaSepValidator servicoViaSepValidator;
 
 
-	public EnderecoDTO salvar(EnderecoDTO enderecoDTO,String cep) {
-		this.servicoViaSepValidator.validarEndereco(enderecoDTO, cep);
-		Endereco endereco = this.enderecoRepository.save(enderecoDTO.getEndereco(enderecoDTO));
+	public EnderecoDTO salvar(CepDTO cepDTO) {
+		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
+		
+		Endereco endereco = this.enderecoRepository.save(enderecoResultViaCepDTO.getEndereco());
 		return new EnderecoDTO(endereco);
 	}
 	

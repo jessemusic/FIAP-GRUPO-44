@@ -1,11 +1,12 @@
 package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
+import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class EnderecoViaCepDTO {
+public class EnderecoResultViaCepDTO {
 	private String cep;
 	private String logradouro;
 	private String complemento;
@@ -16,6 +17,19 @@ public class EnderecoViaCepDTO {
 	private Integer gia;
 	private Integer ddd;
 	private Integer siafi;
+	
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		endereco.setBairro(bairro);
+		endereco.setCidade(localidade);
+		endereco.setEstado(uf);
+		endereco.setNumero(ibge);
+		endereco.setRua(logradouro);
+		return endereco;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "EnderecoViaCep [cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento
