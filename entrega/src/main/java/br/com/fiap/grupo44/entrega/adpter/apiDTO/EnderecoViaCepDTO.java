@@ -1,4 +1,4 @@
-package br.com.fiap.grupo44.entrega.dominio.endereco.dto;
+package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
 import lombok.Getter;
 import lombok.Setter;
