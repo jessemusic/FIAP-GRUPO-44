@@ -7,19 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.EnderecoResultViaCepDTO;
+import br.com.fiap.grupo44.entrega.adpter.out.ServicoViaSepValidator;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
-import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
+import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 
 @Service
 public class EnderecoService {
-
+ 
 	@Autowired
 	private IEEnderecoRepository enderecoRepository;
+	@Autowired
+	private ServicoViaSepValidator servicoViaSepValidator;
 
-	public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
-		Endereco endereco = this.enderecoRepository.save(enderecoDTO.getEndereco(enderecoDTO));
+
+	public EnderecoDTO salvar(CepDTO cepDTO) {
+		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
+		
+		Endereco endereco = this.enderecoRepository.save(enderecoResultViaCepDTO.getEndereco());
 		return new EnderecoDTO(endereco);
 	}
 	

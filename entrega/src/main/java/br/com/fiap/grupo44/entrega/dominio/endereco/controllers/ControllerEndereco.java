@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.services.EnderecoService;
 import jakarta.validation.Valid;
@@ -26,8 +27,8 @@ public class ControllerEndereco {
 	private EnderecoService enderecoService;
 	 
 	@PostMapping("/salvar")
-	public ResponseEntity<EnderecoDTO> salvar(@Valid @RequestBody EnderecoDTO enderecoDTO) {
-		enderecoDTO = this.enderecoService.salvar(enderecoDTO);
+	public ResponseEntity<EnderecoDTO> salvar(@Valid @RequestBody CepDTO cepDTO) {
+		EnderecoDTO enderecoDTO = this.enderecoService.salvar(cepDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoDTO); 
 	}
 	
