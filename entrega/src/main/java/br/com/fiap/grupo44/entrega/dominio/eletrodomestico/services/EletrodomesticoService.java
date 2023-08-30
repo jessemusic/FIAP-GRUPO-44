@@ -132,22 +132,29 @@ public class EletrodomesticoService {
         entity.setIdPatchCategoria(dto.getIdPatchCategoria());
     }
 
-    public Map<Long, EletrodomesticoDTO> selecionarUmDeCadaCategoriaAleatoriamente() {
+    public Set<EletrodomesticoDTO> selecionarEletrodomesticosAleatoriamente() {
         Set<Eletrodomestico> eletrodomesticos = new HashSet<>(repository.findAll());
         Map<Long, Set<Eletrodomestico>> eletrodomesticosPorCategoria = eletrodomesticos.stream()
                 .collect(Collectors.groupingBy(Eletrodomestico::getIdPatchCategoria, Collectors.toSet()));
 
         Random random = new Random();
-        return eletrodomesticosPorCategoria.entrySet().stream()
-                .filter(entry -> !entry.getValue().isEmpty())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> {
-                            Set<Eletrodomestico> eletrodomesticosCategoria = entry.getValue();
-                            Eletrodomestico[] arrayEletrodomesticos = eletrodomesticosCategoria.toArray(new Eletrodomestico[0]);
-                            int indexAleatorio = random.nextInt(arrayEletrodomesticos.length);
-                            return new EletrodomesticoDTO(arrayEletrodomesticos[indexAleatorio]);
-                        }
-                ));
+        List<EletrodomesticoDTO> eletrodomesticosSelecionados = new ArrayList<>();
+
+        eletrodomesticosPorCategoria.values().forEach(eletrodomesticosCategoria -> {
+            List<Eletrodomestico> eletrodomesticosCategoriaLista = new ArrayList<>(eletrodomesticosCategoria);
+            if (!eletrodomesticosCategoriaLista.isEmpty()) {
+                Collections.shuffle(eletrodomesticosCategoriaLista);
+                Eletrodomestico eletrodomesticoAleatorio = eletrodomesticosCategoriaLista.get(random.nextInt(eletrodomesticosCategoriaLista.size()));
+                eletrodomesticosSelecionados.add(new EletrodomesticoDTO(eletrodomesticoAleatorio));
+            }
+        });
+
+        int quantidadeTotal = Math.min(random.nextInt(12) + 1, eletrodomesticosSelecionados.size());
+        return eletrodomesticosSelecionados.stream()
+                .limit(quantidadeTotal)
+                .collect(Collectors.toSet());
     }
+
+
+
 }

@@ -23,6 +23,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -62,6 +63,7 @@ public class PessoaService {
             Pessoa entity = repo.getOne(id);
             mapperDtoToEntity(dto,entity);
             entity = repo.save(entity);
+
             return new PessoaDTO(entity);
         }catch (EntityNotFoundException ene){
             throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
@@ -93,18 +95,18 @@ public class PessoaService {
     public PessoaDTO insertAndCria() {
         ChamaResultDTO pessoaCriada = criarRandomUseService.getRandomUser();
         ResultsDto resultsDto = pessoaCriada.getResults().get(0);
-        Pessoa entity = new Pessoa();
-        entity.setNome(resultsDto.getName().getTitle() +" "+resultsDto.getName().getFirst() );
-        entity.setSobrenome(resultsDto.getName().getLast());
-        entity.setDataNascimento(resultsDto.getDob().getDate());
-        entity.setIdade(resultsDto.getDob().getAge());
-        entity.setSexo(resultsDto.getGender());
-        entity.setEmail(resultsDto.getEmail());
-        entity.setPhone(resultsDto.getPhone());
-        entity.setCell(resultsDto.getCell());
-        entity.setFotosUrls(resultsDto.getPicture().getLarge());
-        entity.setNat(resultsDto.getNat());
-        var  pessoaSaved = repo.save(entity);
+        Pessoa pessoaEntity = new Pessoa();
+        pessoaEntity.setNome(resultsDto.getName().getTitle() +" "+resultsDto.getName().getFirst() );
+        pessoaEntity.setSobrenome(resultsDto.getName().getLast());
+        pessoaEntity.setDataNascimento(resultsDto.getDob().getDate());
+        pessoaEntity.setIdade(resultsDto.getDob().getAge());
+        pessoaEntity.setSexo(resultsDto.getGender());
+        pessoaEntity.setEmail(resultsDto.getEmail());
+        pessoaEntity.setPhone(resultsDto.getPhone());
+        pessoaEntity.setCell(resultsDto.getCell());
+        pessoaEntity.setFotosUrls(resultsDto.getPicture().getLarge());
+        pessoaEntity.setNat(resultsDto.getNat());
+        var  pessoaSaved = repo.save(pessoaEntity);
         return new PessoaDTO(pessoaSaved);
     }
 
