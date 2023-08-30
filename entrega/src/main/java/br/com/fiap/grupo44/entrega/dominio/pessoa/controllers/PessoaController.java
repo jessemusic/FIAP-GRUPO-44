@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/pessoas",produces = {"application/json"})
-@Tag(name = "open-apí")
+//@Tag(name = "open-apí")
 public class PessoaController {
 
     private PessoaService pessoaService;
