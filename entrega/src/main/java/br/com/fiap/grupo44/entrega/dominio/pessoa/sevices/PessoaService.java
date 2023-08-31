@@ -58,6 +58,7 @@ public class PessoaService {
         return new PessoaDTO(pessoaSaved,pessoaSaved.getEletrodomesticos());
     }
 
+    @Transactional
     public PessoaDTO update(Long id,PessoaDTO dto){
         try {
             Pessoa entity = repo.getOne(id);
@@ -110,6 +111,7 @@ public class PessoaService {
         return new PessoaDTO(pessoaSaved);
     }
 
+    @Transactional(readOnly = true)
     private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
