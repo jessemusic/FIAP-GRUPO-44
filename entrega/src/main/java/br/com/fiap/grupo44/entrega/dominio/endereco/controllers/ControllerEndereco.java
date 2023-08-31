@@ -1,7 +1,5 @@
 package br.com.fiap.grupo44.entrega.dominio.endereco.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.RestDataReturnDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.services.EnderecoService;
 import jakarta.validation.Valid;
 
@@ -45,7 +44,7 @@ public class ControllerEndereco {
 	
 	
 	@GetMapping("/buscar-todos")
-	public List<EnderecoDTO> getAll(@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,@RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho) {
+	public RestDataReturnDTO getAll(@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,@RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho) {
 		PageRequest pageRequest = PageRequest.of(pagina,tamanho);
 		return this.enderecoService.findAll(pageRequest);
 	}

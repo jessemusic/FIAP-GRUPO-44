@@ -1,6 +1,5 @@
 package br.com.fiap.grupo44.entrega.dominio.endereco.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import br.com.fiap.grupo44.entrega.adpter.apiDTO.CepDTO;
 import br.com.fiap.grupo44.entrega.adpter.apiDTO.EnderecoResultViaCepDTO;
 import br.com.fiap.grupo44.entrega.adpter.out.ServicoViaSepValidator;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.Paginator;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.RestDataReturnDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
@@ -27,8 +28,16 @@ public class EnderecoService {
 	public EnderecoDTO salvar(CepDTO cepDTO) {
 		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
 		
-		Endereco endereco = this.enderecoRepository.save(enderecoResultViaCepDTO.getEndereco());
-		return new EnderecoDTO(endereco);
+		Endereco OEndereco = this.enderecoRepository.BUSCAR_ENDERECO_POR_CEP(cepDTO.getCep());
+	    if(OEndereco==null) {
+	    	Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
+	    	OEndereco=this.enderecoRepository.save(enderecoEntity);			    	
+	    }else {
+	    	
+	    	this.enderecoRepository.SALVAR_ENDERECO(cepDTO.getCep(), cepDTO.getPessoa().getId());
+	    }
+
+		return new EnderecoDTO(OEndereco); 
 	}
 	
 	public EnderecoDTO findById(Long id) {
@@ -36,10 +45,10 @@ public class EnderecoService {
 		return new EnderecoDTO(endereco);
 	}
 
-	public List<EnderecoDTO> findAll(PageRequest pageRequest){
-        var enderecos = enderecoRepository.findAll(pageRequest);
-        if(!enderecos.isEmpty()) {
-        	return enderecos.getContent().stream().map(endereco -> new EnderecoDTO(endereco)).toList();        	
+	public RestDataReturnDTO findAll(PageRequest pageRequest){
+        var enderecos = enderecoRepository.findAll(pageRequest);        
+        if(!enderecos.isEmpty()) {    
+        	return new RestDataReturnDTO(enderecos.getContent(), new Paginator(enderecos.getNumber(), enderecos.getTotalElements(), enderecos.getTotalPages()));
         }
         throw new ControllerNotFoundException("Nenhum Endereço para listar na pagina especificada.");
     }

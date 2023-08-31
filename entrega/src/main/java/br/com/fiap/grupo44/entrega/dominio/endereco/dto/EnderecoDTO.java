@@ -1,8 +1,11 @@
 package br.com.fiap.grupo44.entrega.dominio.endereco.dto;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Range;
 
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,23 +25,27 @@ public class EnderecoDTO {
 	private String cidade;
 	@NotBlank(message = "Ocampo Estado é obrigatório seu preenchimento.")
 	private String estado;
+	private String cep;
+	private List<Pessoa> pessoas;
 	
 	public EnderecoDTO() {
 		
 	}
 	
 	public EnderecoDTO(Endereco endereco) {
-		this.id     = endereco.getId();
+		//this.id     = endereco.getId();
 		this.rua    = endereco.getRua();
 		this.numero = endereco.getNumero();
 		this.bairro = endereco.getBairro();
 		this.cidade = endereco.getCidade();
 		this.estado = endereco.getEstado();
+		this.cep    = endereco.getCep();
+		this.pessoas= endereco.getPessoas();
 	}
 	
 	public Endereco getEndereco(EnderecoDTO enderecoDTO) {
 		Endereco endereco=new Endereco();
-		endereco.setId(enderecoDTO.getId());
+		//endereco.setId(enderecoDTO.getId());
 		endereco.setBairro(enderecoDTO.getBairro());
 		endereco.setCidade(enderecoDTO.getCidade());
 		endereco.setEstado(enderecoDTO.getEstado());
