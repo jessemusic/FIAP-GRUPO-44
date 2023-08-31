@@ -64,7 +64,7 @@ public class PessoaService {
             mapperDtoToEntity(dto,entity);
             entity = repo.save(entity);
 
-            return new PessoaDTO(entity);
+            return new PessoaDTO(entity,entity.getEletrodomesticos());
         }catch (EntityNotFoundException ene){
             throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
         }
@@ -122,6 +122,7 @@ public class PessoaService {
         entity.setFotosUrls(dto.getFotosUrls());
         entity.setNat(dto.getNat());
 
+        entity.getEletrodomesticos().clear();
         for (EletrodomesticoDTO eletrodomesticoDTO: dto.getEletrodomesticos()) {
             Eletrodomestico eletrodomestico = repoEletro.getOne(eletrodomesticoDTO.getId());
             entity.getEletrodomesticos().add(eletrodomestico);

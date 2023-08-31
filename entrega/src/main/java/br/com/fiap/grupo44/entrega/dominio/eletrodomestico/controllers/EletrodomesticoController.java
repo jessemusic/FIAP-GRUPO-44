@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/eletrodomesticos")
@@ -62,6 +63,16 @@ public class EletrodomesticoController {
         var eletrodomestico = eletrodomesticoService.findById(id);
         return ResponseEntity.ok(eletrodomestico);
     }
+
+    @GetMapping("/aleatorios")
+    public ResponseEntity<Set<EletrodomesticoDTO>> getEletrodomesticosAleatorios() {
+        Set<EletrodomesticoDTO> eletrodomesticos = eletrodomesticoService.selecionarEletrodomesticosAleatoriamente();
+        if (eletrodomesticos.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Status 204 No Content
+        }
+        return ResponseEntity.ok(eletrodomesticos); // Status 200 OK
+    }
+
     @Operation(summary = "Insere eletrodomestico",method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the book"),
