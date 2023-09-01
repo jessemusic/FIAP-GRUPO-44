@@ -112,7 +112,7 @@ public class PessoaService {
     }
 
     @Transactional(readOnly = true)
-    private void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
+    public void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setDataNascimento(dto.getDataNascimento());

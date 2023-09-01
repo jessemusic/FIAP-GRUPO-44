@@ -109,11 +109,14 @@ public class EletrodomesticoService {
         return violacoesToList;
     }
     public EletrodomesticoDTO calcularConsumoMedio(EletrodomesticoDTO dto) {
-
-        Double consumoDiario = (dto.getPotencia() * dto.getUsoDiarioEstimado()) / 1000;
+        //Calculo baseado em minutos
+        double tarifa = 0.9;
+        Double consumoDiario = (dto.getPotencia() * (dto.getUsoDiarioEstimado() / 60)) / 1000;
         if (consumoDiario > 0){
             dto.setConsumoDiario(consumoDiario);
             dto.setConsumoMensal(consumoDiario * dto.getUsoDiasEstimados());
+            dto.setCustoDiario(dto.getConsumoDiario() * tarifa);
+            dto.setConsumoMensal(dto.getConsumoDiario() * dto.getUsoDiasEstimados());
 
         }
         return dto;
@@ -129,6 +132,8 @@ public class EletrodomesticoService {
         entity.setUsoDiasEstimados(dto.getUsoDiasEstimados());
         entity.setConsumoDiario(dto.getConsumoDiario());
         entity.setConsumoMensal(dto.getConsumoMensal());
+        entity.setCustoDiario(dto.getCustoDiario());
+        entity.setCustoMensal(dto.getCustoMensal());
         entity.setIdPatchCategoria(dto.getIdPatchCategoria());
     }
 

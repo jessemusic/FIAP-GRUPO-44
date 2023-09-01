@@ -28,6 +28,8 @@ public class Eletrodomestico {
     private double potencia;
     private double consumoDiario;
     private double consumoMensal;
+    private double custoDiario;
+    private double custoMensal;
     private Long usoDiasEstimados;
     private Long usoDiarioEstimado;
     private Long idPatchCategoria;
