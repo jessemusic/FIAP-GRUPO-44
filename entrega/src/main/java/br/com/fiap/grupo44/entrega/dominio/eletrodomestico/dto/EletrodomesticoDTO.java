@@ -2,10 +2,7 @@ package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto;
 
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,12 +45,12 @@ public class EletrodomesticoDTO {
     @JsonProperty
     @NotNull(message = "É necessario inserir o numero de dias de uso estimados")
     @Min(value = 1, message = "É necessario usar ao menos 1 dia no mes")
-    @Min(value = 31, message = "É necessario usar no maximo 31 dia no mes")
+    @Max(value = 31, message = "É necessario usar no maximo 31 dia no mes")
     private Long  usoDiasEstimados;
 
     @JsonProperty
     @NotNull(message = "É necessario inserir a estimativa de uso diario")
-    @Min(value = 1440, message = "Limite de 1440 equivalente a 24 horas")
+    @Max(value = 1440, message = "Limite de 1440 equivalente a 24 horas")
     private Long  usoDiarioEstimado;
 
     @JsonProperty
@@ -66,10 +63,10 @@ public class EletrodomesticoDTO {
 
     @JsonProperty
     @Null(message = "O valor inicial do custo diario deve ser nulo")
-    private double custoDiario;
+    private Double custoDiario;
     @JsonProperty
     @Null(message = "O valor inicial do custo mensal deve ser nulo")
-    private double custoMensal;
+    private Double custoMensal;
 
     @JsonProperty
     private Long idPatchCategoria;

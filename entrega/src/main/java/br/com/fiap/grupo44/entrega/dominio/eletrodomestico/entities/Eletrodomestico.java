@@ -25,11 +25,11 @@ public class Eletrodomestico {
     private String modelo;
     private String marca;
     private String tensao;
-    private double potencia;
-    private double consumoDiario;
-    private double consumoMensal;
-    private double custoDiario;
-    private double custoMensal;
+    private Double potencia;
+    private Double consumoDiario;
+    private Double consumoMensal;
+    private Double custoDiario;
+    private Double custoMensal;
     private Long usoDiasEstimados;
     private Long usoDiarioEstimado;
     private Long idPatchCategoria;
