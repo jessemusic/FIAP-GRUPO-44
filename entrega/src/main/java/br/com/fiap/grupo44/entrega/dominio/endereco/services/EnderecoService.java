@@ -69,4 +69,11 @@ public class EnderecoService {
 		}
         throw new ControllerNotFoundException("Endereço não encontrado, id: " + id);
 	}
+
+	public EnderecoDTO PopulaCepParaPessoa(String cepDTO) {
+		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.populaCep(cepDTO);
+
+		Endereco endereco = this.enderecoRepository.save(enderecoResultViaCepDTO.getEndereco());
+		return new EnderecoDTO(endereco);
+	}
 }

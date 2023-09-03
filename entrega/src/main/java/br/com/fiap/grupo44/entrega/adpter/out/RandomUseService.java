@@ -10,14 +10,14 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RandomUseService {
 
-    //@Value("${api-comunication.host}")
-    //private String apiHost;
+    @Value("${api-comunication.host}")
+    private String apiHost;
 
     @Autowired
     private RestTemplate restTemplate = new RestTemplate();
 
     public ChamaResultDTO getRandomUser() {
-        ResponseEntity<ChamaResultDTO> response = restTemplate.getForEntity("https://randomuser.me/api/" ,ChamaResultDTO.class);
+        ResponseEntity<ChamaResultDTO> response = restTemplate.getForEntity(apiHost ,ChamaResultDTO.class);
         return response.getBody();
 
     }

@@ -2,6 +2,7 @@ package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.controllers;
 
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.services.EletrodomesticoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/eletrodomesticos")
+@Tag(name = "API ELETRODOMÉSTICO")
 public class EletrodomesticoController {
 
 
