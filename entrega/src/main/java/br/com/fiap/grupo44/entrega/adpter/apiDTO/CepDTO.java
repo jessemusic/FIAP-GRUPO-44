@@ -2,7 +2,9 @@ package br.com.fiap.grupo44.entrega.adpter.apiDTO;
 
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter

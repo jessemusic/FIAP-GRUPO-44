@@ -1,5 +1,6 @@
 package br.com.fiap.grupo44.entrega.dominio.endereco.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import br.com.fiap.grupo44.entrega.dominio.endereco.services.EnderecoService;
 import jakarta.validation.Valid;
 
 @RestController
+@Tag(name = "API ENDEREÇO")
 public class ControllerEndereco {
 	
 	@Autowired
