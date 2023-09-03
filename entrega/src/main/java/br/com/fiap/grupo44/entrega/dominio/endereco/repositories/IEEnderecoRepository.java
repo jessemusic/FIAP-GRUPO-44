@@ -13,5 +13,5 @@ public interface IEEnderecoRepository extends JpaRepository<Endereco,Long> {
 	@Transactional
     @Modifying
 	@Query(value = "INSERT INTO TB_ENDERECO_PESSOA(ENDERECO_ID,PESSOA_ID) VALUES(?1,?2)",nativeQuery = true)
-	int SALVAR_ENDERECO(String endereco,Long pessoa);
+	int SALVAR_ENDERECO(Long endereco,Long pessoa);
 }
