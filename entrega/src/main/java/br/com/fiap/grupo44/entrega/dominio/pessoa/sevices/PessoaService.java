@@ -8,6 +8,9 @@ import br.com.fiap.grupo44.entrega.adpter.out.RandomUseService;
 
 
 import br.com.fiap.grupo44.entrega.adpter.out.ServicoViaSepValidator;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories.IEletrodomesticoRepository;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
@@ -41,6 +44,9 @@ public class PessoaService {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private IEletrodomesticoRepository repoEletro;
 
     @Autowired
     private BuscaCepService buscaCepService;
@@ -133,11 +139,32 @@ public class PessoaService {
         CepDTO cepEnviar = new CepDTO();
         cepEnviar.setCep(criaCepAutomatico.getCep());
         EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepEnviar);
-        final Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco();
-        enderecoEntity.setNumero(numeroDaCasaCriado);
-        var enderecoSaved = this.enderecoRepository.save(enderecoEntity);
-        pessoa.setEndereco(enderecoSaved);
+
+//        final Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco();
+//        enderecoEntity.setNumero(numeroDaCasaCriado);
+//        var enderecoSaved = this.enderecoRepository.save(enderecoEntity);
+//        pessoa.setEndereco(enderecoSaved);
         return  pessoa;
+    }
+
+    @Transactional(readOnly = true)
+    public void mapperDtoToEntity(PessoaDTO dto, Pessoa entity) {
+        entity.setNome(dto.getNome());
+        entity.setSobrenome(dto.getSobrenome());
+        entity.setDataNascimento(dto.getDataNascimento());
+        entity.setSexo(dto.getSexo());
+        entity.setIdade(dto.getIdade());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
+        entity.setCell(dto.getCell());
+        entity.setFotosUrls(dto.getFotosUrls());
+        entity.setNat(dto.getNat());
+
+        entity.getEletrodomesticos().clear();
+        for (EletrodomesticoDTO eletrodomesticoDTO: dto.getEletrodomesticos()) {
+            Eletrodomestico eletrodomestico = repoEletro.getOne(eletrodomesticoDTO.getId());
+            entity.getEletrodomesticos().add(eletrodomestico);
+        }
     }
 
 }
