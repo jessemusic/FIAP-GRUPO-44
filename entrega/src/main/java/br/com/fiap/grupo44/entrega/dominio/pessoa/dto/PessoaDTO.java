@@ -2,6 +2,8 @@ package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +12,9 @@ import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -44,6 +48,8 @@ public class PessoaDTO {
 
     private Set<EletrodomesticoDTO> eletrodomesticos = new HashSet<>();
 
+    private List<EnderecoDTO> enderecos = new ArrayList<>();
+
     public PessoaDTO(Pessoa entidade) {
         this.id = entidade.getId();
         this.nome = entidade.getNome();
@@ -72,5 +78,27 @@ public class PessoaDTO {
                 this.somatorioCustoMensal = somaCustoMensal;
         }
 
+    }
+
+    public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos, Set<Endereco> enderecos) {
+        this(pessoa);
+
+        if (eletrodomesticos != null && eletrodomesticos.size() > 0) {
+            Double somaCustoMensal = 0d;
+
+            for(Eletrodomestico eletrodomestico: eletrodomesticos){
+                somaCustoMensal += eletrodomestico.getCustoMensal();
+
+                this.eletrodomesticos.add(new EletrodomesticoDTO(eletrodomestico));
+            }
+            this.somatorioCustoMensal = somaCustoMensal;
+        }
+
+        if (enderecos != null && enderecos.size() > 0) {
+
+            for(Endereco endereco: enderecos){
+                this.enderecos.add(new EnderecoDTO(endereco));
+            }
+        }
     }
 }

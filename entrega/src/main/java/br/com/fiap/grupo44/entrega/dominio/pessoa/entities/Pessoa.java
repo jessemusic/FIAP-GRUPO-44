@@ -44,7 +44,8 @@ public class Pessoa {
         )
     private Set<Eletrodomestico> eletrodomesticos = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "endereco_id", nullable = false)
-    private Endereco endereco;
+    @ManyToMany(mappedBy = "pessoas")
+    private Set<Endereco> enderecos = new HashSet<>();
+
+
 }

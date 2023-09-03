@@ -2,6 +2,7 @@ package br.com.fiap.grupo44.entrega.dominio.endereco.dto;
 
 import java.util.List;
 
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import org.hibernate.validator.constraints.Range;
 
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
@@ -53,4 +54,6 @@ public class EnderecoDTO {
 		endereco.setRua(enderecoDTO.getRua());
 		return endereco;
 	}
+
+
 }

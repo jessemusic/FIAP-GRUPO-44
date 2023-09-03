@@ -11,6 +11,7 @@ import br.com.fiap.grupo44.entrega.adpter.out.ServicoViaSepValidator;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories.IEletrodomesticoRepository;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.services.EletrodomesticoService;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
@@ -31,16 +32,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaService {
 
     @Autowired
     private IPessoaRepository repo;
+
+    @Autowired
+    private EletrodomesticoService eletrodomesticoService;
+
 
     @Autowired
     private EnderecoService enderecoService;
@@ -127,24 +130,47 @@ public class PessoaService {
         pessoaEntity.setCell(resultsDto.getCell());
         pessoaEntity.setFotosUrls(resultsDto.getPicture().getLarge());
         pessoaEntity.setNat(resultsDto.getNat());
-        insertAndCriaEndereço(pessoaEntity);
+        final Set<Eletrodomestico> eletrodomesticos = selecionarEletrodomesticosAleatoriamente();
+        pessoaEntity.setEletrodomesticos(eletrodomesticos);
         var  pessoaSaved = repo.save(pessoaEntity);
-        return new PessoaDTO(pessoaSaved);
+        final EnderecoDTO enderecoDTO = insertAndCriaEndereco(pessoaSaved);
+//        final Set<Endereco> listarEnderecos = listarEnderecos(enderecoDTO);
+
+//        return new PessoaDTO(pessoaSaved, eletrodomesticos, listarEnderecos);
+        return new PessoaDTO(pessoaSaved, eletrodomesticos);
     }
 
-    public Pessoa insertAndCriaEndereço(Pessoa pessoa) {
+//    private Set<Endereco> listarEnderecos(EnderecoDTO enderecoDTO) {
+//       return null;
+//
+//    }
+
+    public Set<Eletrodomestico> selecionarEletrodomesticosAleatoriamente() {
+        Set<Eletrodomestico> eletrodomesticos = new HashSet<>(repoEletro.findAll());
+        Map<Long, Set<Eletrodomestico>> eletrodomesticosPorCategoria = eletrodomesticos.stream()
+                .collect(Collectors.groupingBy(Eletrodomestico::getIdPatchCategoria, Collectors.toSet()));
+        Random random = new Random();
+        List<Eletrodomestico> eletrodomesticosSelecionados = new ArrayList<>();
+        eletrodomesticosPorCategoria.values().forEach(eletrodomesticosCategoria -> {
+        List<Eletrodomestico> eletrodomesticosCategoriaLista = new ArrayList<>(eletrodomesticosCategoria);
+            if (!eletrodomesticosCategoriaLista.isEmpty()) {
+                Collections.shuffle(eletrodomesticosCategoriaLista);
+                Eletrodomestico eletrodomesticoAleatorio = eletrodomesticosCategoriaLista.get(random.nextInt(eletrodomesticosCategoriaLista.size()));
+                eletrodomesticosSelecionados.add(eletrodomesticoAleatorio);         }     });
+        int quantidadeTotal = Math.min(random.nextInt(12) + 1, eletrodomesticosSelecionados.size());
+        return eletrodomesticosSelecionados.stream() .limit(quantidadeTotal).collect(Collectors.toSet()); }
+
+
+
+    public EnderecoDTO insertAndCriaEndereco(Pessoa pessoa) {
         Long idDoCep = (long)(Math.random()*1019411) +1;
         int numeroDaCasaCriado = (int)(Math.random()*1000) +1;
         CriaCepAutomatico criaCepAutomatico = buscaCepService.findById(idDoCep);
         CepDTO cepEnviar = new CepDTO();
         cepEnviar.setCep(criaCepAutomatico.getCep());
-        EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepEnviar);
-
-//        final Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco();
-//        enderecoEntity.setNumero(numeroDaCasaCriado);
-//        var enderecoSaved = this.enderecoRepository.save(enderecoEntity);
-//        pessoa.setEndereco(enderecoSaved);
-        return  pessoa;
+        cepEnviar.setPessoa(pessoa);
+        final EnderecoDTO salvar = enderecoService.salvar(cepEnviar);
+        return salvar;
     }
 
     @Transactional(readOnly = true)
