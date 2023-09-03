@@ -33,8 +33,8 @@ public class EnderecoService {
 	    	Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
 	    	OEndereco=this.enderecoRepository.save(enderecoEntity);			    	
 	    }else {
-	    	
-	    	this.enderecoRepository.SALVAR_ENDERECO(cepDTO.getCep(), cepDTO.getPessoa().getId());
+	    	System.err.println("ENTREI NO LUGAR CERTO.");
+	    	this.enderecoRepository.SALVAR_ENDERECO(OEndereco.getId(), cepDTO.getPessoa().getId());
 	    }
 
 		return new EnderecoDTO(OEndereco); 

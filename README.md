@@ -235,63 +235,91 @@ Content-Type: application/json
 
 API para gerenciamento de eletrodomésticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomésticos.
 
-
-
 ## API Endpoints
 
 
 Lista de eletrodomésticos
 
 - GET /eletrodomesticos
+
 ```
 http GET http://localhost:8080/eletrodomesticos
-
 {
     "content": [
         {
             "id": 1,
-            "nome": "Notebook",
-            "modelo": "inspiron 14",
-            "marca": "Dell",
-            "tensao": "Bivolt",
-            "potencia": 500.0,
-            "consumo": 12.0
+            "nome": "ABRIDOR/AFIADOR",
+            "modelo": "MultiSharp",
+            "marca": "Philips",
+            "tensao": "110v",
+            "potencia": 135.0,
+            "usoDiasEstimados": 10,
+            "usoDiarioEstimado": 5,
+            "consumoDiario": 0.011249999955,
+            "consumoMensal": 0.11249999955,
+            "custoDiario": 0.0101249999595,
+            "custoMensal": 0.101249999595,
+            "idPatchCategoria": 6
         },
         {
             "id": 2,
-            "nome": "Notebook",
-            "modelo": "inspiron 14",
-            "marca": "Dell",
-            "tensao": "Bivolt",
-            "potencia": 500.0,
-            "consumo": 12.0
+            "nome": "AFIADOR DE FACAS",
+            "modelo": "BladeSharp",
+            "marca": "Philips",
+            "tensao": "110v",
+            "potencia": 20.0,
+            "usoDiasEstimados": 5,
+            "usoDiarioEstimado": 30,
+            "consumoDiario": 0.01,
+            "consumoMensal": 0.05,
+            "custoDiario": 0.009000000000000001,
+            "custoMensal": 0.045000000000000005,
+            "idPatchCategoria": 6
         },
         {
             "id": 3,
-            "nome": "Notebook",
-            "modelo": "inspiron 14",
-            "marca": "Dell",
-            "tensao": "Bivolt",
-            "potencia": 500.0,
-            "consumo": 12.0
+            "nome": "APARELHO DE SOM3 EM 1",
+            "modelo": "SoundFusion 3-in-1",
+            "marca": "JBL",
+            "tensao": "110v",
+            "potencia": 80.0,
+            "usoDiasEstimados": 20,
+            "usoDiarioEstimado": 180,
+            "consumoDiario": 0.24,
+            "consumoMensal": 4.8,
+            "custoDiario": 0.216,
+            "custoMensal": 4.32,
+            "idPatchCategoria": 9
         },
         {
             "id": 4,
-            "nome": "Notebook",
-            "modelo": "inspiron 14",
-            "marca": "Dell",
-            "tensao": "Bivolt",
-            "potencia": 500.0,
-            "consumo": 12.0
+            "nome": "APARELHO DE SOM PEQUENO",
+            "modelo": "MiniTunes E-100",
+            "marca": "JBL",
+            "tensao": "110v",
+            "potencia": 20.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 240,
+            "consumoDiario": 0.08,
+            "consumoMensal": 2.4,
+            "custoDiario": 0.07200000000000001,
+            "custoMensal": 2.16,
+            "idPatchCategoria": 9
         },
         {
             "id": 5,
-            "nome": "Notebook",
-            "modelo": "inspiron 14",
-            "marca": "Dell",
-            "tensao": "Bivolt",
-            "potencia": 500.0,
-            "consumo": 12.0
+            "nome": "AQUECEDOR DE AMBIENTE",
+            "modelo": "HeatWave ProHeat",
+            "marca": "Daikin",
+            "tensao": "220V",
+            "potencia": 1550.0,
+            "usoDiasEstimados": 15,
+            "usoDiarioEstimado": 480,
+            "consumoDiario": 12.4,
+            "consumoMensal": 186.0,
+            "custoDiario": 11.16,
+            "custoMensal": 167.4,
+            "idPatchCategoria": 3
         }
     ],
     "pageable": {
@@ -302,14 +330,14 @@ http GET http://localhost:8080/eletrodomesticos
         },
         "offset": 0,
         "pageNumber": 0,
-        "pageSize": 10,
+        "pageSize": 5,
         "unpaged": false,
         "paged": true
     },
-    "last": true,
-    "totalElements": 5,
-    "totalPages": 1,
-    "size": 10,
+    "last": false,
+    "totalElements": 89,
+    "totalPages": 18,
+    "size": 5,
     "number": 0,
     "sort": {
         "empty": true,
@@ -321,8 +349,80 @@ http GET http://localhost:8080/eletrodomesticos
     "empty": false
 }
 ```
+
+Possiveis filtros;
+- - **pagina**:Parametro não obrigatório que define o numero da pagina que o usuário deseja acessar
+- - **tamanho**: Parametro não obrigatório que define a quantidade de itens que serão retornados pela listagem
+- - **nome**: Parametro não obrigatório que filtra a lista de eletrodomésticos por nome;
+- - **marca**:Parametro não obrigatório que filtra a lista de eletrodoméstico por marca;
+- - **modelo**:Parametro não obrigatório que filtra a lista de eletrodoméstico por modelo;
+- - **tensao**:Parametro não obrigatório que filtra a lista de eletrodoméstico por tensão (Ex:110v,220v ou Bivolt);
+- - **Categoria**:Parametro não obrigatório que filtra a lista de eletrodoméstico por categoria (IDentificador da categoria).Exemplo 1,2,6,8;
+
+* GET /eletrodomesticos/{id}
+```
+http://localhost:8080/eletrodomesticos/10
+
+ {
+    "id": 10,
+    "nome": "AR-CONDICIONADO 15.000 BTU",
+    "modelo": "15.000 BTU",
+    "marca": "Daikin",
+    "tensao": "BIVOLT",
+    "potencia": 2000.0,
+    "usoDiasEstimados": 30,
+    "usoDiarioEstimado": 480,
+    "consumoDiario": 16.0,
+    "consumoMensal": 480.0,
+    "custoDiario": 14.4,
+    "custoMensal": 432.0,
+    "idPatchCategoria": 3
+}
+```
+
+* GET /eletrodomesticos/aleatorios
+```
+http://localhost:8080/eletrodomesticos/aleatorios
+
+[
+	{
+		"id": 31,
+		"nome": "CORTADOR DE GRAMA PEQUENO",
+		"modelo": "GR1000",
+		"marca": "Black+Decker",
+		"tensao": "110v",
+		"potencia": 500.0,
+		"usoDiasEstimados": 2,
+		"usoDiarioEstimado": 120,
+		"consumoDiario": 1.0,
+		"consumoMensal": 2.0,
+		"custoDiario": 0.9,
+		"custoMensal": 1.8,
+		"idPatchCategoria": 1
+	},
+	{
+		"id": 17,
+		"nome": "BOILER 200 a 500 L",
+		"modelo": "200 a 500 L",
+		"marca": "KSB",
+		"tensao": "110v",
+		"potencia": 3000.0,
+		"usoDiasEstimados": 30,
+		"usoDiarioEstimado": 360,
+		"consumoDiario": 18.0,
+		"consumoMensal": 540.0,
+		"custoDiario": 16.2,
+		"custoMensal": 486.0,
+		"idPatchCategoria": 2
+	}
+]
+```
+- - Retorna uma lista coom um numero aleatório entre um a doze eletrodomésticos de categoriaas diferentes
+
+
 CADASTRO DE ELETRODOMESTICOS
-- POST /eletrodomesticos
+* POST /eletrodomesticos
+
 ```
 http POST http://localhost:8080/eletrodomesticos
 HTTP/1.1 201 CREATED
@@ -337,52 +437,99 @@ Content-Type: application/json
     "potencia": 500.0
 }
 ```
+ATUALIZAÇÃO DE ELETRODOMÉSTICOS:
 
-- GET /eletrodomesticos/{id}
+- PUT /eletrodomesticos/9
 ```
-http://localhost:8080/eletrodomesticos/2{
-    "id": 2,
-    "nome": "Notebook",
-    "modelo": "inspiron 14",
-    "marca": "Dell",
-    "tensao": "Bivolt",
-    "potencia": 500.0,
-    "consumo": 12.0
-}
-```
-
-- PUT /eletrodomesticos/2
-```
-http://localhost:8080/eletrodomesticos/1
+http://localhost:8080/eletrodomesticos/9
 HTTP/1.1 200 OK
 Content-Length: 129
 Content-Type: application/json
+
 {
-    "nome": "Notebook",
-    "modelo": "inspiron 14",
-    "marca": "Dell",
-    "tensao": "Bivolt",
-    "potencia": 800.0
+    "nome": "AR-CONDICIONADO 12.000 BTU",
+    "modelo": " 12.000 BTU",
+    "marca": "Daikin",
+    "tensao": "BIVOLT",
+    "potencia": 1450.0,
+    "usoDiasEstimados": 30,
+    "usoDiarioEstimado": 480,
+    "idPatchCategoria": 3
 }
 ```
+- PATCH: /eletrodomesticos/9
+```
+http://localhost:8080/eletrodomesticos/9
+HTTP/1.1 200 OK
+Content-Length: 129
+Content-Type: application/json
 
-
-Deletando uma eletrodomestico:
+{
+    "nome": "AR-CONDICIONADO 12.000 BTU"
+}
+```
+DELEÇÃO DE ELETRODOMÉSTICO
 - DELETE /eletrodomesticos/{id}
 ```
-DELETE http://localhost:8080/eletrodomesticos/2
+DELETE http://localhost:8080/eletrodomesticos/9
 HTTP/1.1 204 No Content
 Content-Length: 142
 Content-Type: application/json
 
 ```
+## Parametos de requisição:
+| Parametro        |  Tipo  |       Atribuição                    |   Exemplo   |
+|:-----------------|:------:|:-----------------------------------|:------------|
+| nome             | String |  nome do eletrodoméstico            | Computador  |
+| marca            | String |  Marca do eletrodoméstico           | Sansung     |
+| modelo           | String |  Modelo do eletrodoméstico          | Galaxy Book |
+| tensão           | String |  Tensão do dispostivo               | 200         |
+| usoDiasEstimados |  Long  |  Numero de dias de uso              | 15          |
+|usoDiarioEstimado |  Long  |  Tempo de uso por dia em minutos    | 180         |
+| idPatchCategoria |  Long  |  Categoria do eletrodoméstico       | 1 (Limpeza) |
+| consumoDiario    | Double |  Consumo diário do dispositivo em Kw/h | -           |
+| consumoMensal    | Double |  Consumo mensal do dispositivo em Kw/h | -           |
+| custoDiario      | Double |  Custo de consumo diário em R$      | -           |
+| custoMensal      | Double |  Custo de consumo mensal em R$      | -           |
 
+**CATEGORIAS**
+1. Acessório de aquário
+2. Conforto térmico
+3. Construção
+4. Cucção
+5. Culinária
+6. Entretenimento
+7. Hidráulica
+8. Higiene pessoal
+9. Iluminação
+10. Lavanderia
+11. Limpeza
+12. Processador de alimentos
+13. Refrigerador
+14. Tecnologia
+15. Costura
+
+
+- **Cálculos de consumo/custo diário/mensal**:Os calculos de consumo diários e mansais assim como o calculo de custos são efetuados a partir dos dados enviados pelos parametros usoDiasEstimados que são o numero de dias em que o dispositivo foi usado e usoDiarioEstimado que é o tempo em minutos que o dispositivo se manteve ativo no dia
+<p align="center">
+  consumoDiário (KW/H) = potencia * (usoDiario / 60) / 1000;
+</p>
+<p align="center">
+  consumoMensal (KW/H) = consumoDiario *  usoDiasEstimados;
+</p>
+<p align="center">
+  custoDiario R$: consumoDiario * 0.9 (Tarifa usado como base de cálculo)
+</p>
+<p align="center">
+  custoMensal R$: consumoDiario * usoDiasEstimados
+</p>
+
+<h1 align="center">
+  API ENDEREÇOS
+</h1>
 
 API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização e deleção(CRUD) dos registros de enderelos.
 
-<h1 align="center">
-  API de Endereços
-</h1>
 
 ## API Endpoints
 
