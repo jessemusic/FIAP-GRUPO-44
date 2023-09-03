@@ -2,17 +2,16 @@ package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto;
 
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EletrodomesticoDTO {
     @JsonProperty
     private Long id;
@@ -44,8 +43,33 @@ public class EletrodomesticoDTO {
     private Double potencia;
 
     @JsonProperty
-    @Null(message = "O valor inicial do consumo deve ser nulo")
-    private Double consumo;
+    @NotNull(message = "É necessario inserir o numero de dias de uso estimados")
+    @Min(value = 1, message = "É necessario usar ao menos 1 dia no mes")
+    @Max(value = 31, message = "É necessario usar no maximo 31 dia no mes")
+    private Long  usoDiasEstimados;
+
+    @JsonProperty
+    @NotNull(message = "É necessario inserir a estimativa de uso diario")
+    @Max(value = 1440, message = "Limite de 1440 equivalente a 24 horas")
+    private Long  usoDiarioEstimado;
+
+    @JsonProperty
+    @Null(message = "O valor inicial do consumo diario deve ser nulo")
+    private Double consumoDiario;
+
+    @JsonProperty
+    @Null(message = "O valor inicial do consumo mensal deve ser nulo")
+    private Double consumoMensal;
+
+    @JsonProperty
+    @Null(message = "O valor inicial do custo diario deve ser nulo")
+    private Double custoDiario;
+    @JsonProperty
+    @Null(message = "O valor inicial do custo mensal deve ser nulo")
+    private Double custoMensal;
+
+    @JsonProperty
+    private Long idPatchCategoria;
 
     public EletrodomesticoDTO(Eletrodomestico entidade) {
         this.id = entidade.getId();
@@ -54,6 +78,12 @@ public class EletrodomesticoDTO {
         this.marca  = entidade.getMarca();
         this.tensao = entidade.getTensao();
         this.potencia = entidade.getPotencia();
-        this.consumo = entidade.getConsumo();
+        this.usoDiasEstimados = entidade.getUsoDiasEstimados();
+        this.usoDiarioEstimado = entidade.getUsoDiarioEstimado();
+        this.consumoDiario = entidade.getConsumoDiario();
+        this.consumoMensal = entidade.getConsumoMensal();
+        this.custoDiario = entidade.getCustoDiario();
+        this.custoMensal = entidade.getCustoMensal();
+        this.idPatchCategoria = entidade.getIdPatchCategoria();
     }
 }

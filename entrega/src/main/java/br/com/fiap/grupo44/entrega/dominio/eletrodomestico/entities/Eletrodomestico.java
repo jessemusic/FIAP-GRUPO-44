@@ -1,7 +1,12 @@
 package br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -20,7 +25,17 @@ public class Eletrodomestico {
     private String modelo;
     private String marca;
     private String tensao;
-    private double potencia;
-    private double consumo;
+    private Double potencia;
+    private Double consumoDiario;
+    private Double consumoMensal;
+    private Double custoDiario;
+    private Double custoMensal;
+    private Long usoDiasEstimados;
+    private Long usoDiarioEstimado;
+    private Long idPatchCategoria;
+    @ManyToMany(mappedBy = "eletrodomesticos")
+    private Set<Pessoa> pessoas;
+    @CreationTimestamp
+    private Instant dataDeCriacao;
 
 }

@@ -1,11 +1,17 @@
 package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +31,7 @@ public class PessoaDTO {
     private String dataNascimento;
     @NotNull(message = "Sexo não deve ser nulo")
     @NotBlank(message = "Sexo deve ser apenas um caractere")
-    @Max(value = 1,message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
+    @Max(value = 1, message = "Sexo só pode ter uma letra 'M' para masculino  ou 'F' para feminino")
     private String sexo;
     private Integer idade;
     private String email;
@@ -33,8 +39,12 @@ public class PessoaDTO {
     private String cell;
     private String fotosUrls;
     private String nat;
+    @Null(message = "O valor do somatorio deve ser calculado automaticamente")
+    private Double somatorioCustoMensal;
 
-    public PessoaDTO(Pessoa entidade){
+    private Set<EletrodomesticoDTO> eletrodomesticos = new HashSet<>();
+
+    public PessoaDTO(Pessoa entidade) {
         this.id = entidade.getId();
         this.nome = entidade.getNome();
         this.sobrenome = entidade.getSobrenome();
@@ -46,5 +56,21 @@ public class PessoaDTO {
         this.cell = entidade.getCell();
         this.fotosUrls = entidade.getFotosUrls();
         this.nat = entidade.getNat();
+        this.somatorioCustoMensal = entidade.getSomatorioCustoMensal();
+    }
+
+    public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos) {
+        this(pessoa);
+        if (eletrodomesticos != null && eletrodomesticos.size() > 0) {
+            Double somaCustoMensal = 0d;
+
+            for(Eletrodomestico eletrodomestico: eletrodomesticos){
+                somaCustoMensal += eletrodomestico.getCustoMensal();
+
+                this.eletrodomesticos.add(new EletrodomesticoDTO(eletrodomestico));
+            }
+                this.somatorioCustoMensal = somaCustoMensal;
+        }
+
     }
 }

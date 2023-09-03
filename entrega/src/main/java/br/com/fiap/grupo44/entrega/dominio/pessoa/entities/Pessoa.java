@@ -3,14 +3,16 @@ package br.com.fiap.grupo44.entrega.dominio.pessoa.entities;
 
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.context.annotation.Lazy;
 
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,6 +32,16 @@ public class Pessoa {
     private String cell;
     private String fotosUrls;
     private String nat;
+    private Double somatorioCustoMensal;
+    @CreationTimestamp
+    private Instant dataDeCriacao;
+    @ManyToMany( fetch =  FetchType.LAZY)
+        @JoinTable(
+                name = "tb_pessoa_eletrodomestico",
+                joinColumns = @JoinColumn(name = "pessoa_id"),
+                inverseJoinColumns = @JoinColumn(name = "eletrodomestico_id")
+        )
+    private Set<Eletrodomestico> eletrodomesticos = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "endereco_id", nullable = false)

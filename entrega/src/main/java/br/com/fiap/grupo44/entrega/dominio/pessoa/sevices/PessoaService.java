@@ -24,10 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -56,67 +58,53 @@ public class PessoaService {
         return pessoas.map(PessoaDTO::new);
     }
 
-    public PessoaDTO findById(Long id){
+    @Transactional(readOnly = true)
+    public PessoaDTO findById(Long id) {
         var pessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
-        return new PessoaDTO(pessoa);
+        return new PessoaDTO(pessoa, pessoa.getEletrodomesticos());
     }
 
-    public PessoaDTO insert(PessoaDTO pessoa){
-        Pessoa pessoaEntity = new Pessoa();
-        pessoaEntity.setNome(pessoa.getNome());
-        pessoaEntity.setSobrenome(pessoa.getSobrenome());
-        pessoaEntity.setDataNascimento(pessoa.getDataNascimento());
-        pessoaEntity.setSexo(pessoa.getSexo());
-        pessoaEntity.setIdade(pessoa.getIdade());
-        pessoaEntity.setEmail(pessoa.getEmail());
-        pessoaEntity.setPhone(pessoa.getPhone());
-        pessoaEntity.setCell(pessoa.getCell());
-        pessoaEntity.setFotosUrls(pessoa.getFotosUrls());
-        pessoaEntity.setNat(pessoa.getNat());
-        var  pessoaSaved = repo.save(pessoaEntity);
-        return new PessoaDTO(pessoaSaved);
+    @Transactional
+    public PessoaDTO insert(PessoaDTO dto) {
+        Pessoa entity = new Pessoa();
+        mapperDtoToEntity(dto,entity);
+        var  pessoaSaved = repo.save(entity);
+        return new PessoaDTO(pessoaSaved,pessoaSaved.getEletrodomesticos());
     }
 
-    public PessoaDTO update(Long id,PessoaDTO pessoaDTO){
-    try {
-        Pessoa buscaPessoa = repo.getOne(id);
-        buscaPessoa.setNome(pessoaDTO.getNome());
-        buscaPessoa.setSobrenome(pessoaDTO.getSobrenome());
-        buscaPessoa.setDataNascimento(pessoaDTO.getDataNascimento());
-        buscaPessoa.setSexo(pessoaDTO.getSexo());
-        buscaPessoa.setIdade(pessoaDTO.getIdade());
-        buscaPessoa.setEmail(pessoaDTO.getEmail());
-        buscaPessoa.setPhone(pessoaDTO.getPhone());
-        buscaPessoa.setCell(pessoaDTO.getCell());
-        buscaPessoa.setFotosUrls(pessoaDTO.getFotosUrls());
-        buscaPessoa.setNat(pessoaDTO.getNat());
-        buscaPessoa = repo.save(buscaPessoa);
-        return new PessoaDTO(buscaPessoa);
-    }catch (EntityNotFoundException ene){
-        throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
-    }
+    @Transactional
+    public PessoaDTO update(Long id,PessoaDTO dto){
+        try {
+            Pessoa entity = repo.getOne(id);
+            mapperDtoToEntity(dto,entity);
+            entity = repo.save(entity);
+
+            return new PessoaDTO(entity,entity.getEletrodomesticos());
+        }catch (EntityNotFoundException ene){
+            throw new ControllerNotFoundException("Pessoa não encontrada, id: " + id);
+        }
 
     }
 
     public PessoaPatchDTO updatePessoaByFields(Long id, Map<String, Object> fields) {
         Pessoa existingPessoa = repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
-            fields.forEach((key, value) -> {
-                Field field = ReflectionUtils.findField(Pessoa.class, key);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, existingPessoa, value);
-            });
-            var pessoaAtualizada = repo.save(existingPessoa);
-            return new PessoaPatchDTO(pessoaAtualizada);
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Pessoa.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, existingPessoa, value);
+        });
+        var pessoaAtualizada = repo.save(existingPessoa);
+        return new PessoaPatchDTO(pessoaAtualizada);
     }
 
     public Long deletePessoa(Long id) {
         Optional<Pessoa> existingPessoa = repo.findById(id);
         if (existingPessoa.isPresent()) {
             repo.deleteById(id);
-        }else {
-            throw  new ControllerNotFoundException("Pessoa não encontrada, impossível deletar se não existe pessoa no id: " + id);
+        } else {
+            throw new ControllerNotFoundException("Pessoa não encontrada, impossível deletar se não existe pessoa no id: " + id);
         }
-        return  repo.count();
+        return repo.count();
     }
 
     public PessoaDTO insertAndCria() {
