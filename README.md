@@ -235,41 +235,6 @@ Content-Type: application/json
 
 API para gerenciamento de eletrodomésticos. Ao consumir esta api o desenvolvedor conseguirá realizar a criação, leitura,atualização,leitura e deleção(CRUD) dos registros de eletrodomésticos.
 
-OBSERVAÇÕES:
-- Os eletrodomésticos foram separados por catego para possibilitar a escalabilidade do sistema:
-
-
-**CATEGORIAS**
-1. Acessório de aquário
-2. Conforto térmico
-3. Construção
-4. Cucção
-5. Culinária
-6. Entretenimento
-7. Hidráulica
-8. Higiene pessoal
-9. Iluminação
-10. Lavanderia
-11. Limpeza
-12. Processador de alimentos
-13. Refrigerador
-14. Tecnologia
-15. Costura
-
-- **Cálculos de consumo/custo diário/mensal**:Os calculos de consumo diários e mansais assim como o calculo de custos são efetuados a partir dos dados enviados pelos parametros usoDiasEstimados que são o numero de dias em que o dispositivo foi usado e usoDiarioEstimado que é o tempo em minutos que o dispositivo se manteve ativo no dia
-<p align="center">
-  consumoDiário (KW/H) = potencia * (usoDiario / 60) / 1000;
-</p>
-<p align="center">
-  consumoMensal (KW/H) = consumoDiario *  usoDiasEstimados;
-</p>
-<p align="center">
-  custoDiario R$: consumoDiario * 0.9 (Tarifa usado como base de cálculo)
-</p>
-<p align="center">
-  custoMensal R$: consumoDiario * usoDiasEstimados
-</p>
-
 ## API Endpoints
 
 
@@ -415,6 +380,46 @@ http://localhost:8080/eletrodomesticos/10
 }
 ```
 
+* GET /eletrodomesticos/aleatorios
+```
+http://localhost:8080/eletrodomesticos/aleatorios
+
+[
+	{
+		"id": 31,
+		"nome": "CORTADOR DE GRAMA PEQUENO",
+		"modelo": "GR1000",
+		"marca": "Black+Decker",
+		"tensao": "110v",
+		"potencia": 500.0,
+		"usoDiasEstimados": 2,
+		"usoDiarioEstimado": 120,
+		"consumoDiario": 1.0,
+		"consumoMensal": 2.0,
+		"custoDiario": 0.9,
+		"custoMensal": 1.8,
+		"idPatchCategoria": 1
+	},
+	{
+		"id": 17,
+		"nome": "BOILER 200 a 500 L",
+		"modelo": "200 a 500 L",
+		"marca": "KSB",
+		"tensao": "110v",
+		"potencia": 3000.0,
+		"usoDiasEstimados": 30,
+		"usoDiarioEstimado": 360,
+		"consumoDiario": 18.0,
+		"consumoMensal": 540.0,
+		"custoDiario": 16.2,
+		"custoMensal": 486.0,
+		"idPatchCategoria": 2
+	}
+]
+```
+- - Retorna uma lista coom um numero aleatório entre um a doze eletrodomésticos de categoriaas diferentes
+
+
 CADASTRO DE ELETRODOMESTICOS
 * POST /eletrodomesticos
 
@@ -472,6 +477,52 @@ Content-Length: 142
 Content-Type: application/json
 
 ```
+## Parametos de requisição:
+| Parametro        |  Tipo  |       Atribuição                    |   Exemplo   |
+|:-----------------|:------:|:-----------------------------------|:------------|
+| nome             | String |  nome do eletrodoméstico            | Computador  |
+| marca            | String |  Marca do eletrodoméstico           | Sansung     |
+| modelo           | String |  Modelo do eletrodoméstico          | Galaxy Book |
+| tensão           | String |  Tensão do dispostivo               | 200         |
+| usoDiasEstimados |  Long  |  Numero de dias de uso              | 15          |
+|usoDiarioEstimado |  Long  |  Tempo de uso por dia em minutos    | 180         |
+| idPatchCategoria |  Long  |  Categoria do eletrodoméstico       | 1 (Limpeza) |
+| consumoDiario    | Double |  Consumo diário do dispositivo em Kw/h | -           |
+| consumoMensal    | Double |  Consumo mensal do dispositivo em Kw/h | -           |
+| custoDiario      | Double |  Custo de consumo diário em R$      | -           |
+| custoMensal      | Double |  Custo de consumo mensal em R$      | -           |
+
+**CATEGORIAS**
+1. Acessório de aquário
+2. Conforto térmico
+3. Construção
+4. Cucção
+5. Culinária
+6. Entretenimento
+7. Hidráulica
+8. Higiene pessoal
+9. Iluminação
+10. Lavanderia
+11. Limpeza
+12. Processador de alimentos
+13. Refrigerador
+14. Tecnologia
+15. Costura
+
+
+- **Cálculos de consumo/custo diário/mensal**:Os calculos de consumo diários e mansais assim como o calculo de custos são efetuados a partir dos dados enviados pelos parametros usoDiasEstimados que são o numero de dias em que o dispositivo foi usado e usoDiarioEstimado que é o tempo em minutos que o dispositivo se manteve ativo no dia
+<p align="center">
+  consumoDiário (KW/H) = potencia * (usoDiario / 60) / 1000;
+</p>
+<p align="center">
+  consumoMensal (KW/H) = consumoDiario *  usoDiasEstimados;
+</p>
+<p align="center">
+  custoDiario R$: consumoDiario * 0.9 (Tarifa usado como base de cálculo)
+</p>
+<p align="center">
+  custoMensal R$: consumoDiario * usoDiasEstimados
+</p>
 
 <h1 align="center">
   API ENDEREÇOS

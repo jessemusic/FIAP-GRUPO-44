@@ -38,6 +38,11 @@ public class EletrodomesticoService {
                     builder.like(builder.lower(root.get("marca")), "%" + filtro.getMarca().toLowerCase() + "%"));
         }
 
+        if (!StringUtils.isEmpty(filtro.getModelo())) {
+            specification = specification.and((root, query, builder) ->
+                    builder.like(builder.lower(root.get("modelo")), "%" + filtro.getModelo().toLowerCase() + "%"));
+        }
+
         if (filtro.getPotencia() != null) {
             specification = specification.and((root, query, builder) ->
                     builder.equal(root.get("potencia"), filtro.getPotencia()));

@@ -19,14 +19,14 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/eletrodomesticos")
-@Tag(name = "open-apí")
+@RequestMapping(value = "/eletrodomesticos",produces = {"application/json"})
+//@Tag(name = "Eletrodomesticos")
 public class EletrodomesticoController {
 
 
     @Autowired
     private EletrodomesticoService eletrodomesticoService;
-    @Operation(summary = "Consulta pessoa passando o id",method = "GET")
+    @Operation(summary = "Retorna lista de eletrodomesticos paginada podendo ser filtrada por pagina,tamanho,nome,marca,modelo,tensao,categoria",method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the book"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
@@ -38,6 +38,7 @@ public class EletrodomesticoController {
             @RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String marca,
+            @RequestParam(required = false) String modelo,
             @RequestParam(required = false) Double potencia,
             @RequestParam(required = false) String tensao,
             @RequestParam(required = false) Long categoria
@@ -46,6 +47,7 @@ public class EletrodomesticoController {
         EletrodomesticoDTO filtro = new EletrodomesticoDTO();
         filtro.setNome(nome);
         filtro.setMarca(marca);
+        filtro.setModelo(modelo);
         filtro.setPotencia(potencia);
         filtro.setTensao(tensao);
         filtro.setIdPatchCategoria(categoria);
@@ -64,6 +66,12 @@ public class EletrodomesticoController {
         return ResponseEntity.ok(eletrodomestico);
     }
 
+    @Operation(summary = "Retorna pacote com numero aleatório de 1 a 12 eletrodomésticos de categorias diferentes",method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "500", description = "Erro no seervio")})
     @GetMapping("/aleatorios")
     public ResponseEntity<Set<EletrodomesticoDTO>> getEletrodomesticosAleatorios() {
         Set<EletrodomesticoDTO> eletrodomesticos = eletrodomesticoService.selecionarEletrodomesticosAleatoriamente();
@@ -107,7 +115,7 @@ public class EletrodomesticoController {
         var eletrodomesticoUpdated = eletrodomesticoService.update(id, eletroDomesticoDTO);
         return  ResponseEntity.ok(eletrodomesticoUpdated);
     }
-    @Operation(summary = "Atualiza��o de eletrodomestico por campo",method = "PATCH")
+    @Operation(summary = "Atualiza atributo especifico do eletrodomestico",method = "PATCH")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the book"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
