@@ -1,8 +1,12 @@
 package br.com.fiap.grupo44.entrega.dominio.endereco.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ import br.com.fiap.grupo44.entrega.dominio.endereco.dto.Paginator;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.RestDataReturnDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 
 @Service
@@ -29,12 +35,14 @@ public class EnderecoService {
 		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
 		
 		Endereco OEndereco = this.enderecoRepository.BUSCAR_ENDERECO_POR_CEP(cepDTO.getCep());
-	    if(OEndereco==null) {
+
+		
+		if(OEndereco==null) {
 	    	Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
 	    	OEndereco=this.enderecoRepository.save(enderecoEntity);			    	
 	    }else {
-	    	System.err.println("ENTREI NO LUGAR CERTO.");
 	    	this.enderecoRepository.SALVAR_ENDERECO(OEndereco.getId(), cepDTO.getPessoa().getId());
+	    	System.err.println("PASSEI PELO SERVIÇO COM SUCESSO!");
 	    }
 
 		return new EnderecoDTO(OEndereco); 
@@ -46,9 +54,24 @@ public class EnderecoService {
 	}
 
 	public RestDataReturnDTO findAll(PageRequest pageRequest){
-        var enderecos = enderecoRepository.findAll(pageRequest);        
-        if(!enderecos.isEmpty()) {    
-        	return new RestDataReturnDTO(enderecos.getContent(), new Paginator(enderecos.getNumber(), enderecos.getTotalElements(), enderecos.getTotalPages()));
+		Page<Endereco> enderecos      = enderecoRepository.findAll(pageRequest);   
+     	List<EnderecoDTO> enderecosDTO= new ArrayList<EnderecoDTO>();
+     	EnderecoDTO enderecoDTO;
+     	List<PessoaDTO>   pessoasDTO   = new ArrayList<PessoaDTO>();
+     	PessoaDTO pessoaDTO;
+        if(!enderecos.isEmpty()) {   
+        	for (Endereco endereco : enderecos) {
+        		enderecoDTO= new EnderecoDTO();
+        		BeanUtils.copyProperties(endereco, enderecoDTO);
+        		for (Pessoa pessoa : endereco.getPessoas()) {
+        			pessoaDTO=new PessoaDTO();        			
+        			BeanUtils.copyProperties(pessoa, pessoaDTO);
+        			pessoasDTO.add(pessoaDTO);
+        		}
+        		enderecoDTO.setPessoasDTO(pessoasDTO);
+        		enderecosDTO.add(enderecoDTO);
+			}
+        	return new RestDataReturnDTO(enderecosDTO, new Paginator(enderecos.getNumber(), enderecos.getTotalElements(), enderecos.getTotalPages()));
         }
         throw new ControllerNotFoundException("Nenhum Endereço para listar na pagina especificada.");
     }
@@ -78,10 +101,4 @@ public class EnderecoService {
 		}
         throw new ControllerNotFoundException("Endereço não encontrado, id: " + id);
 	}
-
-//	public EnderecoDTO PopulaCepParaPessoa(String cepDTO) {
-//		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.populaCep(cepDTO);
-////		Endereco endereco = this.enderecoRepository.save(enderecoResultViaCepDTO.getEndereco());
-//		return new EnderecoDTO(endereco);
-//	}
 }
