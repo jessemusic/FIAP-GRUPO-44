@@ -34,7 +34,7 @@ public class EnderecoDTO {
 	private List<PessoaDTO> pessoasDTO;
 	
 	public EnderecoDTO() {
-		
+		 
 	}
 	
 	public EnderecoDTO(Endereco endereco) {

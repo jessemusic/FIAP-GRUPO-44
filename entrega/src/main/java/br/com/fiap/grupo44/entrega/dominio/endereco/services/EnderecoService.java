@@ -35,7 +35,7 @@ public class EnderecoService {
 		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
 		
 		Endereco OEndereco = this.enderecoRepository.BUSCAR_ENDERECO_POR_CEP(cepDTO.getCep());
-
+ 
 		
 		if(OEndereco==null) {
 	    	Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
