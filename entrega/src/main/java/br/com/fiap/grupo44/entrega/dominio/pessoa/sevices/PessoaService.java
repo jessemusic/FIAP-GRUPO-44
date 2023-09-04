@@ -185,12 +185,12 @@ public class PessoaService {
 
 
     public EnderecoDTO insertAndCriaEndereco(Pessoa pessoa) {
-        //Long idDoCep = (long)(Math.random()*1019411) +1;
-        //int numeroDaCasaCriado = (int)(Math.random()*1000) +1;
-        //CriaCepAutomatico criaCepAutomatico = buscaCepService.findById(idDoCep);
+        Long idDoCep = (long)(Math.random()*1019411) +1;
+        int numeroDaCasaCriado = (int)(Math.random()*1000) +1;
+        CriaCepAutomatico criaCepAutomatico = buscaCepService.findById(idDoCep);
         
         CepDTO cepEnviar = new CepDTO();
-        cepEnviar.setCep("04011001");
+        cepEnviar.setCep(criaCepAutomatico.getCep());
         cepEnviar.setPessoa(pessoa);
         final EnderecoDTO salvar = enderecoService.salvar(cepEnviar);
         return salvar;
