@@ -77,7 +77,7 @@ public class PessoaDTO {
 
     }
 
-    public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos, Set<Endereco> enderecos) {
+    public PessoaDTO(Pessoa pessoa, Set<Eletrodomestico> eletrodomesticos, List<EnderecoDTO> enderecosDTO) {
         this(pessoa);
 
         if (eletrodomesticos != null && eletrodomesticos.size() > 0) {
@@ -91,11 +91,8 @@ public class PessoaDTO {
             this.somatorioCustoMensal = somaCustoMensal;
         }
 
-        if (enderecos != null && enderecos.size() > 0) {
-
-            for(Endereco endereco: enderecos){
-                this.enderecos.add(new EnderecoDTO(endereco));
-            }
+        if (enderecosDTO!=null) {
+            this.setEnderecos(enderecosDTO);
         }
     }
 }

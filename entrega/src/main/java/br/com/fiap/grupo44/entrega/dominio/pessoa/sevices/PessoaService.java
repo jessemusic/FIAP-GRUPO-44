@@ -163,16 +163,9 @@ public class PessoaService {
         pessoaEntity.setEletrodomesticos(eletrodomesticos);
         var  pessoaSaved = repo.save(pessoaEntity);
         final EnderecoDTO enderecoDTO = insertAndCriaEndereco(pessoaSaved);
-//        final Set<Endereco> listarEnderecos = listarEnderecos(enderecoDTO);
 
-//        return new PessoaDTO(pessoaSaved, eletrodomesticos, listarEnderecos);
-        return new PessoaDTO(pessoaSaved, eletrodomesticos);
+        return new PessoaDTO(pessoaSaved, eletrodomesticos,Arrays.asList(enderecoDTO));
     }
-
-//    private Set<Endereco> listarEnderecos(EnderecoDTO enderecoDTO) {
-//       return null;
-//
-//    }
 
     public Set<Eletrodomestico> selecionarEletrodomesticosAleatoriamente() {
         Set<Eletrodomestico> eletrodomesticos = new HashSet<>(repoEletro.findAll());
@@ -192,11 +185,12 @@ public class PessoaService {
 
 
     public EnderecoDTO insertAndCriaEndereco(Pessoa pessoa) {
-        Long idDoCep = (long)(Math.random()*1019411) +1;
-        int numeroDaCasaCriado = (int)(Math.random()*1000) +1;
-        CriaCepAutomatico criaCepAutomatico = buscaCepService.findById(idDoCep);
+        //Long idDoCep = (long)(Math.random()*1019411) +1;
+        //int numeroDaCasaCriado = (int)(Math.random()*1000) +1;
+        //CriaCepAutomatico criaCepAutomatico = buscaCepService.findById(idDoCep);
+        
         CepDTO cepEnviar = new CepDTO();
-        cepEnviar.setCep(criaCepAutomatico.getCep());
+        cepEnviar.setCep("04011001");
         cepEnviar.setPessoa(pessoa);
         final EnderecoDTO salvar = enderecoService.salvar(cepEnviar);
         return salvar;
