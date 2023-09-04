@@ -539,64 +539,102 @@ API para gerenciamento de Endereços. Ao consumir esta api o desenvolvedor conse
 GET http://localhost:8080/buscar-todos?pagina=0&tamanho=10
 
 RESPONSE
-[
-    {
-        "id": 1,
-        "rua": "Rua dos bravos",
-        "numero": 8898,
-        "bairro": "Presidente altino",
-        "cidade": "Embu das artes",
-        "estado": "SP"
-    },
-    {
-        "id": 3,
-        "rua": "Rua dos bravos",
-        "numero": 990,
-        "bairro": "Capão Redondo",
-        "cidade": "São Paulo",
-        "estado": "SP"
-    },
-    {
-        "id": 4,
-        "rua": "Rua do shoping campo limpo",
-        "numero": 990,
-        "bairro": "Capão Redondo",
-        "cidade": "São Paulo",
-        "estado": "SP"
-    },
-    {
-        "id": 5,
-        "rua": "Presidente altino",
-        "numero": 8054,
-        "bairro": "Osasco",
-        "cidade": "São Paulo",
-        "estado": "SP"
-    },
-    {
-        "id": 6,
-        "rua": "Lapa",
-        "numero": 7867,
-        "bairro": "Osasco",
-        "cidade": "São Paulo",
-        "estado": "SP"
+{
+    "data": [
+        {
+            "id": 1,
+            "rua": "Estrada de Itapecerica",
+            "numero": 3550308,
+            "bairro": "Capão Redondo",
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "cep": "05858001",
+            "pessoasDTO": [
+                {
+                    "id": 1,
+                    "nome": "João",
+                    "sobrenome": null,
+                    "dataNascimento": "2022-12-23",
+                    "sexo": "M",
+                    "idade": null,
+                    "email": null,
+                    "phone": null,
+                    "cell": null,
+                    "fotosUrls": null,
+                    "nat": null,
+                    "somatorioCustoMensal": null,
+                    "eletrodomesticos": [],
+                    "enderecos": []
+                },
+                {
+                    "id": 2,
+                    "nome": "Antonio",
+                    "sobrenome": null,
+                    "dataNascimento": "2022-12-23",
+                    "sexo": "M",
+                    "idade": null,
+                    "email": null,
+                    "phone": null,
+                    "cell": null,
+                    "fotosUrls": null,
+                    "nat": null,
+                    "somatorioCustoMensal": null,
+                    "eletrodomesticos": [],
+                    "enderecos": []
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "rua": "Avenida Lins de Vasconcelos",
+            "numero": 3550308,
+            "bairro": "Cambuci",
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "cep": "01538001",
+            "pessoasDTO": [
+                {
+                    "id": 4,
+                    "nome": "Nueza",
+                    "sobrenome": null,
+                    "dataNascimento": "2022-12-23",
+                    "sexo": "F",
+                    "idade": null,
+                    "email": null,
+                    "phone": null,
+                    "cell": null,
+                    "fotosUrls": null,
+                    "nat": null,
+                    "somatorioCustoMensal": null,
+                    "eletrodomesticos": [],
+                    "enderecos": []
+                }
+            ]
+        }
+    ],
+    "paginator": {
+        "pageNumber": 0,
+        "totalElements": 2,
+        "totalPages": 1
     }
-]
+}
 
 ```
 LISTAR POR ID
 
 
 ```
-GET http://localhost:8080/buscar-getID?id=2
+GET http://localhost:8080/buscar-getID?id=1
 
 RESPONSE:
 {
-    "id": 4,
-    "rua": "Rua do shoping campo limpo",
-    "numero": 990,
-    "bairro": "Capão Redondo",
-    "cidade": "São Paulo",
-    "estado": "SP"
+    "id": 1,
+    "rua": "RUA 5",
+    "numero": 1000,
+    "bairro": "CAPÃO REDONDA",
+    "cidade": "SÃO PAULO",
+    "estado": "SP",
+    "cep": "01538001"
 }
 
 
@@ -611,24 +649,26 @@ Content-Length: 129
 Content-Type: application/json
 
 REQUEST BODY
+
 {
-   "rua":"Lapa",
-   "numero":"7867",
-   "bairro":"Osasco",
-   "cidade":"São Paulo",
-   "estado":"SP"
+    "cep": "01538001",
+    "pessoa": {
+        "id": 1,
+        "nome": "Ernesto Sambongo"
+    }
 }
 
 
 RESPONSE
 
 {
-    "id": 7,
-    "rua": "Lapa",
-    "numero": 7867,
-    "bairro": "Osasco",
+    "id": 1,
+    "rua": "Avenida Lins de Vasconcelos",
+    "numero": 3550308,
+    "bairro": "Cambuci",
     "cidade": "São Paulo",
-    "estado": "SP"
+    "estado": "SP",
+    "cep": "01538001"
 }
 
 
@@ -640,22 +680,23 @@ PUT http://localhost:8080/atualizar/3
 
 REQUEST BODY
 {
-   "rua":"Rua dos Imbondeiros",
+   "rua":"RUA 5",
    "numero":"1000",
-   "bairro":"Urbanização nova vida",
-   "cidade":"Luanda",
-   "estado":"LD"
+   "bairro":"CAPÃO REDONDA",
+   "cidade":"SÃO PAULO",
+   "estado":"SP"
 }
 
 RESPOSE
 
 {
-    "id": 3,
-    "rua": "Rua dos Imbondeiros",
+    "id": 1,
+    "rua": "RUA 5",
     "numero": 1000,
-    "bairro": "Urbanização nova vida",
-    "cidade": "Luanda",
-    "estado": "LD"
+    "bairro": "CAPÃO REDONDA",
+    "cidade": "SÃO PAULO",
+    "estado": "SP",
+    "cep": "01538001"
 }
 
 ```

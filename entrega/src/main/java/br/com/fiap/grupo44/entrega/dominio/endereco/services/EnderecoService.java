@@ -57,10 +57,11 @@ public class EnderecoService {
 		Page<Endereco> enderecos      = enderecoRepository.findAll(pageRequest);   
      	List<EnderecoDTO> enderecosDTO= new ArrayList<EnderecoDTO>();
      	EnderecoDTO enderecoDTO;
-     	List<PessoaDTO>   pessoasDTO   = new ArrayList<PessoaDTO>();
+     	List<PessoaDTO>   pessoasDTO;
      	PessoaDTO pessoaDTO;
         if(!enderecos.isEmpty()) {   
         	for (Endereco endereco : enderecos) {
+        		pessoasDTO   = new ArrayList<PessoaDTO>();
         		enderecoDTO= new EnderecoDTO();
         		BeanUtils.copyProperties(endereco, enderecoDTO);
         		for (Pessoa pessoa : endereco.getPessoas()) {
@@ -68,8 +69,11 @@ public class EnderecoService {
         			BeanUtils.copyProperties(pessoa, pessoaDTO);
         			pessoasDTO.add(pessoaDTO);
         		}
+        		
         		enderecoDTO.setPessoasDTO(pessoasDTO);
         		enderecosDTO.add(enderecoDTO);
+        		
+        		
 			}
         	return new RestDataReturnDTO(enderecosDTO, new Paginator(enderecos.getNumber(), enderecos.getTotalElements(), enderecos.getTotalPages()));
         }
