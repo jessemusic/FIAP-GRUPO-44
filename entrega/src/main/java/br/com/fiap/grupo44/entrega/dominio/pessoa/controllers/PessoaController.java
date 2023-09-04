@@ -1,7 +1,9 @@
 package br.com.fiap.grupo44.entrega.dominio.pessoa.controllers;
 
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.RestDataReturnDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaDTO;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.dto.PessoaPatchDTO;
+import br.com.fiap.grupo44.entrega.dominio.pessoa.entities.Pessoa;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.sevices.PessoaService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,13 +37,12 @@ public class PessoaController {
             @ApiResponse(responseCode = "404", description = "Person not found"),
             @ApiResponse(responseCode = "500", description = "Erro no servidor")})
     @GetMapping
-    public ResponseEntity<Page<PessoaDTO>> findAll(
+    public RestDataReturnDTO findAll(
             @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
             @RequestParam(value = "tamanho", defaultValue = "10") Integer tamanho
     ){
         PageRequest pageRequest = PageRequest.of(pagina,tamanho);
-        var pessoas = pessoaService.findAll(pageRequest);
-        return ResponseEntity.ok(pessoas);
+        return pessoaService.findAll(pageRequest);
     }
     @Operation(summary = "Consulta pessoa passando o id",method = "GET")
     @ApiResponses(value = {

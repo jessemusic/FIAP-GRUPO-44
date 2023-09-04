@@ -13,6 +13,8 @@ import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomest
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.repositories.IEletrodomesticoRepository;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.services.EletrodomesticoService;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.Paginator;
+import br.com.fiap.grupo44.entrega.dominio.endereco.dto.RestDataReturnDTO;
 import br.com.fiap.grupo44.entrega.dominio.endereco.entities.Endereco;
 import br.com.fiap.grupo44.entrega.dominio.endereco.repositories.IEEnderecoRepository;
 import br.com.fiap.grupo44.entrega.dominio.endereco.services.EnderecoService;
@@ -24,6 +26,8 @@ import br.com.fiap.grupo44.entrega.dominio.pessoa.utilbancocep.service.BuscaCepS
 import br.com.fiap.grupo44.entrega.exception.ControllerNotFoundException;
 import br.com.fiap.grupo44.entrega.dominio.pessoa.repositories.IPessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,9 +66,34 @@ public class PessoaService {
     @Autowired
     private ServicoViaSepValidator servicoViaSepValidator;
 
-    public Page<PessoaDTO> findAll(PageRequest pagina){
-        var pessoas = repo.findAll(pagina);
-        return pessoas.map(PessoaDTO::new);
+    public RestDataReturnDTO findAll(PageRequest pagina){
+    	List<PessoaDTO> PessoasDTO=new ArrayList<PessoaDTO>();
+    	List<EnderecoDTO> enderecosDTO;
+    	EnderecoDTO enderecoDTO;
+    	
+    	PessoaDTO pessoaDTO=null;
+    	
+    	var pessoas = repo.findAll(pagina);
+    	
+    	for (Pessoa pessoa : pessoas.getContent()) {
+    		enderecosDTO= new ArrayList<EnderecoDTO>();
+    		pessoaDTO   = new PessoaDTO();
+          //PARSEAR DADOS DE PESSOA
+			BeanUtils.copyProperties(pessoa, pessoaDTO);
+			PessoasDTO.add(pessoaDTO);
+    		
+    		 for (Endereco endereco : pessoa.getEnderecos()) {
+				//PARSSEAR DADOS DE ENDEREÇO
+    			 enderecoDTO=new EnderecoDTO();
+    			 BeanUtils.copyProperties(endereco, enderecoDTO);
+    			 enderecosDTO.add(enderecoDTO);
+			}  
+    		 pessoaDTO.setEnderecos(enderecosDTO);
+		}
+    	
+    	
+    	return new RestDataReturnDTO(PessoasDTO, new Paginator(pessoas.getNumber(), pessoas.getTotalElements(), pessoas.getTotalPages()));
+
     }
 
     @Transactional(readOnly = true)

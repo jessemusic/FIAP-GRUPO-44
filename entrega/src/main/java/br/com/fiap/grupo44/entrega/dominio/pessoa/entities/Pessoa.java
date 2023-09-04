@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 @Getter
 @Setter
@@ -45,7 +47,7 @@ public class Pessoa {
     private Set<Eletrodomestico> eletrodomesticos = new HashSet<>();
 
     @ManyToMany(mappedBy = "pessoas")
-    private Set<Endereco> enderecos = new HashSet<>();
+    private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 
 }

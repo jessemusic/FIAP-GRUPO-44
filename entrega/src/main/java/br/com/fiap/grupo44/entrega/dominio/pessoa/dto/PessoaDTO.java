@@ -1,5 +1,9 @@
 package br.com.fiap.grupo44.entrega.dominio.pessoa.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.dto.EletrodomesticoDTO;
 import br.com.fiap.grupo44.entrega.dominio.eletrodomestico.entities.Eletrodomestico;
 import br.com.fiap.grupo44.entrega.dominio.endereco.dto.EnderecoDTO;
@@ -11,11 +15,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -45,9 +44,7 @@ public class PessoaDTO {
     private String nat;
     @Null(message = "O valor do somatorio deve ser calculado automaticamente")
     private Double somatorioCustoMensal;
-
-    private Set<EletrodomesticoDTO> eletrodomesticos = new HashSet<>();
-
+    private List<EletrodomesticoDTO> eletrodomesticos = new ArrayList<>();
     private List<EnderecoDTO> enderecos = new ArrayList<>();
 
     public PessoaDTO(Pessoa entidade) {
