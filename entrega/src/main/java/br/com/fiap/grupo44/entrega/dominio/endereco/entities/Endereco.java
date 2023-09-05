@@ -39,5 +39,5 @@ public class Endereco {
 	@JoinTable(name = "tb_endereco_pessoa",
 			joinColumns = @JoinColumn(name = "endereco_id"),
 			inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
-	private List<Pessoa> pessoas;
+	private List<Pessoa> pessoas= new ArrayList<>();
 }
