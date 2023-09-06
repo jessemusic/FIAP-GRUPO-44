@@ -726,7 +726,7 @@ Também essa pessoa já possui uma foto que já vem diretamete no json com o atr
                             
 A API faz integração com duas APIs externas e foi criado um adpter com in para o controller e out para chamadas de API externas. Usando um pedaço de modelo de arquitetura hexagonal.
 Dentro desse adpter são feitas as lógicas de comunicação interna e externa. A API também consome um banco de dados com mais de um milhão de ids cada contendo CEPs válidos para serem 
-consumido na chamada da API de endereços que busca já o cep gerado randomicamente seu ID via código no serviço da classe Pessoa, para então fazer o pedido para a API de enereços a partir desse cep escolhido.
+consumido na chamada da API de endereços que busca já o cep gerado randomicamente seu ID via código no serviço da classe Pessoa, para então fazer o pedido para a API de endereços a partir desse cep escolhido.
 
 Para criar a pessoa e dar vida e dívidas a ela, basta consumir o endpoint /pessoas/cria<br>
 http://localhost:8080/pessoas/cria
