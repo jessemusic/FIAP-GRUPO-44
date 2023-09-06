@@ -721,220 +721,60 @@ O objetivo dessa API é gerar pessoas aleatórias que tenha um cep, ou seja, uma
 o número de sua casa. Tendo em vista essas ações , então a API automática criará uma pessoas como se fosse na vida real, já com número de casa e 
 um conjunto de eletrodomésticos que são usado para o cálculo de sua despesa mensal com energia elétrica.
 Essa API, é um desenvolvimento personalidado do grupo 44, com a intenção de mostrar a automação de processos.
+Ao criar a pessoa automática, esta já vem com seus eletrodomésticos e seus gastos mensais com energia elétrica , que está no atributo"somatorioCustoMensal" no json de resposta. 
+Também essa pessoa já possui uma foto que já vem diretamete no json cokm o atributo "fotosUrls"
                             
+A API faz integração com duas APIs externas e foi criado um adpter com in pata o controller e out para chamadas de API externas. Usando um pedaço de modelo de arquitetura hexagonal.
+Dentro desse adpter são feitas as lógicas de comunicação interna e externa. A API também consome um banco de dados com mais de um lihão de ids cada contendo um cep válido para ser 
+consumido na chama de API de endereços que busca já o cep gerando randomicamente pelo ID via código para fazer o pedido para a API de enereços.
 
-
+Para criar a pessoa e dar vida e dívidas a ela, basta consumir o endpoint /pessoas/cria<br>
 http://localhost:8080/pessoas/cria
 
 ```
 {
-    "id": 18,
-    "nome": "Miss Leah",
-    "sobrenome": "Gutierrez",
-    "dataNascimento": "1968-02-12T13:07:07.838Z",
+    "id": 22,
+    "nome": "Ms Nanna",
+    "sobrenome": "Larsen",
+    "dataNascimento": "1990-04-13T18:02:23.755Z",
     "sexo": "female",
-    "idade": 55,
-    "email": "leah.gutierrez@example.com",
-    "phone": "(860) 340-6898",
-    "cell": "(297) 533-4434",
-    "fotosUrls": "https://randomuser.me/api/portraits/women/88.jpg",
-    "nat": "US",
-    "somatorioCustoMensal": 769.3019999982001,
+    "idade": 33,
+    "email": "nanna.larsen@example.com",
+    "phone": "07749917",
+    "cell": "53652133",
+    "fotosUrls": "https://randomuser.me/api/portraits/women/51.jpg",
+    "nat": "DK",
+    "somatorioCustoMensal": 846.9,
     "eletrodomesticos": [
         {
-            "id": 14,
-            "nome": "BOILER 50 e 60 L",
-            "modelo": "50 e 60 L",
-            "marca": "KSB",
-            "tensao": "110v",
-            "potencia": 1500.0,
-            "usoDiasEstimados": 30,
-            "usoDiarioEstimado": 360,
-            "consumoDiario": 9.0,
-            "consumoMensal": 270.0,
-            "custoDiario": 8.1,
-            "custoMensal": 243.0,
-            "idPatchCategoria": 2
-        },
-        {
-            "id": 48,
-            "nome": "GRILL",
-            "modelo": "RI2730",
-            "marca": "Mondial",
-            "tensao": "110v",
-            "potencia": 900.0,
-            "usoDiasEstimados": 10,
-            "usoDiarioEstimado": 30,
-            "consumoDiario": 0.45,
-            "consumoMensal": 4.5,
-            "custoDiario": 0.405,
-            "custoMensal": 4.050000000000001,
-            "idPatchCategoria": 7
-        },
-        {
-            "id": 32,
-            "nome": "ESCOVA DE DENTES ELÉTRICA",
-            "modelo": "Pro 1000",
-            "marca": "Oral-B",
-            "tensao": "110v",
-            "potencia": 50.0,
-            "usoDiasEstimados": 30,
-            "usoDiarioEstimado": 10,
-            "consumoDiario": 0.008333333299999999,
-            "consumoMensal": 0.24999999899999997,
-            "custoDiario": 0.007499999969999999,
-            "custoMensal": 0.22499999909999996,
-            "idPatchCategoria": 5
-        },
-        {
-            "id": 10,
-            "nome": "AR-CONDICIONADO 18.000 BTU",
-            "modelo": " 18.000 BTU",
+            "id": 9,
+            "nome": "AR-CONDICIONADO 15.000 BTU",
+            "modelo": "15.000 BTU",
             "marca": "Daikin",
             "tensao": "BIVOLT",
-            "potencia": 2100.0,
+            "potencia": 2000.0,
             "usoDiasEstimados": 30,
             "usoDiarioEstimado": 480,
-            "consumoDiario": 16.8,
-            "consumoMensal": 504.0,
-            "custoDiario": 15.120000000000001,
-            "custoMensal": 453.6,
+            "consumoDiario": 16.0,
+            "consumoMensal": 480.0,
+            "custoDiario": 14.4,
+            "custoMensal": 432.0,
             "idPatchCategoria": 3
         },
         {
-            "id": 11,
-            "nome": "ASPIRADOR DE PÓ",
-            "modelo": "PowerClean 2000",
-            "marca": "Mindial",
+            "id": 30,
+            "nome": "CORTADOR DE GRAMA PEQUENO",
+            "modelo": "GR1000",
+            "marca": "Black+Decker",
             "tensao": "110v",
-            "potencia": 100.0,
-            "usoDiasEstimados": 30,
-            "usoDiarioEstimado": 20,
-            "consumoDiario": 0.0333333333,
-            "consumoMensal": 0.9999999989999999,
-            "custoDiario": 0.029999999969999996,
-            "custoMensal": 0.8999999990999998,
-            "idPatchCategoria": 1
-        },
-        {
-            "id": 43,
-            "nome": "FREEZER VERTICAL/HORIZONTAL",
-            "modelo": "H300",
-            "marca": "George Foreman",
-            "tensao": "110v",
-            "potencia": 130.0,
-            "usoDiasEstimados": 24,
-            "usoDiarioEstimado": 1440,
-            "consumoDiario": 3.12,
-            "consumoMensal": 74.88,
-            "custoDiario": 2.8080000000000003,
-            "custoMensal": 67.39200000000001,
-            "idPatchCategoria": 4
-        },
-        {
-            "id": 77,
-            "nome": "SORVETEIRA",
-            "modelo": "H300",
-            "marca": "Cuisinart",
-            "tensao": "110v",
-            "potencia": 15.0,
-            "usoDiasEstimados": 5,
+            "potencia": 500.0,
+            "usoDiasEstimados": 2,
             "usoDiarioEstimado": 120,
-            "consumoDiario": 0.03,
-            "consumoMensal": 0.15,
-            "custoDiario": 0.027,
-            "custoMensal": 0.135,
-            "idPatchCategoria": 6
-        }
-    ],
-    "enderecos": [
-        {
-            "id": 19,
-            "rua": "Praça da Marinha",
-            "numero": 3552205,
-            "bairro": "Parque Campolim",
-            "cidade": "Sorocaba",
-            "estado": "SP",
-            "cep": "18047771"
-        }
-    ]
-}
-
-
-Gerando outra pessoa
-{
-    "id": 19,
-    "nome": "Mr Jose",
-    "sobrenome": "Chavez",
-    "dataNascimento": "2000-01-23T14:00:12.682Z",
-    "sexo": "male",
-    "idade": 23,
-    "email": "jose.chavez@example.com",
-    "phone": "015395 30798",
-    "cell": "07893 590898",
-    "fotosUrls": "https://randomuser.me/api/portraits/men/82.jpg",
-    "nat": "GB",
-    "somatorioCustoMensal": 565.091249973615,
-    "eletrodomesticos": [
-        {
-            "id": 74,
-            "nome": "SECADORA DE ROUPA GRANDE",
-            "modelo": "CFO4NAB",
-            "marca": "LG",
-            "tensao": "110v",
-            "potencia": 3500.0,
-            "usoDiasEstimados": 12,
-            "usoDiarioEstimado": 60,
-            "consumoDiario": 3.5,
-            "consumoMensal": 42.0,
-            "custoDiario": 3.15,
-            "custoMensal": 37.8,
-            "idPatchCategoria": 10
-        },
-        {
-            "id": 15,
-            "nome": "BOILER 100 L",
-            "modelo": "100 L",
-            "marca": "KSB",
-            "tensao": "110v",
-            "potencia": 2030.0,
-            "usoDiasEstimados": 30,
-            "usoDiarioEstimado": 360,
-            "consumoDiario": 12.18,
-            "consumoMensal": 365.4,
-            "custoDiario": 10.962,
-            "custoMensal": 328.86,
-            "idPatchCategoria": 2
-        },
-        {
-            "id": 24,
-            "nome": "CHURRASQUEIRA",
-            "modelo": "GrillMax ",
-            "marca": "FlameMaster",
-            "tensao": "110v",
-            "potencia": 3800.0,
-            "usoDiasEstimados": 5,
-            "usoDiarioEstimado": 240,
-            "consumoDiario": 15.2,
-            "consumoMensal": 76.0,
-            "custoDiario": 13.68,
-            "custoMensal": 68.4,
-            "idPatchCategoria": 7
-        },
-        {
-            "id": 81,
-            "nome": "TV EM CORES – 40″",
-            "modelo": "Pro 1000",
-            "marca": "SANSUNG",
-            "tensao": "110v",
-            "potencia": 70.0,
-            "usoDiasEstimados": 30,
-            "usoDiarioEstimado": 330,
-            "consumoDiario": 0.385,
-            "consumoMensal": 11.55,
-            "custoDiario": 0.34650000000000003,
-            "custoMensal": 10.395000000000001,
-            "idPatchCategoria": 9
+            "consumoDiario": 1.0,
+            "consumoMensal": 2.0,
+            "custoDiario": 0.9,
+            "custoMensal": 1.8,
+            "idPatchCategoria": 1
         },
         {
             "id": 47,
@@ -952,6 +792,245 @@ Gerando outra pessoa
             "idPatchCategoria": 4
         },
         {
+            "id": 15,
+            "nome": "BOILER 100 L",
+            "modelo": "100 L",
+            "marca": "KSB",
+            "tensao": "110v",
+            "potencia": 2030.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 360,
+            "consumoDiario": 12.18,
+            "consumoMensal": 365.4,
+            "custoDiario": 10.962,
+            "custoMensal": 328.86,
+            "idPatchCategoria": 2
+        }
+    ],
+    "enderecos": [
+        {
+            "id": 23,
+            "rua": "Rua Armando Marino",
+            "numero": 746,
+            "bairro": "Fioravante Marino",
+            "cidade": "Colatina",
+            "estado": "ES",
+            "cep": "29705800"
+        }
+    ]
+}
+
+Gerando outra pessoa
+{
+    "id": 23,
+    "nome": "Mrs Elisa",
+    "sobrenome": "Hidalgo",
+    "dataNascimento": "1959-01-19T17:57:24.142Z",
+    "sexo": "female",
+    "idade": 64,
+    "email": "elisa.hidalgo@example.com",
+    "phone": "973-467-760",
+    "cell": "699-508-135",
+    "fotosUrls": "https://randomuser.me/api/portraits/women/0.jpg",
+    "nat": "ES",
+    "somatorioCustoMensal": 4.104,
+    "eletrodomesticos": [
+        {
+            "id": 29,
+            "nome": "CORTADOR DE GRAMA GRANDE",
+            "modelo": "LC221RH",
+            "marca": "Husqvarna",
+            "tensao": "110v",
+            "potencia": 1140.0,
+            "usoDiasEstimados": 2,
+            "usoDiarioEstimado": 120,
+            "consumoDiario": 2.28,
+            "consumoMensal": 4.56,
+            "custoDiario": 2.052,
+            "custoMensal": 4.104,
+            "idPatchCategoria": 1
+        }
+    ],
+    "enderecos": [
+        {
+            "id": 24,
+            "rua": "Rua Amós",
+            "numero": 268,
+            "bairro": "Canaã",
+            "cidade": "Ipatinga",
+            "estado": "MG",
+            "cep": "35164135"
+        }
+    ]
+}
+
+Gerando outra pessoa
+
+{
+    "id": 24,
+    "nome": "Mrs Filippa",
+    "sobrenome": "Kildahl",
+    "dataNascimento": "1971-07-11T06:43:34.761Z",
+    "sexo": "female",
+    "idade": 52,
+    "email": "filippa.kildahl@example.com",
+    "phone": "36922805",
+    "cell": "48523383",
+    "fotosUrls": "https://randomuser.me/api/portraits/women/67.jpg",
+    "nat": "NO",
+    "somatorioCustoMensal": 407.49899989932,
+    "eletrodomesticos": [
+        {
+            "id": 25,
+            "nome": "CHUVEIRO ELÉTRICO",
+            "modelo": "HeatWave ShowerX-100",
+            "marca": "AquaFlow",
+            "tensao": "110v",
+            "potencia": 3500.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 40,
+            "consumoDiario": 2.3333333310000004,
+            "consumoMensal": 69.99999993000002,
+            "custoDiario": 2.0999999979000004,
+            "custoMensal": 62.99999993700001,
+            "idPatchCategoria": 2
+        },
+        {
+            "id": 11,
+            "nome": "ASPIRADOR DE PÓ",
+            "modelo": "PowerClean 2000",
+            "marca": "Mindial",
+            "tensao": "110v",
+            "potencia": 100.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 20,
+            "consumoDiario": 0.0333333333,
+            "consumoMensal": 0.9999999989999999,
+            "custoDiario": 0.029999999969999996,
+            "custoMensal": 0.8999999990999998,
+            "idPatchCategoria": 1
+        },
+        {
+            "id": 53,
+            "nome": "LÂMPADA INCANDESCENTE – 40 W",
+            "modelo": "BOA84AE",
+            "marca": "Energizer",
+            "tensao": "110v",
+            "potencia": 40.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 330,
+            "consumoDiario": 0.22,
+            "consumoMensal": 6.6,
+            "custoDiario": 0.198,
+            "custoMensal": 5.94,
+            "idPatchCategoria": 11
+        },
+        {
+            "id": 61,
+            "nome": "MICROCOMPUTADOR",
+            "modelo": "BRM34BB",
+            "marca": "Consul",
+            "tensao": "110v",
+            "potencia": 120.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 180,
+            "consumoDiario": 0.36,
+            "consumoMensal": 10.799999999999999,
+            "custoDiario": 0.324,
+            "custoMensal": 9.72,
+            "idPatchCategoria": 12
+        },
+        {
+            "id": 37,
+            "nome": "FERRO ELÉTRICO AUTOMÁTICO",
+            "modelo": "F200",
+            "marca": "Black+Decker",
+            "tensao": "220V",
+            "potencia": 1000.0,
+            "usoDiasEstimados": 12,
+            "usoDiarioEstimado": 60,
+            "consumoDiario": 1.0,
+            "consumoMensal": 12.0,
+            "custoDiario": 0.9,
+            "custoMensal": 10.8,
+            "idPatchCategoria": 10
+        },
+        {
+            "id": 49,
+            "nome": "IOGURTEIRA",
+            "modelo": "BVE10",
+            "marca": "",
+            "tensao": "110v",
+            "potencia": 26.0,
+            "usoDiasEstimados": 10,
+            "usoDiarioEstimado": 30,
+            "consumoDiario": 0.013,
+            "consumoMensal": 0.13,
+            "custoDiario": 0.0117,
+            "custoMensal": 0.117,
+            "idPatchCategoria": 6
+        },
+        {
+            "id": 43,
+            "nome": "FREEZER VERTICAL/HORIZONTAL",
+            "modelo": "H300",
+            "marca": "George Foreman",
+            "tensao": "110v",
+            "potencia": 130.0,
+            "usoDiasEstimados": 24,
+            "usoDiarioEstimado": 1440,
+            "consumoDiario": 3.12,
+            "consumoMensal": 74.88,
+            "custoDiario": 2.8080000000000003,
+            "custoMensal": 67.39200000000001,
+            "idPatchCategoria": 4
+        },
+        {
+            "id": 33,
+            "nome": "ESPREMEDOR DE FRUTAS",
+            "modelo": "RI2730",
+            "marca": "Philips Walita",
+            "tensao": "110v",
+            "potencia": 65.0,
+            "usoDiasEstimados": 20,
+            "usoDiarioEstimado": 10,
+            "consumoDiario": 0.010833333289999999,
+            "consumoMensal": 0.21666666579999996,
+            "custoDiario": 0.009749999960999999,
+            "custoMensal": 0.19499999921999997,
+            "idPatchCategoria": 8
+        },
+        {
+            "id": 42,
+            "nome": "FORNO MICROONDAS",
+            "modelo": "NN-ST67HSRUN",
+            "marca": "Philips Walita",
+            "tensao": "220V",
+            "potencia": 1200.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 20,
+            "consumoDiario": 0.39999999960000004,
+            "consumoMensal": 11.999999988,
+            "custoDiario": 0.35999999964000007,
+            "custoMensal": 10.799999989200002,
+            "idPatchCategoria": 7
+        },
+        {
+            "id": 6,
+            "nome": "AR-CONDICIONADO 7.500 BTU",
+            "modelo": "7.500 BTU",
+            "marca": "Daikin",
+            "tensao": "BIVOLT",
+            "potencia": 1000.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 480,
+            "consumoDiario": 8.0,
+            "consumoMensal": 240.0,
+            "custoDiario": 7.2,
+            "custoMensal": 216.0,
+            "idPatchCategoria": 3
+        },
+        {
             "id": 72,
             "nome": "SECADOR DE CABELO GRANDE",
             "modelo": "DF42",
@@ -965,6 +1044,111 @@ Gerando outra pessoa
             "custoDiario": 0.20999999915999998,
             "custoMensal": 6.2999999747999995,
             "idPatchCategoria": 5
+        },
+        {
+            "id": 83,
+            "nome": "TV EM CORES – 29″",
+            "modelo": "BVE10",
+            "marca": "SONY",
+            "tensao": "110v",
+            "potencia": 110.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 330,
+            "consumoDiario": 0.605,
+            "consumoMensal": 18.15,
+            "custoDiario": 0.5445,
+            "custoMensal": 16.335,
+            "idPatchCategoria": 9
+        }
+    ],
+    "enderecos": [
+        {
+            "id": 25,
+            "rua": "Área Rural",
+            "numero": 928,
+            "bairro": "Área Rural de Florianópolis",
+            "cidade": "Florianópolis",
+            "estado": "SC",
+            "cep": "88099899"
+        }
+    ]
+}
+
+Mais outra pessoa
+
+
+    "id": 25,
+    "nome": "Mrs Sanni",
+    "sobrenome": "Salminen",
+    "dataNascimento": "1985-10-28T07:58:29.424Z",
+    "sexo": "female",
+    "idade": 37,
+    "email": "sanni.salminen@example.com",
+    "phone": "07-364-694",
+    "cell": "046-186-38-83",
+    "fotosUrls": "https://randomuser.me/api/portraits/women/91.jpg",
+    "nat": "FI",
+    "somatorioCustoMensal": 393.16499999999996,
+    "eletrodomesticos": [
+        {
+            "id": 73,
+            "nome": "SECADOR DE CABELOS PEQUENO",
+            "modelo": "GR20B",
+            "marca": "Philips",
+            "tensao": "110v",
+            "potencia": 600.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 900,
+            "consumoDiario": 9.0,
+            "consumoMensal": 270.0,
+            "custoDiario": 8.1,
+            "custoMensal": 243.0,
+            "idPatchCategoria": 5
+        },
+        {
+            "id": 23,
+            "nome": "CAFETEIRA ELÉTRICA",
+            "modelo": "BrewMaster ",
+            "marca": "JavaEase",
+            "tensao": "110v",
+            "potencia": 600.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 60,
+            "consumoDiario": 0.6,
+            "consumoMensal": 18.0,
+            "custoDiario": 0.54,
+            "custoMensal": 16.200000000000003,
+            "idPatchCategoria": 6
+        },
+        {
+            "id": 46,
+            "nome": "GELADEIRA 1 PORTA",
+            "modelo": "ERC50",
+            "marca": "Consul",
+            "tensao": "110v",
+            "potencia": 90.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 1440,
+            "consumoDiario": 2.16,
+            "consumoMensal": 64.80000000000001,
+            "custoDiario": 1.9440000000000002,
+            "custoMensal": 58.32000000000001,
+            "idPatchCategoria": 4
+        },
+        {
+            "id": 40,
+            "nome": "FORNO · RESISTÊNCIA GRANDE",
+            "modelo": "CFO4NAB",
+            "marca": "Brastemp",
+            "tensao": "110v",
+            "potencia": 1500.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 60,
+            "consumoDiario": 1.5,
+            "consumoMensal": 45.0,
+            "custoDiario": 1.35,
+            "custoMensal": 40.5,
+            "idPatchCategoria": 7
         },
         {
             "id": 31,
@@ -982,6 +1166,51 @@ Gerando outra pessoa
             "idPatchCategoria": 1
         },
         {
+            "id": 17,
+            "nome": "BOMBA D’ÁGUA 1/4 CV",
+            "modelo": " 1/4 CV",
+            "marca": "KSB",
+            "tensao": "110v",
+            "potencia": 335.0,
+            "usoDiasEstimados": 30,
+            "usoDiarioEstimado": 30,
+            "consumoDiario": 0.1675,
+            "consumoMensal": 5.025,
+            "custoDiario": 0.15075000000000002,
+            "custoMensal": 4.522500000000001,
+            "idPatchCategoria": 2
+        },
+        {
+            "id": 89,
+            "nome": "VIDEOGAME",
+            "modelo": "ONE",
+            "marca": "XBOX",
+            "tensao": "110v",
+            "potencia": 15.0,
+            "usoDiasEstimados": 15,
+            "usoDiarioEstimado": 240,
+            "consumoDiario": 0.06,
+            "consumoMensal": 0.8999999999999999,
+            "custoDiario": 0.054,
+            "custoMensal": 0.8099999999999999,
+            "idPatchCategoria": 9
+        },
+        {
+            "id": 58,
+            "nome": "LIQUIDIFICADOR",
+            "modelo": "H300",
+            "marca": "Consul",
+            "tensao": "110v",
+            "potencia": 300.0,
+            "usoDiasEstimados": 15,
+            "usoDiarioEstimado": 15,
+            "consumoDiario": 0.075,
+            "consumoMensal": 1.125,
+            "custoDiario": 0.0675,
+            "custoMensal": 1.0125000000000002,
+            "idPatchCategoria": 8
+        },
+        {
             "id": 65,
             "nome": "OZONIZADOR",
             "modelo": "CFO4NAB",
@@ -995,47 +1224,17 @@ Gerando outra pessoa
             "custoDiario": 0.9,
             "custoMensal": 27.0,
             "idPatchCategoria": 3
-        },
-        {
-            "id": 1,
-            "nome": "ABRIDOR/AFIADOR",
-            "modelo": "MultiSharp",
-            "marca": "Philips",
-            "tensao": "110v",
-            "potencia": 135.0,
-            "usoDiasEstimados": 10,
-            "usoDiarioEstimado": 5,
-            "consumoDiario": 0.011249999955,
-            "consumoMensal": 0.11249999955,
-            "custoDiario": 0.0101249999595,
-            "custoMensal": 0.101249999595,
-            "idPatchCategoria": 6
-        },
-        {
-            "id": 33,
-            "nome": "ESPREMEDOR DE FRUTAS",
-            "modelo": "RI2730",
-            "marca": "Philips Walita",
-            "tensao": "110v",
-            "potencia": 65.0,
-            "usoDiasEstimados": 20,
-            "usoDiarioEstimado": 10,
-            "consumoDiario": 0.010833333289999999,
-            "consumoMensal": 0.21666666579999996,
-            "custoDiario": 0.009749999960999999,
-            "custoMensal": 0.19499999921999997,
-            "idPatchCategoria": 8
         }
     ],
     "enderecos": [
         {
-            "id": 20,
-            "rua": "QNR 4 Conjunto I",
-            "numero": 5300108,
-            "bairro": "Ceilândia Norte (Ceilândia)",
-            "cidade": "Brasília",
-            "estado": "DF",
-            "cep": "72275468"
+            "id": 26,
+            "rua": "Estrada Municipal Francisco Eugênio Bicudo",
+            "numero": 280,
+            "bairro": "Jardim Colinas",
+            "cidade": "Jacareí",
+            "estado": "SP",
+            "cep": "12319010"
         }
     ]
 }

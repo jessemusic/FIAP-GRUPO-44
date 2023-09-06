@@ -31,7 +31,7 @@ public class EnderecoService {
 	private ServicoViaSepValidator servicoViaSepValidator;
 
 
-	public EnderecoDTO salvar(CepDTO cepDTO) {
+	public EnderecoDTO salvar(CepDTO cepDTO,int numeroDeEnereco) {
 		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
 		
 		Endereco OEndereco = this.enderecoRepository.BUSCAR_ENDERECO_POR_CEP(cepDTO.getCep());
@@ -39,6 +39,7 @@ public class EnderecoService {
 		
 		if(OEndereco==null) {
 	    	Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
+			enderecoEntity.setNumero(numeroDeEnereco);
 	    	OEndereco=this.enderecoRepository.save(enderecoEntity);			    	
 	    }else {
 	    	this.enderecoRepository.SALVAR_ENDERECO(OEndereco.getId(), cepDTO.getPessoa().getId());
@@ -46,6 +47,22 @@ public class EnderecoService {
 	    }
 
 		return new EnderecoDTO(OEndereco); 
+	}
+	public EnderecoDTO salvar(CepDTO cepDTO) {
+		EnderecoResultViaCepDTO enderecoResultViaCepDTO = this.servicoViaSepValidator.validarEndereco(cepDTO);
+
+		Endereco OEndereco = this.enderecoRepository.BUSCAR_ENDERECO_POR_CEP(cepDTO.getCep());
+
+
+		if(OEndereco==null) {
+			Endereco enderecoEntity = enderecoResultViaCepDTO.getEndereco(cepDTO);
+			OEndereco=this.enderecoRepository.save(enderecoEntity);
+		}else {
+			this.enderecoRepository.SALVAR_ENDERECO(OEndereco.getId(), cepDTO.getPessoa().getId());
+			System.err.println("PASSEI PELO SERVIÇO COM SUCESSO!");
+		}
+
+		return new EnderecoDTO(OEndereco);
 	}
 	
 	public EnderecoDTO findById(Long id) {
