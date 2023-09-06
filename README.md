@@ -722,11 +722,11 @@ o número de sua casa. Tendo em vista essas ações , então a API automática c
 um conjunto de eletrodomésticos que são usado para o cálculo de sua despesa mensal com energia elétrica.
 Essa API, é um desenvolvimento personalidado do grupo 44, com a intenção de mostrar a automação de processos.
 Ao criar a pessoa automática, esta já vem com seus eletrodomésticos e seus gastos mensais com energia elétrica , que está no atributo"somatorioCustoMensal" no json de resposta. 
-Também essa pessoa já possui uma foto que já vem diretamete no json cokm o atributo "fotosUrls"
+Também essa pessoa já possui uma foto que já vem diretamete no json com o atributo "fotosUrls"
                             
-A API faz integração com duas APIs externas e foi criado um adpter com in pata o controller e out para chamadas de API externas. Usando um pedaço de modelo de arquitetura hexagonal.
-Dentro desse adpter são feitas as lógicas de comunicação interna e externa. A API também consome um banco de dados com mais de um lihão de ids cada contendo um cep válido para ser 
-consumido na chama de API de endereços que busca já o cep gerando randomicamente pelo ID via código para fazer o pedido para a API de enereços.
+A API faz integração com duas APIs externas e foi criado um adpter com in para o controller e out para chamadas de API externas. Usando um pedaço de modelo de arquitetura hexagonal.
+Dentro desse adpter são feitas as lógicas de comunicação interna e externa. A API também consome um banco de dados com mais de um milhão de ids cada contendo CEPs válidos para serem 
+consumido na chamada da API de endereços que busca já o cep gerado randomicamente seu ID via código no serviço da classe Pessoa, para então fazer o pedido para a API de enereços a partir desse cep escolhido.
 
 Para criar a pessoa e dar vida e dívidas a ela, basta consumir o endpoint /pessoas/cria<br>
 http://localhost:8080/pessoas/cria
