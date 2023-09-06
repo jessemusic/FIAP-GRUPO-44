@@ -85,6 +85,21 @@ public class PessoaService {
           //PARSEAR DADOS DE PESSOA
 			BeanUtils.copyProperties(pessoa, pessoaDTO);
 			PessoasDTO.add(pessoaDTO);
+
+            Double somatorioMensal = 0.0;
+            if (pessoa.getEletrodomesticos() != null && !pessoa.getEletrodomesticos().isEmpty()) {
+                somatorioMensal = pessoa.getEletrodomesticos().stream()
+                        .mapToDouble(Eletrodomestico::getCustoMensal)
+                        .sum();
+            }
+            pessoaDTO.setSomatorioCustoMensal(somatorioMensal);
+
+            // Carregue os eletrodomésticos associados a esta pessoa
+            List<EletrodomesticoDTO> eletrodomesticosDTO = pessoa.getEletrodomesticos().stream()
+                    .map(EletrodomesticoDTO::new)
+                    .collect(Collectors.toList());
+
+            pessoaDTO.setEletrodomesticos(eletrodomesticosDTO);
     		
     		 for (Endereco endereco : pessoa.getEnderecos()) {
 				//PARSSEAR DADOS DE ENDEREÇO
