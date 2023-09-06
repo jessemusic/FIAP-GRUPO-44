@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ public class Eletrodomestico {
     private Long usoDiarioEstimado;
     private Long idPatchCategoria;
     @ManyToMany(mappedBy = "eletrodomesticos")
-    private Set<Pessoa> pessoas;
+    private Set<Pessoa> pessoas = new HashSet<>();
     @CreationTimestamp
     private Instant dataDeCriacao;
 

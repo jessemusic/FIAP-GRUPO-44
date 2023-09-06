@@ -70,14 +70,18 @@ public class PessoaService {
     	List<PessoaDTO> PessoasDTO=new ArrayList<PessoaDTO>();
     	List<EnderecoDTO> enderecosDTO;
     	EnderecoDTO enderecoDTO;
+        List<EletrodomesticoDTO> enderecosDTOList;
+        EletrodomesticoDTO eletrodomesticoDTO;
     	
     	PessoaDTO pessoaDTO=null;
-    	
+        ;
     	var pessoas = repo.findAll(pagina);
-    	
-    	for (Pessoa pessoa : pessoas.getContent()) {
+        final Page<PessoaDTO> map = pessoas.map(PessoaDTO::new);
+        for (Pessoa pessoa : pessoas.getContent()) {
     		enderecosDTO= new ArrayList<EnderecoDTO>();
-    		pessoaDTO   = new PessoaDTO();
+    		pessoaDTO   = new PessoaDTO(pessoa,pessoa.getEletrodomesticos());
+            enderecosDTOList = new ArrayList<>();
+
           //PARSEAR DADOS DE PESSOA
 			BeanUtils.copyProperties(pessoa, pessoaDTO);
 			PessoasDTO.add(pessoaDTO);
@@ -102,11 +106,19 @@ public class PessoaService {
     			 enderecoDTO=new EnderecoDTO();
     			 BeanUtils.copyProperties(endereco, enderecoDTO);
     			 enderecosDTO.add(enderecoDTO);
-			}  
-    		 pessoaDTO.setEnderecos(enderecosDTO);
+			}
+            final Set<Eletrodomestico> eletrodomesticos = pessoa.getEletrodomesticos();
+            System.out.println(eletrodomesticos);
+            for (Eletrodomestico eletrodomestico : pessoa.getEletrodomesticos()) {
+                //PARSSEAR DADOS DE ELETRODOMÉSTICOS
+                eletrodomesticoDTO=new EletrodomesticoDTO();
+                BeanUtils.copyProperties(eletrodomestico, eletrodomesticoDTO);
+                enderecosDTOList.add(eletrodomesticoDTO);
+            }
+             pessoaDTO.setEletrodomesticos(enderecosDTOList);
+            pessoaDTO.setEnderecos(enderecosDTO);
 		}
-    	
-    	
+
     	return new RestDataReturnDTO(PessoasDTO, new Paginator(pessoas.getNumber(), pessoas.getTotalElements(), pessoas.getTotalPages()));
 
     }
@@ -207,7 +219,7 @@ public class PessoaService {
         CepDTO cepEnviar = new CepDTO();
         cepEnviar.setCep(criaCepAutomatico.getCep());
         cepEnviar.setPessoa(pessoa);
-        final EnderecoDTO salvar = enderecoService.salvar(cepEnviar);
+        final EnderecoDTO salvar = enderecoService.salvar(cepEnviar,numeroDaCasaCriado);
         return salvar;
     }
 
